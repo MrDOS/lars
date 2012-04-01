@@ -15,6 +15,16 @@ public class ItemType
     private int rentalDuration;
     private boolean isRentable;
 
+    public ItemType(String name, String description, int price,
+            int rentalDuration, boolean isRentable)
+    {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.rentalDuration = rentalDuration;
+        this.isRentable = isRentable;
+    }
+
     public String getDescription()
     {
         return description;

@@ -3,7 +3,7 @@ package lars;
 /**
  * Data class for item description.
  * 
- * @author jeremywheaton
+ * @author Jeremy Wheaton
  * @version April 1, 2012
  */
 public class ItemDescription
@@ -11,6 +11,13 @@ public class ItemDescription
     private int SKU;
     private String description;
     private int quantity;
+
+    public ItemDescription(int newSKU, String description, int quantity)
+    {
+        SKU = newSKU;
+        this.description = description;
+        this.quantity = quantity;
+    }
 
     public int getSKU()
     {

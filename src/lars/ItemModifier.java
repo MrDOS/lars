@@ -11,6 +11,12 @@ public class ItemModifier
     private int price;
     private int rentalDuration;
 
+    public ItemModifier(int price, int rentalDuration)
+    {
+        this.price = price;
+        this.rentalDuration = rentalDuration;
+    }
+
     public int getPrice()
     {
         return price;
