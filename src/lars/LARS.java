@@ -2,7 +2,7 @@ package lars;
 
 import javax.swing.JFrame;
 
-import lars.gui.KioskFrame;
+import lars.gui.kiosk.KioskFrame;
 
 public class LARS
 {
@@ -17,8 +17,7 @@ public class LARS
         }
         else
         {
-            JFrame frame = new KioskFrame();
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            JFrame frame = KioskFrame.getInstance();
             frame.setVisible(true);
         }
     }
