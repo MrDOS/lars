@@ -14,14 +14,16 @@ public class Item
     private List<ItemModifier> modifiers;
     private ItemType type;
     private ItemDescription description;
-    private int totalPrice;
+    private int totalRentalPrice;
+    private int totalBuyPrice;
     private int totalDuration;
 
     public Item(ItemType newType, ItemDescription newDescription)
     {
         type = newType;
         description = newDescription;
-        totalPrice = 0;
+        totalRentalPrice = 0;
+        totalBuyPrice = 0;
         totalDuration = 0;
     }
 
@@ -40,16 +42,28 @@ public class Item
         return modifiers;
     }
 
-    public int getPrice()
+    public int getRentalPrice()
     {
-        totalPrice += type.getPrice();
+        totalRentalPrice += type.getRentalPrice();
 
         for (int i = 0; i < modifiers.size(); i++)
         {
-            totalPrice += modifiers.get(i).getPrice();
+            totalRentalPrice += modifiers.get(i).getRentalPrice();
         }
 
-        return totalPrice;
+        return totalRentalPrice;
+    }
+    
+    public int getBuyPrice()
+    {
+        totalBuyPrice += type.getBuyPrice();
+
+        for (int i = 0; i < modifiers.size(); i++)
+        {
+            totalBuyPrice += modifiers.get(i).getBuyPrice();
+        }
+
+        return totalBuyPrice;
     }
 
     public int getSKU()

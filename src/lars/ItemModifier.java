@@ -8,23 +8,25 @@ package lars;
  */
 public class ItemModifier
 {
-    private int price;
+    private int rentalPrice;
+    private int buyPrice;
     private int rentalDuration;
 
-    public ItemModifier(int price, int rentalDuration)
+    public ItemModifier(int rentalPrice, int buyPrice, int rentalDuration)
     {
-        this.price = price;
+        this.rentalPrice = rentalPrice;
+        this.setBuyPrice(buyPrice);
         this.rentalDuration = rentalDuration;
     }
 
-    public int getPrice()
+    public int getRentalPrice()
     {
-        return price;
+        return rentalPrice;
     }
 
-    public void setPrice(int price)
+    public void setRentalPrice(int price)
     {
-        this.price = price;
+        this.rentalPrice = price;
     }
 
     public int getRentalDuration()
@@ -35,6 +37,16 @@ public class ItemModifier
     public void setRentalDuration(int rentalDuration)
     {
         this.rentalDuration = rentalDuration;
+    }
+
+    public void setBuyPrice(int buyPrice)
+    {
+        this.buyPrice = buyPrice;
+    }
+
+    public int getBuyPrice()
+    {
+        return buyPrice;
     }
 
 }
