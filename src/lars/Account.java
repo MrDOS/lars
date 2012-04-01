@@ -1,7 +1,8 @@
 package lars;
 
 /**
- * Data class describing an qccount.
+ * Data class describing an account.
+ * 
  * @author Jeremy Wheaton
  * @version April 1, 2012
  */
