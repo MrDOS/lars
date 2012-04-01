@@ -42,12 +42,12 @@ public class KioskFrame extends JFrame
     public void showMenu()
     {
         this.setContentPane(new MenuPanel());
-        this.revalidate();
+        this.validate();
     }
 
     public void showCheckout()
     {
         this.setContentPane(new CheckoutPanel());
-        this.revalidate();
+        this.validate();
     }
 }
