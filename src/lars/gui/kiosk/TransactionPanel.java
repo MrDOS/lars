@@ -35,12 +35,13 @@ public class TransactionPanel extends JPanel implements ActionListener
         this.setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
+        
         c.gridx = 0;
         c.gridy = 0;
 
         skuField = new JTextField(SKU_LENGTH);
-
         this.add(skuField, c);
+        
         c.gridx = 0;
         c.gridy = 1;
 
