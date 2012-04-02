@@ -1,6 +1,7 @@
 package lars;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,10 +20,10 @@ public class Transaction
 
     public Transaction()
     {
-        transactionItems.clear();
+        transactionItems = new ArrayList<TransactionItem>();
         totalPrice = 0;
         setDate(new Date(System.currentTimeMillis()));
-        setTransactionID(0); // TODO: Will need to set using transaction database
+        setTransactionID(0); 
     }
 
     public int getTotalPrice()
@@ -52,7 +53,7 @@ public class Transaction
 
     public void setTransactionID(int transactionID)
     {
-        this.transactionID = transactionID;
+        this.transactionID = transactionID; 
     }
 
     public int getTransactionID()
