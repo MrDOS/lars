@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 
 import lars.LARS;
+import lars.Transaction;
 
 /**
  * Main kiosk interface.
@@ -45,9 +46,15 @@ public class KioskFrame extends JFrame
         this.validate();
     }
 
-    public void showCheckout()
+    public void showTransaction()
     {
-        this.setContentPane(new CheckoutPanel());
+        this.setContentPane(new TransactionPanel());
+        this.validate();
+    }
+
+    public void showCheckout(Transaction transaction)
+    {
+        this.setContentPane(new CheckoutPanel(transaction));
         this.validate();
     }
 }
