@@ -29,7 +29,6 @@ public class TransactionPanel extends JPanel implements ActionListener
 
     private Transaction transaction;
     private Item item;
-    private ItemDatabase database;
 
     private JTextField skuField;
     private JButton enter;
@@ -37,7 +36,6 @@ public class TransactionPanel extends JPanel implements ActionListener
     public TransactionPanel()
     {
         transaction = new Transaction();
-        database = new ItemDatabase();
 
         this.setLayout(new GridBagLayout());
 
@@ -66,7 +64,7 @@ public class TransactionPanel extends JPanel implements ActionListener
             int sku = Integer.valueOf(skuField.getText());
             try
             {
-                item = database.getIdBySku(sku);
+                item = ItemDatabase.getIdBySku(sku);
             }
             catch (SQLException e1)
             {
