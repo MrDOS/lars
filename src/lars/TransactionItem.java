@@ -13,7 +13,7 @@ public class TransactionItem
 
     public void getItem(int SKUScanned)
     {
-        // Need to find item based on SKU
+        // TODO: Need to find item based on SKU
     }
 
     public TransactionItem(Item item, int quantity, boolean isRented)

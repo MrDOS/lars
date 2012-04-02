@@ -16,7 +16,7 @@ public class Customer
     {
         name = newName;
         address = newAddress;
-        setAccount(null);   //Needs to be linked to an account
+        setAccount(null);   //TODO: Needs to be linked to an account through account database
     }
 
     public String getName()

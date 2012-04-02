@@ -22,7 +22,7 @@ public class Transaction
         transactionItems.clear();
         totalPrice = 0;
         setDate(new Date(System.currentTimeMillis()));
-        setTransactionID(0); // Will need to set using transaction database
+        setTransactionID(0); // TODO: Will need to set using transaction database
     }
 
     public int getTotalPrice()
