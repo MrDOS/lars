@@ -3,7 +3,9 @@ package lars.db;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
+import lars.Account;
 import lars.Transaction;
 
 /**
@@ -14,18 +16,37 @@ import lars.Transaction;
  */
 public class TransactionDatabase
 {
-    public static Transaction getTransactionBySKU(int SKU) throws SQLException
+    public static List<Transaction> getTransactionsByAccount(Account account)
+            throws SQLException
     {
-        PreparedStatement ps = ConnectionManager
-                .getConnection()
-                .prepareStatement(
-                        "SELECT date, transactionItems FROM Transaction WHERE SKU = ?");
-        ps.setInt(1, SKU);
+        // TODO: Stub method.
+        return null;
+    }
 
-        ResultSet rs = ps.executeQuery();
-        if (rs.next())
-            return null; // TODO: Make it return a Real Thing (TM).
-        else
-            throw new SQLException("No matching Transaction.");
+    public static Transaction getTransactionById(int id) throws SQLException
+    {
+        // TODO: Stub method.
+        return null;
+    }
+
+    public static Transaction insertTransaction(Transaction transaction)
+            throws SQLException
+    {
+        // TODO: Stub method.
+        return null;
+    }
+
+    public static Transaction updateTransaction(Transaction transaction)
+            throws SQLException
+    {
+        // TODO: Stub method.
+        return null;
+    }
+
+    public static Transaction deleteTransaction(Transaction transaction)
+            throws SQLException
+    {
+        // TODO: Stub method.
+        return null;
     }
 }
