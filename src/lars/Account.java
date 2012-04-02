@@ -4,31 +4,32 @@ package lars;
  * Data class describing an account.
  * 
  * @author Jeremy Wheaton, 100105823
- * @version April 1, 2012
+ * @author Samuel Coleman, 100105709
+ * @version 2012-04-01
  */
 public class Account
 {
-    private int accountID;
+    private int accountId;
     private String name;
     private String address;
     private boolean manager;
 
-    public Account(int accountID, String name, String address, boolean manager)
+    public Account(int accountId, String name, String address, boolean manager)
     {
-        this.accountID = accountID;
+        this.accountId = accountId;
         this.name = name;
         this.address = address;
         this.manager = manager;
     }
 
-    public int getAccountID()
+    public int getAccountId()
     {
-        return accountID;
+        return accountId;
     }
 
-    public void setAccountID(int accountID)
+    public void setAccountId(int accountId)
     {
-        this.accountID = accountID;
+        this.accountId = accountId;
     }
 
     public String getName()

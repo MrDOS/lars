@@ -9,29 +9,27 @@ import java.util.List;
  * receipt printer.
  * 
  * @author Jeremy Wheaton, 100105823
- * @version April 1, 2012
+ * @version 2012-04-01
  */
 public class Transaction
 {
     private Date date;
-    private int transactionID;
-    private int totalPrice;
+    private int transactionId;
     private List<TransactionItem> transactionItems;
 
     public Transaction()
     {
         transactionItems = new ArrayList<TransactionItem>();
-        totalPrice = 0;
         setDate(new Date(System.currentTimeMillis()));
-        setTransactionID(0); 
+        this.transactionId = 0;
     }
 
     public int getTotalPrice()
     {
+        int totalPrice = 0;
+
         for (TransactionItem i : transactionItems)
-        {
             totalPrice += i.getPrice();
-        }
 
         return totalPrice;
     }
@@ -51,14 +49,14 @@ public class Transaction
         return transactionItems;
     }
 
-    public void setTransactionID(int transactionID)
+    public void setTransactionId(int transactionId)
     {
-        this.transactionID = transactionID; 
+        this.transactionId = transactionId;
     }
 
-    public int getTransactionID()
+    public int getTransactionId()
     {
-        return transactionID;
+        return transactionId;
     }
 
     public void setDate(Date date)

@@ -12,6 +12,7 @@ import lars.Transaction;
  * Item checkout interface.
  * 
  * @author Samuel Coleman, 100105709
+ * @version 2012-04-01
  */
 public class CheckoutPanel extends JPanel
 {
@@ -22,7 +23,7 @@ public class CheckoutPanel extends JPanel
         this.setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
-        
+
         c.gridx = 0;
         c.gridy = 0;
         this.add(new JLabel("Checkout plz"), c);

@@ -4,6 +4,12 @@ import javax.swing.JFrame;
 
 import lars.gui.kiosk.KioskFrame;
 
+/**
+ * Main entry point.
+ * 
+ * @author Samuel Coleman, 100105709
+ * @version 2012-04-01
+ */
 public class LARS
 {
     public static final String name = "LARS";

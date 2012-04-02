@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-
 /**
  * Main menu presented to a customer approaching the kiosk.
  * 

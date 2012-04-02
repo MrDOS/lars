@@ -11,12 +11,11 @@ import javax.swing.JTextField;
 
 import lars.Transaction;
 
-
 /**
  * Transaction menu presented to a customer upon beginning a transaction.
  * 
  * @author Jeremy Wheaton, 100105823
- * @version April 1, 2012
+ * @version 2012-04-01
  */
 public class TransactionPanel extends JPanel implements ActionListener
 {
@@ -25,27 +24,26 @@ public class TransactionPanel extends JPanel implements ActionListener
     private static final int SKU_LENGTH = 8;
 
     private Transaction transaction;
-    
-    private JTextField itemID;
-    private int SKU;
+
+    private JTextField skuField;
     private JButton enter;
 
     public TransactionPanel()
     {
         transaction = new Transaction();
-        
+
         this.setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 0;
 
-        itemID = new JTextField(SKU_LENGTH);
-        
-        this.add(itemID, c);
+        skuField = new JTextField(SKU_LENGTH);
+
+        this.add(skuField, c);
         c.gridx = 0;
         c.gridy = 1;
-        
+
         enter = new JButton("Enter item ID");
         this.add(enter, c);
 
@@ -57,9 +55,9 @@ public class TransactionPanel extends JPanel implements ActionListener
     {
         if (e.getSource().equals(enter))
         {
-            SKU = Integer.valueOf(itemID.getText());
-            //TODO: Find item from SKU
-            //TODO: Create a transactionItem for that item
+            int sku = Integer.valueOf(skuField.getText());
+            // TODO: Find item from SKU
+            // TODO: Create a transactionItem for that item
         }
     }
 }

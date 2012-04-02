@@ -4,40 +4,59 @@ package lars;
  * Class describing a single transaction item.
  * 
  * @author Jeremy Wheaton, 100105823
- * @version April 1, 2012
+ * @author Samuel Coleman, 100105709
+ * @version 2012-04-01
  */
 public class TransactionItem
 {
+    private Item item;
     private int quantity;
-    private int price;
-
-    public void getItem(int SKUScanned)
-    {
-        // TODO: Need to find item based on SKU
-    }
+    private boolean isRented = false;
 
     public TransactionItem(Item item, int quantity, boolean isRented)
     {
-        if (isRented)
-            this.price = item.getRentalPrice();
-        else
-            this.price = item.getBuyPrice();
+        this.item = item;
         this.quantity = quantity;
+        if (this.item.getType().isRentable())
+            this.isRented = isRented;
     }
 
-    public int getPrice()
+    public Item getItem()
     {
-        return this.price;
-    }
-
-    public void changeQuantity(int newQuantity)
-    {
-        this.quantity = newQuantity;
+        return item;
     }
 
     public int getQuantity()
     {
-        return this.quantity;
+        return quantity;
     }
 
+    public void setQuantity(int quantity)
+    {
+        this.quantity = quantity;
+    }
+
+    public boolean isRentable()
+    {
+        return item.getType().isRentable();
+    }
+
+    public boolean isRented()
+    {
+        return isRented;
+    }
+
+    public void setRented(boolean isRented)
+    {
+        if (this.item.getType().isRentable())
+            this.isRented = isRented;
+    }
+
+    public int getPrice()
+    {
+        if (this.isRented)
+            return this.quantity * this.item.getRentalPrice();
+        else
+            return this.quantity * this.item.getPurchasePrice();
+    }
 }
