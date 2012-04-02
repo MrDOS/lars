@@ -31,6 +31,6 @@ public class ItemDatabase
                             rs.getInt(6)), rs.getInt(7), rs.getString(8),
                     rs.getInt(9));
         else
-            throw new SQLException("No matching account.");
+            throw new SQLException("No matching item.");
     }
 }

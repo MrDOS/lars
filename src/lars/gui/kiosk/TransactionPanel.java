@@ -4,12 +4,16 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import lars.Item;
 import lars.Transaction;
+import lars.TransactionItem;
+import lars.db.ItemDatabase;
 
 /**
  * Transaction menu presented to a customer upon beginning a transaction.
@@ -24,6 +28,8 @@ public class TransactionPanel extends JPanel implements ActionListener
     private static final int SKU_LENGTH = 8;
 
     private Transaction transaction;
+    private Item item;
+    private ItemDatabase database;
 
     private JTextField skuField;
     private JButton enter;
@@ -31,6 +37,7 @@ public class TransactionPanel extends JPanel implements ActionListener
     public TransactionPanel()
     {
         transaction = new Transaction();
+        database = new ItemDatabase();
 
         this.setLayout(new GridBagLayout());
 
@@ -57,8 +64,16 @@ public class TransactionPanel extends JPanel implements ActionListener
         if (e.getSource().equals(enter))
         {
             int sku = Integer.valueOf(skuField.getText());
-            // TODO: Find item from SKU
-            // TODO: Create a transactionItem for that item
+            try
+            {
+                item = database.getIdBySku(sku);
+            }
+            catch (SQLException e1)
+            {
+                e1.printStackTrace();
+            }
+            TransactionItem newItem = new TransactionItem(item, 1, false);
+            transaction.addTransactionItem(newItem);
         }
     }
 }
