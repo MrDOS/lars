@@ -2,16 +2,16 @@ package lars.gui;
 
 import java.awt.Color;
 
-import javax.swing.JTextField;
+import javax.swing.JLabel;
 
 /**
- * A JTextField intended for messages in interactive UIs.
+ * A JLabel intended for response messages in interactive UIs.
  * 
  * @author Samuel Coleman, 100105709
  * @version 2012-04-02
  * 
  */
-public class MessageLabel extends JTextField
+public class MessageLabel extends JLabel
 {
     private static final long serialVersionUID = 1L;
 
