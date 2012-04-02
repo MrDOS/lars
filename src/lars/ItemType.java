@@ -13,17 +13,17 @@ public class ItemType
     private String name;
     private String description;
     private int purchasePrice;
-    private boolean isRentable;
+    private boolean rentable;
     private int rentalPrice;
     private int rentalDuration;
 
     public ItemType(String name, String description, int purchasePrice,
-            boolean isRentable, int rentalPrice, int rentalDuration)
+            boolean rentable, int rentalPrice, int rentalDuration)
     {
         this.name = name;
         this.description = description;
         this.purchasePrice = purchasePrice;
-        this.isRentable = isRentable;
+        this.rentable = rentable;
         this.rentalPrice = rentalPrice;
         this.rentalDuration = rentalDuration;
     }
@@ -33,7 +33,7 @@ public class ItemType
         this.name = name;
         this.description = description;
         this.purchasePrice = purchasePrice;
-        this.isRentable = true;
+        this.rentable = true;
         this.rentalPrice = 0;
         this.rentalDuration = 0;
     }
@@ -44,7 +44,7 @@ public class ItemType
         this.name = name;
         this.description = description;
         this.purchasePrice = purchasePrice;
-        this.isRentable = true;
+        this.rentable = true;
         this.rentalPrice = rentalPrice;
         this.rentalDuration = rentalDuration;
     }
@@ -81,12 +81,12 @@ public class ItemType
 
     public boolean isRentable()
     {
-        return isRentable;
+        return rentable;
     }
 
-    public void setRentable(boolean isRentable)
+    public void setRentable(boolean rentable)
     {
-        this.isRentable = isRentable;
+        this.rentable = rentable;
     }
 
     public int getRentalPrice()

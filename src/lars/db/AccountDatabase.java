@@ -6,6 +6,12 @@ import java.sql.SQLException;
 
 import lars.Account;
 
+/**
+ * Provide database access to accounts.
+ * 
+ * @author Samuel Coleman, 100105709
+ * @version 2012-04-01
+ */
 public class AccountDatabase
 {
     public static Account getAccountById(int id) throws SQLException

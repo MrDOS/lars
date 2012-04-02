@@ -4,6 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Juggle a database connection.
+ * 
+ * @author Samuel Coleman, 100105709
+ * @version 2012-04-01
+ */
 public class ConnectionManager
 {
     private static Connection connection = null;
