@@ -7,7 +7,7 @@ import java.util.List;
  * Class describing a transaction. Used to get total price of transaction for
  * receipt printer.
  * 
- * @author Jeremy Wheaton
+ * @author Jeremy Wheaton, 100105823
  * @version April 1, 2012
  */
 public class Transaction

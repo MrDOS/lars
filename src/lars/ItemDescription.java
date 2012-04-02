@@ -3,7 +3,7 @@ package lars;
 /**
  * Data class for item description.
  * 
- * @author Jeremy Wheaton
+ * @author Jeremy Wheaton, 100105823
  * @version April 1, 2012
  */
 public class ItemDescription
