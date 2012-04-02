@@ -12,7 +12,7 @@ import lars.Transaction;
  * Main kiosk interface.
  * 
  * @author Samuel Coleman, 100105709
- * @version 2012-04-01
+ * @version 2012-04-02
  */
 public class KioskFrame extends JFrame
 {
@@ -23,6 +23,8 @@ public class KioskFrame extends JFrame
     private KioskFrame()
     {
         super(LARS.name + " " + LARS.version);
+
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.setUndecorated(true);
         Dimension screenBounds = Toolkit.getDefaultToolkit().getScreenSize();

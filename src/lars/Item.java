@@ -8,7 +8,7 @@ import java.util.List;
  * 
  * @author Jeremy Wheaton, 100105823
  * @author Samuel Coleman, 100105709
- * @version 2012-04-01
+ * @version 2012-04-02
  */
 public class Item
 {
@@ -24,6 +24,43 @@ public class Item
         this.sku = sku;
         this.description = description;
         this.quantity = quantity;
+    }
+
+    @Override
+    public String toString()
+    {
+        String rep = "Item[type=" + this.type + ";sku=" + this.sku
+                + ";description=" + this.description + ";quantity="
+                + this.quantity + ";modifiers=[";
+
+        boolean hasOne = false;
+        for (ItemModifier modifier : this.modifiers)
+        {
+            if (hasOne)
+                rep += ";";
+            rep += modifier;
+            hasOne = true;
+        }
+        rep += "]]";
+
+        return rep;
+    }
+
+    @Override
+    public boolean equals(Object other)
+    {
+        if (other instanceof Item)
+        {
+            Item otherItem = (Item) other;
+            if (otherItem.sku == this.sku
+                    && otherItem.quantity == this.quantity
+                    && otherItem.description.equals(this.description)
+                    && otherItem.type.equals(this.type)
+                    && otherItem.modifiers.equals(this.modifiers))
+                return true;
+        }
+
+        return false;
     }
 
     public List<ItemModifier> getModifiers()

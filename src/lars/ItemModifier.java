@@ -5,7 +5,7 @@ package lars;
  * 
  * @author Jeremy Wheaton, 100105823
  * @author Samuel Coleman, 100105709
- * @version 2012-04-01
+ * @version 2012-04-02
  */
 public class ItemModifier
 {
@@ -18,6 +18,29 @@ public class ItemModifier
         this.purchasePrice = purchasePrice;
         this.rentalPrice = rentalPrice;
         this.rentalDuration = rentalDuration;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "ItemModifier[purchasePrice=" + this.purchasePrice
+                + ";rentalPrice=" + this.rentalPrice + ";rentalDuration="
+                + this.rentalDuration + "]";
+    }
+
+    @Override
+    public boolean equals(Object other)
+    {
+        if (other instanceof ItemModifier)
+        {
+            ItemModifier otherModifier = (ItemModifier) other;
+            if (otherModifier.purchasePrice == this.purchasePrice
+                    && otherModifier.rentalPrice == this.rentalPrice
+                    && otherModifier.rentalDuration == this.rentalDuration)
+                return true;
+        }
+
+        return false;
     }
 
     public int getPurchasePrice()

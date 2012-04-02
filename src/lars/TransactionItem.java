@@ -5,7 +5,7 @@ package lars;
  * 
  * @author Jeremy Wheaton, 100105823
  * @author Samuel Coleman, 100105709
- * @version 2012-04-01
+ * @version 2012-04-02
  */
 public class TransactionItem
 {
@@ -19,6 +19,28 @@ public class TransactionItem
         this.quantity = quantity;
         if (this.item.getType().isRentable())
             this.isRented = isRented;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "TransactionItem[item=" + this.item + ";quantity="
+                + this.quantity + ";isRented=" + this.isRented + "]";
+    }
+
+    @Override
+    public boolean equals(Object other)
+    {
+        if (other instanceof TransactionItem)
+        {
+            TransactionItem otherItem = (TransactionItem) other;
+            if (otherItem.quantity == this.quantity
+                    && otherItem.isRented == this.isRented
+                    && otherItem.item.equals(this.item))
+                return true;
+        }
+
+        return false;
     }
 
     public Item getItem()
