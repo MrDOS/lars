@@ -74,7 +74,8 @@ public class LoginPanel extends JPanel implements ActionListener, FocusListener
             try
             {
                 Account thisAccount = AccountDatabase.getAccountById(ID);
-                //TODO: Go to transaction panel
+                //TODO: Pass account to transaction Panel
+                KioskFrame.getInstance().showTransaction();
             }
             catch (SQLException e1)
             {
