@@ -9,6 +9,7 @@ import java.awt.event.FocusListener;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -20,40 +21,36 @@ public class LoginPanel extends JPanel implements ActionListener, FocusListener
 {
     private static final long serialVersionUID = 1L;
     private static final int ACCOUNT_LENGTH = 8;
-    private JTextField account;
+    private JTextField accountField;
     private JButton confirm;
     private MessageLabel message;
-    private MessageLabel greeting;
-    private int ID;
 
     public LoginPanel()
     {
         this.setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
-        
-        greeting = new MessageLabel();
-        greeting.setText("Please Input Your Account ID");
+
         c.gridx = 0;
         c.gridy = 0;
-        this.add(greeting, c);
-        
+        this.add(new JLabel("Please input your account ID"), c);
+
         message = new MessageLabel();
         c.gridx = 0;
         c.gridy = 1;
         this.add(message, c);
-        
-        account = new JTextField(ACCOUNT_LENGTH);
+
+        accountField = new JTextField(ACCOUNT_LENGTH);
         c.gridx = 0;
         c.gridy = 2;
-        this.add(account, c);
-        account.requestFocus();
-        
+        this.add(accountField, c);
+        accountField.requestFocus();
+
         confirm = new JButton("Confirm");
         c.gridx = 0;
         c.gridy = 3;
         this.add(confirm, c);
-        
+
         confirm.addActionListener(this);
     }
 
@@ -64,22 +61,17 @@ public class LoginPanel extends JPanel implements ActionListener, FocusListener
         {
             try
             {
-                ID = Integer.valueOf(account.getText());
+                int id = Integer.valueOf(accountField.getText());
+                Account account = AccountDatabase.getAccountById(id);
+                KioskFrame.getInstance().showTransaction(account);
             }
             catch (NumberFormatException ex)
             {
-                this.message.setError("Invalid Account ID!");
+                this.message.setError("Invalid account ID!");
             }
-
-            try
+            catch (SQLException ex)
             {
-                Account thisAccount = AccountDatabase.getAccountById(ID);
-                //TODO: Pass account to transaction Panel
-                KioskFrame.getInstance().showTransaction();
-            }
-            catch (SQLException e1)
-            {
-                this.message.setError("No such Account!");
+                this.message.setError("No such account!");
             }
         }
     }
@@ -87,7 +79,7 @@ public class LoginPanel extends JPanel implements ActionListener, FocusListener
     @Override
     public void focusGained(FocusEvent e)
     {
-        account.requestFocus();
+        accountField.requestFocus();
     }
 
     @Override

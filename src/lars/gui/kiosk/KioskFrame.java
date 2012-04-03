@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
+import lars.Account;
 import lars.LARS;
 import lars.Transaction;
 
@@ -48,15 +49,15 @@ public class KioskFrame extends JFrame
         this.validate();
     }
 
-    public void showTransaction()
+    public void showTransaction(Account account)
     {
-        this.setContentPane(new TransactionPanel());
+        this.setContentPane(new TransactionPanel(account));
         this.validate();
     }
 
-    public void showCheckout(Transaction transaction)
+    public void showCheckout(Account account, Transaction transaction)
     {
-        this.setContentPane(new CheckoutPanel(transaction));
+        this.setContentPane(new CheckoutPanel(account, transaction));
         this.validate();
     }
     

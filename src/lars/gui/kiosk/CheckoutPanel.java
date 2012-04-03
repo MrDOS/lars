@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
+import lars.Account;
 import lars.Transaction;
 import lars.gui.TransactionTableModel;
 
@@ -27,7 +28,7 @@ public class CheckoutPanel extends JPanel implements ActionListener
     private TableModel model;
     private JButton confirm;
 
-    public CheckoutPanel(Transaction transaction)
+    public CheckoutPanel(Account account, Transaction transaction)
     {
         this.setLayout(new GridBagLayout());
 
@@ -38,15 +39,15 @@ public class CheckoutPanel extends JPanel implements ActionListener
         c.gridx = 0;
         c.gridy = 0;
         this.add(scroll, c);
-        
+
         confirm = new JButton("Confirm");
         c.gridx = 0;
         c.gridy = 1;
         this.add(confirm, c);
-        
+
         confirm.addActionListener(this);
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e)
     {

@@ -15,6 +15,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableModel;
 
+import lars.Account;
 import lars.Item;
 import lars.Transaction;
 import lars.TransactionItem;
@@ -36,8 +37,8 @@ public class TransactionPanel extends JPanel implements ActionListener,
 
     private static final int SKU_LENGTH = 8;
 
+    private Account account;
     private Transaction transaction;
-    private TransactionItem transItem;
 
     private MessageLabel messageLabel;
 
@@ -46,7 +47,7 @@ public class TransactionPanel extends JPanel implements ActionListener,
     private JButton checkout;
     private JTable table;
 
-    public TransactionPanel()
+    public TransactionPanel(Account account)
     {
         transaction = new Transaction();
 
@@ -105,7 +106,7 @@ public class TransactionPanel extends JPanel implements ActionListener,
             try
             {
                 Item item = ItemDatabase.getItemBySku(sku);
-                transItem = new TransactionItem(item, 1, false);
+                TransactionItem transItem = new TransactionItem(item, 1, false);
                 transaction.addTransactionItem(transItem);
             }
             catch (SQLException e1)
@@ -116,7 +117,7 @@ public class TransactionPanel extends JPanel implements ActionListener,
         }
         else if (e.getSource().equals(checkout))
         {
-            KioskFrame.getInstance().showCheckout(transaction);
+            KioskFrame.getInstance().showCheckout(account, transaction);
         }
 
         skuField.requestFocus();
