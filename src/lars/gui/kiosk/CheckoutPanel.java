@@ -18,6 +18,7 @@ import lars.gui.TransactionTableModel;
  * Item checkout interface.
  * 
  * @author Samuel Coleman, 100105709
+ * @author Jeremy Wheaton, 100105823
  * @version 2012-04-01
  */
 public class CheckoutPanel extends JPanel implements ActionListener

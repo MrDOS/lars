@@ -5,6 +5,14 @@ import javax.swing.table.TableModel;
 
 import lars.Transaction;
 
+/**
+ * Provides a model that links the transaction to the table, updating the table
+ * when the transaction is updated.
+ * 
+ * @author Jeremy Wheaton, 100105823
+ * @author Samuel Coleman, 100105709
+ * @version 2012-04-02
+ */
 public class TransactionTableModel implements TableModel
 {
     private static final int NUMBER_OF_COLUMNS = 4;
