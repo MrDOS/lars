@@ -9,53 +9,52 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+/**
+ * Image-displaying JPanel.
+ * 
+ * @author Jeremy Wheaton, 100105823
+ * @version 2012-04-02
+ */
 public class ImagePanel extends JPanel
 {
     private static final long serialVersionUID = 1L;
+
     private BufferedImage image;
-    private Dimension dim;
-    
-    public ImagePanel(String file)
+    private Dimension size;
+
+    public ImagePanel(String file) throws IOException
     {
-        try
-        {
-            image = ImageIO.read(new File (file));
-            dim = new Dimension(image.getWidth(), image.getHeight());
-        }
-        catch (IOException e)
-        {
-            System.err.println(e.getMessage());
-            e.printStackTrace();
-        }
+        image = ImageIO.read(new File(file));
+        size = new Dimension(image.getWidth(), image.getHeight());
     }
-    
+
     @Override
     public void paintComponent(Graphics g)
     {
         g.drawImage(image, 0, 0, null);
     }
-    
+
     @Override
     public Dimension getSize()
     {
-        return dim;
+        return size;
     }
-    
+
     @Override
     public Dimension getPreferredSize()
     {
-        return dim;
+        return size;
     }
-    
+
     @Override
     public Dimension getMaximumSize()
     {
-        return dim;
+        return size;
     }
-    
+
     @Override
     public Dimension getMinimumSize()
     {
-        return dim;
+        return size;
     }
 }

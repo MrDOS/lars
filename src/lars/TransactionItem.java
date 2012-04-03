@@ -10,13 +10,11 @@ package lars;
 public class TransactionItem
 {
     private Item item;
-    private int quantity;
     private boolean isRented = false;
 
-    public TransactionItem(Item item, int quantity, boolean isRented)
+    public TransactionItem(Item item, boolean isRented)
     {
         this.item = item;
-        this.quantity = quantity;
         if (this.item.getType().isRentable())
             this.isRented = isRented;
     }
@@ -24,8 +22,8 @@ public class TransactionItem
     @Override
     public String toString()
     {
-        return "TransactionItem[item=" + this.item + ";quantity="
-                + this.quantity + ";isRented=" + this.isRented + "]";
+        return "TransactionItem[item=" + this.item + ";isRented="
+                + this.isRented + "]";
     }
 
     @Override
@@ -34,8 +32,7 @@ public class TransactionItem
         if (other instanceof TransactionItem)
         {
             TransactionItem otherItem = (TransactionItem) other;
-            if (otherItem.quantity == this.quantity
-                    && otherItem.isRented == this.isRented
+            if (otherItem.isRented == this.isRented
                     && otherItem.item.equals(this.item))
                 return true;
         }
@@ -46,16 +43,6 @@ public class TransactionItem
     public Item getItem()
     {
         return item;
-    }
-
-    public int getQuantity()
-    {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity)
-    {
-        this.quantity = quantity;
     }
 
     public boolean isRentable()
@@ -77,8 +64,8 @@ public class TransactionItem
     public int getPrice()
     {
         if (this.isRented)
-            return this.quantity * this.item.getRentalPrice();
+            return this.item.getRentalPrice();
         else
-            return this.quantity * this.item.getPurchasePrice();
+            return this.item.getPurchasePrice();
     }
 }

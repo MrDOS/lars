@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -14,6 +15,7 @@ import lars.gui.ImagePanel;
 /**
  * Main menu presented to a customer approaching the kiosk.
  * 
+ * @author Jeremy Wheaton, 100105823
  * @author Samuel Coleman, 100105709
  * @version 2012-04-01
  */
@@ -22,7 +24,6 @@ public class MenuPanel extends JPanel implements ActionListener
     private static final long serialVersionUID = 1L;
 
     private JButton checkoutItems;
-    private ImagePanel images;
 
     public MenuPanel()
     {
@@ -32,19 +33,31 @@ public class MenuPanel extends JPanel implements ActionListener
         c.gridx = 0;
         c.ipadx = 40;
         c.ipady = 40;
-        
-        images = new ImagePanel("res/SwayingPalms.png");
-        c.gridy = 0;
-        this.add(images, c);
-        
+
+        try
+        {
+            c.gridy = 0;
+            this.add(new ImagePanel("res/SwayingPalms.png"), c);
+        }
+        catch (IOException e)
+        {
+            System.err.println("Unable to load logo!");
+        }
+
         checkoutItems = new JButton("Begin Checkout");
         c.gridy = 1;
         this.add(checkoutItems, c);
-        
-        images = new ImagePanel("res/Scorcher.png");
-        c.gridy = 2;
-        c.insets = new Insets(50, 0, 0, 0);
-        this.add(images, c);
+
+        try
+        {
+            c.gridy = 2;
+            c.insets = new Insets(50, 0, 0, 0);
+            this.add(new ImagePanel("res/Scorcher.jpg"), c);
+        }
+        catch (IOException e)
+        {
+            System.err.println("Unable to load ad banner!");
+        }
 
         checkoutItems.addActionListener(this);
     }

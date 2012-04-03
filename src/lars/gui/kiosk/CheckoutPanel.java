@@ -13,7 +13,7 @@ import javax.swing.table.TableModel;
 
 import lars.Account;
 import lars.Transaction;
-import lars.gui.TransactionTableModel;
+import lars.gui.TransactionModel;
 
 /**
  * Item checkout interface.
@@ -34,7 +34,7 @@ public class CheckoutPanel extends JPanel implements ActionListener
         this.setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
-        model = new TransactionTableModel(transaction);
+        model = new TransactionModel(transaction);
         JTable table = new JTable(model);
         JScrollPane scroll = new JScrollPane(table);
         c.gridx = 0;
@@ -45,7 +45,7 @@ public class CheckoutPanel extends JPanel implements ActionListener
         c.gridx = 0;
         c.gridy = 1;
         this.add(confirm, c);
-        
+
         toMenu = new JButton("Exit To Main Menu");
         c.gridx = 0;
         c.gridy = 6;

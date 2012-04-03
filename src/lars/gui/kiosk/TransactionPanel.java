@@ -21,7 +21,7 @@ import lars.Transaction;
 import lars.TransactionItem;
 import lars.db.ItemDatabase;
 import lars.gui.MessageLabel;
-import lars.gui.TransactionTableModel;
+import lars.gui.TransactionModel;
 
 /**
  * Transaction menu presented to a customer upon beginning a transaction.
@@ -72,7 +72,7 @@ public class TransactionPanel extends JPanel implements ActionListener,
         c.gridy = 2;
         this.add(messageLabel, c);
 
-        TableModel model = new TransactionTableModel(transaction);
+        TableModel model = new TransactionModel(transaction);
         table = new JTable(model);
         c.gridx = 0;
         c.gridy = 4;
@@ -118,7 +118,7 @@ public class TransactionPanel extends JPanel implements ActionListener,
             try
             {
                 Item item = ItemDatabase.getItemBySku(sku);
-                TransactionItem transItem = new TransactionItem(item, 1, false);
+                TransactionItem transItem = new TransactionItem(item, false);
                 transaction.addTransactionItem(transItem);
             }
             catch (SQLException e1)
