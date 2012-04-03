@@ -10,13 +10,17 @@ import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.TableModel;
 
 import lars.Item;
 import lars.Transaction;
 import lars.TransactionItem;
 import lars.db.ItemDatabase;
 import lars.gui.MessageLabel;
+import lars.gui.TransactionTableModel;
 
 /**
  * Transaction menu presented to a customer upon beginning a transaction.
@@ -33,11 +37,15 @@ public class TransactionPanel extends JPanel implements ActionListener,
     private static final int SKU_LENGTH = 8;
 
     private Transaction transaction;
+    private TransactionItem transItem;
 
     private MessageLabel messageLabel;
 
     private JTextField skuField;
     private JButton enter;
+    private JButton checkout;
+    private JTable table;
+    private JScrollPane scroll;
 
     public TransactionPanel()
     {
@@ -57,14 +65,26 @@ public class TransactionPanel extends JPanel implements ActionListener,
         c.gridx = 0;
         c.gridy = 1;
         this.add(enter, c);
-        
+
         messageLabel = new MessageLabel();
         c.gridx = 0;
         c.gridy = 2;
         this.add(messageLabel, c);
 
+        TableModel model = new TransactionTableModel(transaction);
+        table = new JTable(model);
+        c.gridx = 0;
+        c.gridy = 4;
+        this.add(new JScrollPane(table), c);
+        
+        checkout = new JButton("Checkout");
+        c.gridx = 0;
+        c.gridy = 5;
+        this.add(checkout, c);
+
         KioskFrame.getInstance().addFocusListener(this);
 
+        checkout.addActionListener(this);
         enter.addActionListener(this);
     }
 
@@ -85,16 +105,21 @@ public class TransactionPanel extends JPanel implements ActionListener,
 
             try
             {
-                Item item = ItemDatabase.getIdBySku(sku);
-                transaction.addTransactionItem(new TransactionItem(item, 1,
-                        false));
+                Item item = ItemDatabase.getItemBySku(sku);
+                transItem = new TransactionItem(item, 1, false);
+                transaction.addTransactionItem(transItem);
             }
             catch (SQLException e1)
             {
                 this.messageLabel.setError("No such SKU!");
             }
+            table.revalidate();
         }
-
+        else if (e.getSource().equals(checkout))
+        {
+            KioskFrame.getInstance().showCheckout(transaction);
+        }
+        
         skuField.requestFocus();
     }
 

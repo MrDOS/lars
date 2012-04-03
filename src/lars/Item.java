@@ -1,5 +1,6 @@
 package lars;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +21,7 @@ public class Item
 
     public Item(ItemType type, int sku, String description, int quantity)
     {
+        this.modifiers = new ArrayList<ItemModifier>();
         this.type = type;
         this.sku = sku;
         this.description = description;

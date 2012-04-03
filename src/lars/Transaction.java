@@ -23,6 +23,23 @@ public class Transaction
         setDate(new Date(System.currentTimeMillis()));
         this.transactionId = 0;
     }
+    
+    @Override
+    public String toString()
+    {
+        String rep = "Transaction[";
+        
+        boolean hasOne = false;
+        for (TransactionItem item : transactionItems)
+        {
+            if (hasOne)
+                rep += ";";
+            rep += item;
+            hasOne = true;
+        }
+        
+        return rep + "]";
+    }
 
     public int getTotalPrice()
     {
