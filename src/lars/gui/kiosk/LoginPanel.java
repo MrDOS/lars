@@ -65,6 +65,7 @@ public class LoginPanel extends JPanel implements ActionListener, FocusListener
         
         KioskFrame.getInstance().addFocusListener(this);
 
+        accountField.addActionListener(this);
         confirm.addActionListener(this);
         toMenu.addActionListener(this);
     }
@@ -72,7 +73,11 @@ public class LoginPanel extends JPanel implements ActionListener, FocusListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (e.getSource().equals(confirm))
+        if (e.getSource().equals(accountField))
+        {
+            confirm.doClick();
+        }
+        else if (e.getSource().equals(confirm))
         {
             try
             {

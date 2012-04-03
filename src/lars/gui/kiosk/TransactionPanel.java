@@ -90,6 +90,7 @@ public class TransactionPanel extends JPanel implements ActionListener,
 
         KioskFrame.getInstance().addFocusListener(this);
 
+        skuField.addActionListener(this);
         checkout.addActionListener(this);
         enter.addActionListener(this);
         toMenu.addActionListener(this);
@@ -98,7 +99,11 @@ public class TransactionPanel extends JPanel implements ActionListener,
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (e.getSource().equals(enter))
+        if (e.getSource().equals(skuField))
+        {
+            enter.doClick();
+        }
+        else if (e.getSource().equals(enter))
         {
             int sku = 0;
             try
