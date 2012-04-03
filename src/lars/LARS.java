@@ -2,6 +2,7 @@ package lars;
 
 import javax.swing.JFrame;
 
+import lars.gui.admin.AdminFrame;
 import lars.gui.kiosk.KioskFrame;
 
 /**
@@ -19,7 +20,8 @@ public class LARS
     {
         if (args.length > 0 && args[0].equals("-admin"))
         {
-            // TODO: administrative terminal startup.
+            JFrame frame = AdminFrame.getInstance();
+            frame.setVisible(true);
         }
         else
         {
