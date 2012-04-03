@@ -53,6 +53,7 @@ public class MenuPanel extends JPanel implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
         if (e.getSource().equals(checkoutItems))
-            KioskFrame.getInstance().showTransaction();
+            //KioskFrame.getInstance().showTransaction();
+            KioskFrame.getInstance().showLogin();
     }
 }

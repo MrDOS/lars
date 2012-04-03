@@ -59,4 +59,10 @@ public class KioskFrame extends JFrame
         this.setContentPane(new CheckoutPanel(transaction));
         this.validate();
     }
+    
+    public void showLogin()
+    {
+        this.setContentPane(new LoginPanel());
+        this.validate();
+    }
 }
