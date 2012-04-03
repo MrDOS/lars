@@ -10,16 +10,19 @@ package lars;
  */
 public class ItemType
 {
+    private int typeId = 0;
     private String name;
     private String description;
     private int purchasePrice;
-    private boolean rentable;
-    private int rentalPrice;
-    private int rentalDuration;
+    private boolean rentable = false;
+    private int rentalPrice = 0;
+    private int rentalDuration = 0;
 
-    public ItemType(String name, String description, int purchasePrice,
-            boolean rentable, int rentalPrice, int rentalDuration)
+    public ItemType(int typeId, String name, String description,
+            int purchasePrice, boolean rentable, int rentalPrice,
+            int rentalDuration)
     {
+        this.typeId = typeId;
         this.name = name;
         this.description = description;
         this.purchasePrice = purchasePrice;
@@ -33,9 +36,6 @@ public class ItemType
         this.name = name;
         this.description = description;
         this.purchasePrice = purchasePrice;
-        this.rentable = true;
-        this.rentalPrice = 0;
-        this.rentalDuration = 0;
     }
 
     public ItemType(String name, String description, int purchasePrice,
@@ -47,6 +47,16 @@ public class ItemType
         this.rentable = true;
         this.rentalPrice = rentalPrice;
         this.rentalDuration = rentalDuration;
+    }
+
+    public int getTypeId()
+    {
+        return typeId;
+    }
+
+    public void setTypeId(int typeId)
+    {
+        this.typeId = typeId;
     }
 
     public String getName()

@@ -9,9 +9,19 @@ package lars;
  */
 public class ItemModifier
 {
+    private int modifierId = 0;
     private int purchasePrice;
     private int rentalPrice;
     private int rentalDuration;
+
+    public ItemModifier(int modifierId, int purchasePrice, int rentalPrice,
+            int rentalDuration)
+    {
+        this.modifierId = 0;
+        this.purchasePrice = purchasePrice;
+        this.rentalPrice = rentalPrice;
+        this.rentalDuration = rentalDuration;
+    }
 
     public ItemModifier(int purchasePrice, int rentalPrice, int rentalDuration)
     {
@@ -41,6 +51,16 @@ public class ItemModifier
         }
 
         return false;
+    }
+
+    public int getModifierId()
+    {
+        return modifierId;
+    }
+
+    public void setModifierId(int modifierId)
+    {
+        this.modifierId = modifierId;
     }
 
     public int getPurchasePrice()

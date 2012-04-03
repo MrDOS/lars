@@ -36,13 +36,13 @@ public class MessageLabel extends JLabel
 
     public void setMessage(String message)
     {
-        this.setText(message);
         this.setForeground(ERROR);
+        this.setText(message);
     }
 
     public void setError(String error)
     {
-        this.setText(error);
         this.setForeground(defaultColor);
+        this.setText(error);
     }
 }

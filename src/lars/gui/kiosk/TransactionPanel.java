@@ -45,7 +45,6 @@ public class TransactionPanel extends JPanel implements ActionListener,
     private JButton enter;
     private JButton checkout;
     private JTable table;
-    private JScrollPane scroll;
 
     public TransactionPanel()
     {
@@ -76,7 +75,7 @@ public class TransactionPanel extends JPanel implements ActionListener,
         c.gridx = 0;
         c.gridy = 4;
         this.add(new JScrollPane(table), c);
-        
+
         checkout = new JButton("Checkout");
         c.gridx = 0;
         c.gridy = 5;
@@ -119,7 +118,7 @@ public class TransactionPanel extends JPanel implements ActionListener,
         {
             KioskFrame.getInstance().showCheckout(transaction);
         }
-        
+
         skuField.requestFocus();
     }
 
