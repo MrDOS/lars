@@ -17,12 +17,19 @@ import lars.Account;
 import lars.db.AccountDatabase;
 import lars.gui.MessageLabel;
 
+/**
+ * Login GUI panel to log into customer account.
+ * 
+ * @author Jeremy Wheaton
+ * @version April 2, 2012
+ */
 public class LoginPanel extends JPanel implements ActionListener, FocusListener
 {
     private static final long serialVersionUID = 1L;
     private static final int ACCOUNT_LENGTH = 8;
     private JTextField accountField;
     private JButton confirm;
+    private JButton toMenu;
     private MessageLabel message;
 
     public LoginPanel()
@@ -50,8 +57,16 @@ public class LoginPanel extends JPanel implements ActionListener, FocusListener
         c.gridx = 0;
         c.gridy = 3;
         this.add(confirm, c);
+        
+        toMenu = new JButton("Exit To Main Menu");
+        c.gridx = 0;
+        c.gridy = 4;
+        this.add(toMenu, c);
+        
+        KioskFrame.getInstance().addFocusListener(this);
 
         confirm.addActionListener(this);
+        toMenu.addActionListener(this);
     }
 
     @Override
@@ -72,8 +87,22 @@ public class LoginPanel extends JPanel implements ActionListener, FocusListener
             catch (SQLException ex)
             {
                 this.message.setError("No such account!");
+                try
+                {
+                    Thread.sleep(1000);
+                }
+                catch (InterruptedException ex2)
+                {
+                }
+                KioskFrame.getInstance().showTransaction(null);
             }
         }
+        else if (e.getSource().equals(toMenu))
+        {
+            KioskFrame.getInstance().showMenu();
+        }
+
+        accountField.requestFocus();
     }
 
     @Override

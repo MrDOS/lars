@@ -45,6 +45,7 @@ public class TransactionPanel extends JPanel implements ActionListener,
     private JTextField skuField;
     private JButton enter;
     private JButton checkout;
+    private JButton toMenu;
     private JTable table;
 
     public TransactionPanel(Account account)
@@ -81,11 +82,17 @@ public class TransactionPanel extends JPanel implements ActionListener,
         c.gridx = 0;
         c.gridy = 5;
         this.add(checkout, c);
+        
+        toMenu = new JButton("Exit To Main Menu");
+        c.gridx = 0;
+        c.gridy = 6;
+        this.add(toMenu, c);
 
         KioskFrame.getInstance().addFocusListener(this);
 
         checkout.addActionListener(this);
         enter.addActionListener(this);
+        toMenu.addActionListener(this);
     }
 
     @Override
@@ -118,6 +125,10 @@ public class TransactionPanel extends JPanel implements ActionListener,
         else if (e.getSource().equals(checkout))
         {
             KioskFrame.getInstance().showCheckout(account, transaction);
+        }
+        else if (e.getSource().equals(toMenu))
+        {
+            KioskFrame.getInstance().showMenu();
         }
 
         skuField.requestFocus();
