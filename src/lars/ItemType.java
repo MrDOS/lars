@@ -49,6 +49,12 @@ public class ItemType
         this.rentalDuration = rentalDuration;
     }
 
+    @Override
+    public String toString()
+    {
+        return name;
+    }
+
     public int getTypeId()
     {
         return typeId;

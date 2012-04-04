@@ -27,11 +27,13 @@ import lars.db.ItemDatabase;
  * @author Samuel Coleman, 100105709
  * @version 2012-04-04
  */
-public class AddItemDialog extends JDialog implements ActionListener
+public class UpdateItemDialog extends JDialog implements ActionListener
 {
     private static final long serialVersionUID = 1L;
 
     private static final int QUANTITY_LENTH = 2;
+
+    Item item;
 
     JTextField skuField;
     JTextField quantityField;
@@ -41,10 +43,12 @@ public class AddItemDialog extends JDialog implements ActionListener
     JButton save;
     JButton cancel;
 
-    public AddItemDialog()
+    public UpdateItemDialog(Item item)
     {
         super(AdminFrame.getInstance(), "Add Item");
         this.setLocationByPlatform(true);
+
+        this.item = item;
 
         this.getContentPane().setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -55,7 +59,8 @@ public class AddItemDialog extends JDialog implements ActionListener
         c.gridy = 0;
         this.add(new JLabel("SKU:"), c);
 
-        skuField = new JTextField(Item.SKU_LENGTH);
+        skuField = new JTextField(String.valueOf(item.getSku()),
+                Item.SKU_LENGTH);
         c.gridx = 1;
         c.gridy = 0;
         this.add(skuField, c);
@@ -64,7 +69,8 @@ public class AddItemDialog extends JDialog implements ActionListener
         c.gridy = 1;
         this.add(new JLabel("Quantity:"), c);
 
-        quantityField = new JTextField(QUANTITY_LENTH);
+        quantityField = new JTextField(String.valueOf(item.getQuantity()),
+                QUANTITY_LENTH);
         c.gridx = 1;
         c.gridy = 1;
         this.add(quantityField, c);
@@ -73,7 +79,7 @@ public class AddItemDialog extends JDialog implements ActionListener
         c.gridy = 2;
         this.add(new JLabel("Description:"), c);
 
-        descriptionField = new JTextArea(null, 3, 20);
+        descriptionField = new JTextArea(item.getDescription(), 3, 20);
         c.gridx = 1;
         c.gridy = 2;
         this.add(new JScrollPane(descriptionField), c);
@@ -95,6 +101,7 @@ public class AddItemDialog extends JDialog implements ActionListener
         c.gridx = 1;
         c.gridy = 3;
         this.add(type, c);
+        type.setSelectedItem(item.getType());
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
@@ -163,8 +170,9 @@ public class AddItemDialog extends JDialog implements ActionListener
             {
                 try
                 {
-                    ItemDatabase.insertItem(new Item(type, sku, description,
-                            quantity));
+                    this.item = new Item(this.item.getModifiers(), type, sku,
+                            description, quantity);
+                    ItemDatabase.updateItem(this.item);
 
                     this.dispose();
                 }

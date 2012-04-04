@@ -30,6 +30,16 @@ public class Item
         this.quantity = quantity;
     }
 
+    public Item(List<ItemModifier> modifiers, ItemType type, int sku,
+            String description, int quantity)
+    {
+        this.modifiers = modifiers;
+        this.type = type;
+        this.sku = sku;
+        this.description = description;
+        this.quantity = quantity;
+    }
+
     @Override
     public String toString()
     {

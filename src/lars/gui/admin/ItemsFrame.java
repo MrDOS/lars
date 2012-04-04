@@ -4,9 +4,12 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -16,6 +19,7 @@ import javax.swing.table.TableModel;
 import lars.Item;
 import lars.ItemModifier;
 import lars.ItemType;
+import lars.db.ItemDatabase;
 import lars.gui.ItemModel;
 import lars.gui.ItemModifierModel;
 import lars.gui.ItemTypeModel;
@@ -24,22 +28,25 @@ import lars.gui.ItemTypeModel;
  * Frame for items and associated data management.
  * 
  * @author Samuel Coleman, 100105709
- * @version 2012-04-03
+ * @version 2012-04-04
  */
 public class ItemsFrame extends AdminInternalFrame implements ActionListener
 {
     private static final long serialVersionUID = 1L;
 
+    private List<Item> items;
     private JTable itemTable;
     private JButton addItem;
     private JButton updateItem;
     private JButton deleteItem;
 
+    private List<ItemModifier> modifiers;
     private JTable itemModifierTable;
     private JButton addItemModifier;
     private JButton updateItemModifier;
     private JButton deleteItemModifier;
 
+    private List<ItemType> types;
     private JTable itemTypeTable;
     private JButton addItemType;
     private JButton updateItemType;
@@ -49,11 +56,17 @@ public class ItemsFrame extends AdminInternalFrame implements ActionListener
     {
         super("Items");
 
+        this.items = new ArrayList<Item>();
+        this.modifiers = new ArrayList<ItemModifier>();
+        this.types = new ArrayList<ItemType>();
+
         JTabbedPane tabs = new JTabbedPane();
         tabs.addTab("Items", getItemsPanel());
         tabs.addTab("Item Types", getItemTypesPanel());
         tabs.addTab("Item Modifiers", getItemModifiersPanel());
         this.add(tabs);
+
+        this.refresh();
 
         this.addItem.addActionListener(this);
     }
@@ -64,7 +77,7 @@ public class ItemsFrame extends AdminInternalFrame implements ActionListener
 
         GridBagConstraints c = new GridBagConstraints();
 
-        TableModel model = new ItemModel(new ArrayList<Item>());
+        TableModel model = new ItemModel(this.items);
         itemTable = new JTable(model);
         c.gridx = 0;
         c.gridy = 0;
@@ -107,7 +120,7 @@ public class ItemsFrame extends AdminInternalFrame implements ActionListener
 
         GridBagConstraints c = new GridBagConstraints();
 
-        TableModel model = new ItemModifierModel(new ArrayList<ItemModifier>());
+        TableModel model = new ItemModifierModel(this.modifiers);
         itemModifierTable = new JTable(model);
         c.gridx = 0;
         c.gridy = 0;
@@ -150,7 +163,7 @@ public class ItemsFrame extends AdminInternalFrame implements ActionListener
 
         GridBagConstraints c = new GridBagConstraints();
 
-        TableModel model = new ItemTypeModel(new ArrayList<ItemType>());
+        TableModel model = new ItemTypeModel(this.types);
         itemTypeTable = new JTable(model);
         c.gridx = 0;
         c.gridy = 0;
@@ -187,10 +200,118 @@ public class ItemsFrame extends AdminInternalFrame implements ActionListener
         return panel;
     }
 
+    public void refresh()
+    {
+        try
+        {
+            this.items = ItemDatabase.getItems();
+            this.modifiers = ItemDatabase.getItemModifiers();
+            this.types = ItemDatabase.getItemTypes();
+        }
+        catch (SQLException e)
+        {
+            JOptionPane.showMessageDialog(null, "Error loading data!",
+                    "Item error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        this.itemTable.invalidate();
+        this.itemModifierTable.invalidate();
+        this.itemTypeTable.invalidate();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e)
     {
         if (e.getSource().equals(addItem))
+        {
             new AddItemDialog().setVisible(true);
+        }
+        else if (e.getSource().equals(updateItem))
+        {
+            int row = this.itemTable.getSelectedRow();
+            if (row >= 0)
+                new UpdateItemDialog(this.items.get(row)).setVisible(true);
+        }
+        else if (e.getSource().equals(deleteItem))
+        {
+            int row = this.itemTable.getSelectedRow();
+            if (row >= 0)
+            {
+                if (JOptionPane.showConfirmDialog(null,
+                        "Are you sure you want to delete this item?", "Item",
+                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+                {
+                    try
+                    {
+                        ItemDatabase.deleteItem(this.items.get(row));
+                    }
+                    catch (SQLException ex)
+                    {
+                        JOptionPane.showMessageDialog(null,
+                                "Error deleting item!", "Item error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        }
+        else if (e.getSource().equals(updateItemModifier))
+        {
+            int row = this.itemModifierTable.getSelectedRow();
+            if (row >= 0)
+                this.modifiers.get(row);
+        }
+        else if (e.getSource().equals(deleteItemModifier))
+        {
+            int row = this.itemModifierTable.getSelectedRow();
+            if (row >= 0)
+            {
+                if (JOptionPane.showConfirmDialog(null,
+                        "Are you sure you want to delete this item modifier?",
+                        "Item Modifier", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+                {
+                    try
+                    {
+                        ItemDatabase
+                                .deleteItemModifier(this.modifiers.get(row));
+                    }
+                    catch (SQLException ex)
+                    {
+                        JOptionPane.showMessageDialog(null,
+                                "Error deleting item modifier!", "Item error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        }
+        else if (e.getSource().equals(updateItemType))
+        {
+            int row = this.itemTypeTable.getSelectedRow();
+            if (row >= 0)
+                this.types.get(row);
+        }
+        else if (e.getSource().equals(deleteItemType))
+        {
+            int row = this.itemTypeTable.getSelectedRow();
+            if (row >= 0)
+            {
+                if (JOptionPane.showConfirmDialog(null,
+                        "Are you sure you want to delete this item type?",
+                        "Item Type", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+                {
+                    try
+                    {
+                        ItemDatabase.deleteItemType(this.types.get(row));
+                    }
+                    catch (SQLException ex)
+                    {
+                        JOptionPane.showMessageDialog(null,
+                                "Error deleting item type!", "Item error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        }
+
+        this.refresh();
     }
 }
