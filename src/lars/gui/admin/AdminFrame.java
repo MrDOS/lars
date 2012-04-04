@@ -153,6 +153,11 @@ public class AdminFrame extends JFrame implements ActionListener
     {
         JDialog login = new LoginDialog();
         login.setVisible(true);
+        
+        for (Component c: desktop.getComponents())
+        {
+            c.setVisible(true);
+        }
     }
 
     private void logout()
