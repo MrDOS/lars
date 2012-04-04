@@ -2,15 +2,23 @@ package lars.gui.admin;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
 import lars.Account;
+import lars.Item;
+import lars.db.AccountDatabase;
+import lars.db.ItemDatabase;
 import lars.gui.AccountModel;
 
 /**
@@ -19,7 +27,7 @@ import lars.gui.AccountModel;
  * @author Samuel Coleman, 100105709
  * @version 2012-04-03
  */
-public class AccountsFrame extends AdminInternalFrame
+public class AccountsFrame extends AdminInternalFrame implements ActionListener
 {
     private static final long serialVersionUID = 1L;
 
@@ -27,6 +35,8 @@ public class AccountsFrame extends AdminInternalFrame
     private JButton addAccount;
     private JButton updateAccount;
     private JButton deleteAccount;
+
+    private List<Account> accounts;
 
     public AccountsFrame()
     {
@@ -75,6 +85,38 @@ public class AccountsFrame extends AdminInternalFrame
         c.gridy = 1;
         panel.add(buttonPanel, c);
 
+        addAccount.addActionListener(this);
+        updateAccount.addActionListener(this);
         return panel;
+    }
+    
+    public void refresh()
+    {
+        try
+        {
+            this.accounts = AccountDatabase.getAccounts();
+        }
+        catch (SQLException e)
+        {
+            JOptionPane.showMessageDialog(null, "Error loading data!",
+                    "Account error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        this.accountTable.invalidate();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+        if (e.getSource().equals(addAccount))
+        {
+            new AddAccountDialog().setVisible(true);
+        }
+        else if (e.getSource().equals(updateAccount))
+        {
+            int row = this.accountTable.getSelectedRow();
+            if (row >= 0)
+                new UpdateAccountDialog(this.accounts.get(row)).setVisible(true);
+        }
     }
 }
