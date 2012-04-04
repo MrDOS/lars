@@ -27,4 +27,9 @@ public class AdminInternalFrame extends JInternalFrame
     {
         this.setVisible(false);
     }
+    
+    public boolean isInternalFrame()
+    {
+        return true;
+    }
 }

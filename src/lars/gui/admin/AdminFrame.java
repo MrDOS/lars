@@ -2,6 +2,7 @@ package lars.gui.admin;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -158,6 +159,11 @@ public class AdminFrame extends JFrame implements ActionListener
     {
         this.account = null;
 
+        for (Component c: desktop.getComponents())
+        {
+            c.setVisible(false);
+        }
+        
         this.login();
     }
 
@@ -199,5 +205,11 @@ public class AdminFrame extends JFrame implements ActionListener
             this.showInternalFrame(new ItemsFrame());
         else if (e.getSource().equals(menuQuit))
             System.exit(0);
+    }
+    
+    public AdminInternalFrame getInternal()
+    {
+        AdminInternalFrame f = new AdminInternalFrame("Hello");
+        return f;
     }
 }

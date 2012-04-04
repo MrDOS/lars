@@ -38,7 +38,7 @@ public class UpdateItemDialog extends JDialog implements ActionListener
     JTextField skuField;
     JTextField quantityField;
     JTextArea descriptionField;
-    JComboBox<ItemType> type;
+    JComboBox type;
 
     JButton save;
     JButton cancel;
@@ -97,7 +97,7 @@ public class UpdateItemDialog extends JDialog implements ActionListener
         {
         }
 
-        type = new JComboBox<ItemType>(types);
+        type = new JComboBox(types);
         c.gridx = 1;
         c.gridy = 3;
         this.add(type, c);
