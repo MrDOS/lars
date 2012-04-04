@@ -48,15 +48,15 @@ public class ItemsFrame extends AdminInternalFrame
         super("Items");
 
         JTabbedPane tabs = new JTabbedPane();
-        tabs.addTab("Items", getItemsTab());
-        tabs.addTab("Item Types", getItemTypesTab());
-        tabs.addTab("Item Modifiers", getItemModifiersTab());
+        tabs.addTab("Items", getItemsPanel());
+        tabs.addTab("Item Types", getItemTypesPanel());
+        tabs.addTab("Item Modifiers", getItemModifiersPanel());
         this.add(tabs);
     }
 
-    private JPanel getItemsTab()
+    private JPanel getItemsPanel()
     {
-        JPanel tab = new JPanel(new GridBagLayout());
+        JPanel panel = new JPanel(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
 
@@ -67,7 +67,7 @@ public class ItemsFrame extends AdminInternalFrame
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1;
         c.weighty = 1;
-        tab.add(new JScrollPane(itemTable), c);
+        panel.add(new JScrollPane(itemTable), c);
 
         JPanel buttonPanel = new JPanel(new GridBagLayout());
 
@@ -92,14 +92,14 @@ public class ItemsFrame extends AdminInternalFrame
 
         c.gridx = 0;
         c.gridy = 1;
-        tab.add(buttonPanel, c);
+        panel.add(buttonPanel, c);
 
-        return tab;
+        return panel;
     }
 
-    private JPanel getItemModifiersTab()
+    private JPanel getItemModifiersPanel()
     {
-        JPanel tab = new JPanel(new GridBagLayout());
+        JPanel panel = new JPanel(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
 
@@ -110,7 +110,7 @@ public class ItemsFrame extends AdminInternalFrame
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1;
         c.weighty = 1;
-        tab.add(new JScrollPane(itemModifierTable), c);
+        panel.add(new JScrollPane(itemModifierTable), c);
 
         JPanel buttonPanel = new JPanel(new GridBagLayout());
 
@@ -135,14 +135,14 @@ public class ItemsFrame extends AdminInternalFrame
 
         c.gridx = 0;
         c.gridy = 1;
-        tab.add(buttonPanel, c);
+        panel.add(buttonPanel, c);
 
-        return tab;
+        return panel;
     }
 
-    private JPanel getItemTypesTab()
+    private JPanel getItemTypesPanel()
     {
-        JPanel tab = new JPanel(new GridBagLayout());
+        JPanel panel = new JPanel(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
 
@@ -153,7 +153,7 @@ public class ItemsFrame extends AdminInternalFrame
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1;
         c.weighty = 1;
-        tab.add(new JScrollPane(itemTypeTable), c);
+        panel.add(new JScrollPane(itemTypeTable), c);
 
         JPanel buttonPanel = new JPanel(new GridBagLayout());
 
@@ -178,8 +178,8 @@ public class ItemsFrame extends AdminInternalFrame
 
         c.gridx = 0;
         c.gridy = 1;
-        tab.add(buttonPanel, c);
+        panel.add(buttonPanel, c);
 
-        return tab;
+        return panel;
     }
 }

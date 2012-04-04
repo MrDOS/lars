@@ -186,12 +186,19 @@ public class AdminFrame extends JFrame implements ActionListener
     {
         if (e.getSource().equals(menuLogout) || e.getSource().equals(logout))
             this.logout();
+        else if (e.getSource().equals(accounts))
+        {
+            JInternalFrame frame = new AccountsFrame();
+            frame.setLocation(this.getNewFramePoint());
+            desktop.add(frame);
+            frame.setVisible(true);
+        }
         else if (e.getSource().equals(items))
         {
-            JInternalFrame items = new ItemsFrame();
-            items.setLocation(this.getNewFramePoint());
-            desktop.add(items);
-            items.setVisible(true);
+            JInternalFrame frame = new ItemsFrame();
+            frame.setLocation(this.getNewFramePoint());
+            desktop.add(frame);
+            frame.setVisible(true);
         }
         else if (e.getSource().equals(menuQuit))
             System.exit(0);
