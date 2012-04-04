@@ -292,11 +292,15 @@ public class ItemsFrame extends AdminInternalFrame implements ActionListener
                 }
             }
         }
+        else if (e.getSource().equals(addItemType))
+        {
+            new AddItemTypeDialog(this).setVisible(true);
+        }
         else if (e.getSource().equals(updateItemType))
         {
             int row = this.itemTypeTable.getSelectedRow();
             if (row >= 0)
-                this.types.get(row);
+                new UpdateItemTypeDialog(this, this.types.get(row)).setVisible(true);
         }
         else if (e.getSource().equals(deleteItemType))
         {

@@ -10,6 +10,7 @@ package lars;
  */
 public class ItemType
 {
+    public static final int NAME_SIZE = 8;
     private int typeId = 0;
     private String name;
     private String description;
