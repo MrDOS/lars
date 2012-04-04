@@ -46,6 +46,7 @@ public class AccountsFrame extends AdminInternalFrame implements ActionListener
 
         addAccount.addActionListener(this);
         updateAccount.addActionListener(this);
+        deleteAccount.addActionListener(this);
     }
 
     private JPanel getAccountsPanel()
@@ -119,6 +120,28 @@ public class AccountsFrame extends AdminInternalFrame implements ActionListener
             if (row >= 0)
                 new UpdateAccountDialog(this, this.accounts.get(row))
                         .setVisible(true);
+        }
+        else if (e.getSource().equals(deleteAccount))
+        {
+            int row = this.accountTable.getSelectedRow();
+            if (row >= 0)
+            {
+                if (JOptionPane.showConfirmDialog(null,
+                        "Are you sure you want to delete this account?",
+                        "Account", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+                {
+                    try
+                    {
+                        AccountDatabase.deleteAccount(this.accounts.get(row));
+                    }
+                    catch (SQLException ex)
+                    {
+                        JOptionPane.showMessageDialog(null,
+                                "Error deleting account!", "Account error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
         }
 
         this.refresh();
