@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class Transaction
 {
-    private Date date;
     private int transactionId;
+    private Date date;
     private List<TransactionItem> transactionItems;
 
     public Transaction()
@@ -23,12 +23,12 @@ public class Transaction
         setDate(new Date(System.currentTimeMillis()));
         this.transactionId = 0;
     }
-    
+
     @Override
     public String toString()
     {
         String rep = "Transaction[";
-        
+
         boolean hasOne = false;
         for (TransactionItem item : transactionItems)
         {
@@ -37,7 +37,7 @@ public class Transaction
             rep += item;
             hasOne = true;
         }
-        
+
         return rep + "]";
     }
 
@@ -49,21 +49,6 @@ public class Transaction
             totalPrice += i.getPrice();
 
         return totalPrice;
-    }
-
-    public void addTransactionItem(TransactionItem item)
-    {
-        transactionItems.add(item);
-    }
-
-    public void removeTransactionItem(TransactionItem item)
-    {
-        transactionItems.remove(item);
-    }
-
-    public List<TransactionItem> getTransactionItems()
-    {
-        return transactionItems;
     }
 
     public void setTransactionId(int transactionId)
@@ -84,5 +69,20 @@ public class Transaction
     public Date getDate()
     {
         return date;
+    }
+
+    public void addTransactionItem(TransactionItem item)
+    {
+        transactionItems.add(item);
+    }
+
+    public void removeTransactionItem(TransactionItem item)
+    {
+        transactionItems.remove(item);
+    }
+
+    public List<TransactionItem> getTransactionItems()
+    {
+        return transactionItems;
     }
 }

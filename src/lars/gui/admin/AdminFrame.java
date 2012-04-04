@@ -3,6 +3,7 @@ package lars.gui.admin;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -35,6 +36,11 @@ public class AdminFrame extends JFrame implements ActionListener
     private static AdminFrame _instance = null;
 
     private static final Dimension SIZE = new Dimension(600, 400);
+
+    private static final int MAX_FRAME_INITIAL_LOCATION[] = {200, 200};
+    private static final int FRAME_LOCATION_INCREMENT[] = {20, 20};
+    private int frameInitialLocation[] = {MAX_FRAME_INITIAL_LOCATION[0] + 1,
+            MAX_FRAME_INITIAL_LOCATION[1] + 1};
 
     private Account account = null;
 
@@ -151,7 +157,28 @@ public class AdminFrame extends JFrame implements ActionListener
     private void logout()
     {
         this.account = null;
+
         this.login();
+    }
+
+    private Point getNewFramePoint()
+    {
+        if (this.frameInitialLocation[0] <= MAX_FRAME_INITIAL_LOCATION[0]
+                && this.frameInitialLocation[1] <= MAX_FRAME_INITIAL_LOCATION[1])
+        {
+            this.frameInitialLocation[0] = this.frameInitialLocation[0]
+                    + FRAME_LOCATION_INCREMENT[0];
+            this.frameInitialLocation[1] = this.frameInitialLocation[1]
+                    + FRAME_LOCATION_INCREMENT[1];
+        }
+        else
+        {
+            this.frameInitialLocation[0] = 0;
+            this.frameInitialLocation[1] = 0;
+        }
+
+        return new Point(this.frameInitialLocation[0],
+                this.frameInitialLocation[1]);
     }
 
     @Override
@@ -162,6 +189,7 @@ public class AdminFrame extends JFrame implements ActionListener
         else if (e.getSource().equals(items))
         {
             JInternalFrame items = new ItemsFrame();
+            items.setLocation(this.getNewFramePoint());
             desktop.add(items);
             items.setVisible(true);
         }

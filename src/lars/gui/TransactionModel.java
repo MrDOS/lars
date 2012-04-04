@@ -1,12 +1,19 @@
 package lars.gui;
 
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
+import javax.swing.table.AbstractTableModel;
 
 import lars.Transaction;
 
-public class TransactionModel implements TableModel
+/**
+ * Table model for {@link Transaction}s.
+ * 
+ * @author Jeremy Wheaton, 100105823
+ * @version 2012-04-03
+ */
+public class TransactionModel extends AbstractTableModel
 {
+    private static final long serialVersionUID = 1L;
+
     private static final int COLUMN_COUNT = 3;
     private static final int DESCRIPTION_COLUMN = 0;
     private static final int RENTED_COLUMN = 1;
@@ -20,9 +27,19 @@ public class TransactionModel implements TableModel
     }
 
     @Override
-    public int getRowCount()
+    public Class<?> getColumnClass(int columnIndex)
     {
-        return transaction.getTransactionItems().size();
+        switch (columnIndex)
+        {
+        case DESCRIPTION_COLUMN:
+            return String.class;
+        case RENTED_COLUMN:
+            return Boolean.class;
+        case PRICE_COLUMN:
+            return Integer.class;
+        default:
+            return null;
+        }
     }
 
     @Override
@@ -48,28 +65,9 @@ public class TransactionModel implements TableModel
     }
 
     @Override
-    public Class<?> getColumnClass(int columnIndex)
+    public int getRowCount()
     {
-        switch (columnIndex)
-        {
-        case DESCRIPTION_COLUMN:
-            return String.class;
-        case RENTED_COLUMN:
-            return Boolean.class;
-        case PRICE_COLUMN:
-            return Integer.class;
-        default:
-            return null;
-        }
-    }
-
-    @Override
-    public boolean isCellEditable(int rowIndex, int columnIndex)
-    {
-        if (columnIndex == RENTED_COLUMN
-                && transaction.getTransactionItems().get(rowIndex).isRentable())
-            return true;
-        return false;
+        return transaction.getTransactionItems().size();
     }
 
     @Override
@@ -90,20 +88,19 @@ public class TransactionModel implements TableModel
     }
 
     @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex)
+    {
+        if (columnIndex == RENTED_COLUMN
+                && transaction.getTransactionItems().get(rowIndex).isRentable())
+            return true;
+        return false;
+    }
+
+    @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex)
     {
         if (columnIndex == RENTED_COLUMN)
             transaction.getTransactionItems().get(rowIndex)
                     .setRented((Boolean) aValue);
-    }
-
-    @Override
-    public void addTableModelListener(TableModelListener l)
-    {
-    }
-
-    @Override
-    public void removeTableModelListener(TableModelListener l)
-    {
     }
 }

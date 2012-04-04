@@ -5,26 +5,31 @@ package lars;
  * 
  * @author Jeremy Wheaton, 100105823
  * @author Samuel Coleman, 100105709
- * @version 2012-04-02
+ * @version 2012-04-03
  */
 public class ItemModifier
 {
     private int modifierId = 0;
+    private String name;
     private int purchasePrice;
     private int rentalPrice;
     private int rentalDuration;
 
-    public ItemModifier(int modifierId, int purchasePrice, int rentalPrice,
-            int rentalDuration)
+    public ItemModifier(int modifierId, String name, int purchasePrice,
+            int rentalPrice, int rentalDuration)
     {
-        this.modifierId = 0;
+        this.modifierId = modifierId;
+        this.name = name;
         this.purchasePrice = purchasePrice;
         this.rentalPrice = rentalPrice;
         this.rentalDuration = rentalDuration;
     }
 
-    public ItemModifier(int purchasePrice, int rentalPrice, int rentalDuration)
+    public ItemModifier(String name, int purchasePrice, int rentalPrice,
+            int rentalDuration)
     {
+        this.modifierId = 0;
+        this.name = name;
         this.purchasePrice = purchasePrice;
         this.rentalPrice = rentalPrice;
         this.rentalDuration = rentalDuration;
@@ -33,7 +38,8 @@ public class ItemModifier
     @Override
     public String toString()
     {
-        return "ItemModifier[purchasePrice=" + this.purchasePrice
+        return "ItemModifier[modifierId=" + this.modifierId + ";name="
+                + this.name + ";purchasePrice=" + this.purchasePrice
                 + ";rentalPrice=" + this.rentalPrice + ";rentalDuration="
                 + this.rentalDuration + "]";
     }
@@ -46,7 +52,8 @@ public class ItemModifier
             ItemModifier otherModifier = (ItemModifier) other;
             if (otherModifier.purchasePrice == this.purchasePrice
                     && otherModifier.rentalPrice == this.rentalPrice
-                    && otherModifier.rentalDuration == this.rentalDuration)
+                    && otherModifier.rentalDuration == this.rentalDuration
+                    && otherModifier.name.equals(this.name))
                 return true;
         }
 
@@ -61,6 +68,16 @@ public class ItemModifier
     public void setModifierId(int modifierId)
     {
         this.modifierId = modifierId;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
     }
 
     public int getPurchasePrice()

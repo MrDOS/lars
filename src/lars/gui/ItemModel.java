@@ -2,8 +2,7 @@ package lars.gui;
 
 import java.util.List;
 
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
+import javax.swing.table.AbstractTableModel;
 
 import lars.Item;
 import lars.ItemType;
@@ -14,9 +13,11 @@ import lars.ItemType;
  * @author Samuel Coleman, 100105709
  * @version 2012-04-03
  */
-public class ItemModel implements TableModel
+public class ItemModel extends AbstractTableModel
 {
-    private static final int COLUMNS = 5;
+    private static final long serialVersionUID = 1L;
+
+    private static final int COLUMN_COUNT = 5;
     private static final int TYPE_COLUMN = 1;
     private static final int SKU_COLUMN = 0;
     private static final int DESCRIPTION_COLUMN = 2;
@@ -35,38 +36,6 @@ public class ItemModel implements TableModel
     public ItemModel(List<Item> items)
     {
         this.items = items;
-    }
-
-    @Override
-    public int getRowCount()
-    {
-        return items.size();
-    }
-
-    @Override
-    public int getColumnCount()
-    {
-        return COLUMNS;
-    }
-
-    @Override
-    public String getColumnName(int columnIndex)
-    {
-        switch (columnIndex)
-        {
-        case TYPE_COLUMN:
-            return "Type";
-        case SKU_COLUMN:
-            return "SKU";
-        case DESCRIPTION_COLUMN:
-            return "Description";
-        case QUANTITY_COLUMN:
-            return "Quantity";
-        case MODIFIERS_COLUMN:
-            return "Modifiers";
-        default:
-            return null;
-        }
     }
 
     @Override
@@ -90,19 +59,35 @@ public class ItemModel implements TableModel
     }
 
     @Override
-    public boolean isCellEditable(int rowIndex, int columnIndex)
+    public int getColumnCount()
+    {
+        return COLUMN_COUNT;
+    }
+
+    @Override
+    public String getColumnName(int columnIndex)
     {
         switch (columnIndex)
         {
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-            if (editable)
-                return true;
+        case TYPE_COLUMN:
+            return "Type";
+        case SKU_COLUMN:
+            return "SKU";
+        case DESCRIPTION_COLUMN:
+            return "Description";
+        case QUANTITY_COLUMN:
+            return "Quantity";
+        case MODIFIERS_COLUMN:
+            return "Modifiers";
+        default:
+            return null;
         }
+    }
 
-        return false;
+    @Override
+    public int getRowCount()
+    {
+        return items.size();
     }
 
     @Override
@@ -126,6 +111,22 @@ public class ItemModel implements TableModel
     }
 
     @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex)
+    {
+        switch (columnIndex)
+        {
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+            if (editable)
+                return true;
+        }
+
+        return false;
+    }
+
+    @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex)
     {
         switch (columnIndex)
@@ -141,15 +142,5 @@ public class ItemModel implements TableModel
         default:
             return;
         }
-    }
-
-    @Override
-    public void addTableModelListener(TableModelListener l)
-    {
-    }
-
-    @Override
-    public void removeTableModelListener(TableModelListener l)
-    {
     }
 }

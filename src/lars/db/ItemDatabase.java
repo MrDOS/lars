@@ -108,13 +108,13 @@ public class ItemDatabase
         PreparedStatement ps = ConnectionManager
                 .getConnection()
                 .prepareStatement(
-                        "SELECT ItemModifier.modifierId, ItemModifier.purchasePrice, ItemModifier.rentalPrice, ItemModifier.rentalDuration FROM ItemModifiers LEFT JOIN ItemModifier.modifierId = ItemModifiers.modifierId WHERE ItemModifiers.sku = ?");
+                        "SELECT ItemModifier.modifierId, ItemModifier.name, ItemModifier.purchasePrice, ItemModifier.rentalPrice, ItemModifier.rentalDuration FROM ItemModifiers LEFT JOIN ItemModifier.modifierId = ItemModifiers.modifierId WHERE ItemModifiers.sku = ?");
         ps.setInt(1, item.getSku());
 
         ResultSet rs = ps.executeQuery();
         while (rs.next())
-            modifiers.add(new ItemModifier(rs.getInt(1), rs.getInt(2), rs
-                    .getInt(3), rs.getInt(4)));
+            modifiers.add(new ItemModifier(rs.getInt(1), rs.getString(2), rs
+                    .getInt(3), rs.getInt(4), rs.getInt(5)));
         return modifiers;
     }
 
@@ -146,13 +146,13 @@ public class ItemDatabase
         PreparedStatement ps = ConnectionManager
                 .getConnection()
                 .prepareStatement(
-                        "SELECT modifierId, purchasePrice, rentalPrice, rentalDuration FROM ItemModifier WHERE modifierId = ?");
+                        "SELECT modifierId, name, purchasePrice, rentalPrice, rentalDuration FROM ItemModifier WHERE modifierId = ?");
         ps.setInt(1, modifierId);
 
         ResultSet rs = ps.executeQuery();
         if (rs.next())
-            return new ItemModifier(rs.getInt(1), rs.getInt(2), rs.getInt(3),
-                    rs.getInt(4));
+            return new ItemModifier(rs.getInt(1), rs.getString(2),
+                    rs.getInt(3), rs.getInt(4), rs.getInt(5));
         else
             throw new SQLException("No matching item modifier.");
     }
@@ -163,12 +163,12 @@ public class ItemDatabase
         PreparedStatement ps = ConnectionManager
                 .getConnection()
                 .prepareStatement(
-                        "SELECT modifierId, purchasePrice, rentalPrice, rentalDuration FROM ItemModifier");
+                        "SELECT modifierId, name, purchasePrice, rentalPrice, rentalDuration FROM ItemModifier");
 
         ResultSet rs = ps.executeQuery();
         while (rs.next())
-            modifiers.add(new ItemModifier(rs.getInt(1), rs.getInt(2), rs
-                    .getInt(3), rs.getInt(4)));
+            modifiers.add(new ItemModifier(rs.getInt(1), rs.getString(1), rs
+                    .getInt(3), rs.getInt(4), rs.getInt(5)));
         return modifiers;
     }
 
@@ -178,11 +178,12 @@ public class ItemDatabase
         PreparedStatement ps = ConnectionManager
                 .getConnection()
                 .prepareStatement(
-                        "INSERT INTO ItemModifier(purchasePrice, rentalPrice, rentalDuration) VALUES(?, ?, ?)",
+                        "INSERT INTO ItemModifier(name, purchasePrice, rentalPrice, rentalDuration) VALUES(?, ?, ?, ?)",
                         PreparedStatement.RETURN_GENERATED_KEYS);
-        ps.setInt(1, modifier.getPurchasePrice());
-        ps.setInt(2, modifier.getRentalPrice());
-        ps.setInt(3, modifier.getRentalDuration());
+        ps.setString(1, modifier.getName());
+        ps.setInt(2, modifier.getPurchasePrice());
+        ps.setInt(3, modifier.getRentalPrice());
+        ps.setInt(4, modifier.getRentalDuration());
 
         ps.executeUpdate();
         ResultSet rs = ps.getGeneratedKeys();
@@ -200,11 +201,12 @@ public class ItemDatabase
         PreparedStatement ps = ConnectionManager
                 .getConnection()
                 .prepareStatement(
-                        "UPDATE ItemModifier SET purchasePrice = ?, rentalPrice = ?, rentalDuration = ? WHERE modifierId = ?");
-        ps.setInt(1, modifier.getPurchasePrice());
-        ps.setInt(2, modifier.getRentalPrice());
-        ps.setInt(3, modifier.getRentalDuration());
-        ps.setInt(4, modifier.getModifierId());
+                        "UPDATE ItemModifier SET name = ?, purchasePrice = ?, rentalPrice = ?, rentalDuration = ? WHERE modifierId = ?");
+        ps.setString(1, modifier.getName());
+        ps.setInt(2, modifier.getPurchasePrice());
+        ps.setInt(3, modifier.getRentalPrice());
+        ps.setInt(4, modifier.getRentalDuration());
+        ps.setInt(5, modifier.getModifierId());
 
         ps.executeUpdate();
     }
