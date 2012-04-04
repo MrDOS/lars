@@ -9,6 +9,7 @@ import java.awt.event.FocusListener;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -50,40 +51,50 @@ public class TransactionPanel extends JPanel implements ActionListener,
     {
         transaction = new Transaction();
 
+        this.account = account;
+
         this.setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
 
-        skuField = new JTextField(Item.SKU_LENGTH);
         c.gridx = 0;
         c.gridy = 0;
+        this.add(new JLabel("Welcome back, " + this.account.getName() + "."));
+
+        c.gridx = 0;
+        c.gridy = 1;
+        this.add(new JLabel("Enter item ID:"), c);
+
+        skuField = new JTextField(Item.SKU_LENGTH);
+        c.gridx = 0;
+        c.gridy = 2;
         this.add(skuField, c);
         skuField.requestFocus();
 
-        enter = new JButton("Enter item ID");
+        enter = new JButton("Enter");
         c.gridx = 0;
-        c.gridy = 1;
+        c.gridy = 3;
         this.add(enter, c);
 
         messageLabel = new MessageLabel();
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy = 4;
         this.add(messageLabel, c);
 
         TableModel model = new TransactionModel(this.transaction);
         table = new JTable(model);
         c.gridx = 0;
-        c.gridy = 4;
+        c.gridy = 5;
         this.add(new JScrollPane(table), c);
 
         checkout = new JButton("Checkout");
         c.gridx = 0;
-        c.gridy = 5;
+        c.gridy = 6;
         this.add(checkout, c);
 
         toMenu = new JButton("Exit To Main Menu");
         c.gridx = 0;
-        c.gridy = 6;
+        c.gridy = 7;
         this.add(toMenu, c);
 
         KioskFrame.getInstance().addFocusListener(this);
@@ -118,11 +129,11 @@ public class TransactionPanel extends JPanel implements ActionListener,
                 Item item = ItemDatabase.getItemBySku(sku);
                 TransactionItem transItem = new TransactionItem(item, false);
                 transaction.addTransactionItem(transItem);
+                this.messageLabel.setMessage("");
             }
-            catch (SQLException e1)
+            catch (SQLException ex)
             {
                 this.messageLabel.setError("No such SKU!");
-                System.err.println(e1.getMessage());
             }
 
             table.revalidate();

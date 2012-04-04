@@ -73,21 +73,27 @@ public class ItemDatabase
         applyItemModifiers(item);
     }
 
-    public static void updateItem(Item item) throws SQLException
+    public static void updateItem(Item item, int oldSku) throws SQLException
     {
         PreparedStatement ps = ConnectionManager
                 .getConnection()
                 .prepareStatement(
-                        "UPDATE Item SET typeId = ?, description = ?, quantity = ? WHERE sku = ?");
+                        "UPDATE Item SET typeId = ?, sku = ?, description = ?, quantity = ? WHERE sku = ?");
         ps.setInt(1, item.getType().getTypeId());
-        ps.setString(2, item.getDescription());
-        ps.setInt(3, item.getQuantity());
-        ps.setInt(4, item.getSku());
+        ps.setInt(2, item.getSku());
+        ps.setString(3, item.getDescription());
+        ps.setInt(4, item.getQuantity());
+        ps.setInt(5, oldSku);
 
         ps.executeUpdate();
 
         clearItemModifiers(item);
         applyItemModifiers(item);
+    }
+
+    public static void updateItem(Item item) throws SQLException
+    {
+        updateItem(item, item.getSku());
     }
 
     public static void deleteItem(Item item) throws SQLException

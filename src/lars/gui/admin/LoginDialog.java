@@ -58,17 +58,28 @@ public class LoginDialog extends JDialog implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (e.getSource().equals(accountField))
+        if (e.getSource().equals(this.accountField))
         {
-            login.doClick();
+            this.login.doClick();
         }
-        else if (e.getSource().equals(login))
+        else if (e.getSource().equals(this.login))
         {
             try
             {
-                int id = Integer.valueOf(accountField.getText());
+                int id = Integer.valueOf(this.accountField.getText());
                 Account account = AccountDatabase.getAccountById(id);
-                AdminFrame.getInstance().setAccount(account);
+
+                if (account.isManager())
+                {
+                    AdminFrame.getInstance().setAccount(account);
+                    this.dispose();
+                }
+                else
+                {
+                    this.accountField.setText("");
+                    JOptionPane.showMessageDialog(null, "Non-privileged ID!",
+                            "Login Failure", JOptionPane.ERROR_MESSAGE);
+                }
             }
             catch (NumberFormatException ex)
             {
@@ -80,8 +91,6 @@ public class LoginDialog extends JDialog implements ActionListener
                 JOptionPane.showMessageDialog(null, "No such account!",
                         "Login Failure", JOptionPane.ERROR_MESSAGE);
             }
-
-            this.dispose();
         }
     }
 }

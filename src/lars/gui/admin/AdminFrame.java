@@ -38,10 +38,10 @@ public class AdminFrame extends JFrame implements ActionListener
 
     private static final Dimension SIZE = new Dimension(600, 400);
 
-    private static final int MAX_FRAME_INITIAL_LOCATION[] = { 200, 200 };
-    private static final int FRAME_LOCATION_INCREMENT[] = { 20, 20 };
-    private int frameInitialLocation[] = { MAX_FRAME_INITIAL_LOCATION[0] + 1,
-            MAX_FRAME_INITIAL_LOCATION[1] + 1 };
+    private static final int MAX_FRAME_INITIAL_LOCATION[] = {200, 200};
+    private static final int FRAME_LOCATION_INCREMENT[] = {20, 20};
+    private int frameInitialLocation[] = {MAX_FRAME_INITIAL_LOCATION[0] + 1,
+            MAX_FRAME_INITIAL_LOCATION[1] + 1};
 
     private Account account = null;
 
@@ -153,8 +153,8 @@ public class AdminFrame extends JFrame implements ActionListener
     {
         JDialog login = new LoginDialog();
         login.setVisible(true);
-        
-        for (Component c: desktop.getComponents())
+
+        for (Component c : desktop.getComponents())
         {
             c.setVisible(true);
         }
@@ -164,11 +164,11 @@ public class AdminFrame extends JFrame implements ActionListener
     {
         this.account = null;
 
-        for (Component c: desktop.getComponents())
+        for (Component c : desktop.getComponents())
         {
             c.setVisible(false);
         }
-        
+
         this.login();
     }
 
@@ -211,7 +211,7 @@ public class AdminFrame extends JFrame implements ActionListener
         else if (e.getSource().equals(menuQuit))
             System.exit(0);
     }
-    
+
     public AdminInternalFrame getInternal()
     {
         AdminInternalFrame f = new AdminInternalFrame("Hello");

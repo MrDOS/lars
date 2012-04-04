@@ -173,9 +173,10 @@ public class UpdateItemDialog extends JDialog implements ActionListener
             {
                 try
                 {
+                    int oldSku = item.getSku();
                     this.item = new Item(this.item.getModifiers(), type, sku,
                             description, quantity);
-                    ItemDatabase.updateItem(this.item);
+                    ItemDatabase.updateItem(this.item, oldSku);
 
                     parent.refresh();
                     this.dispose();
