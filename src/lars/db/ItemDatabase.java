@@ -53,6 +53,7 @@ public class ItemDatabase
             item.setModifiers(getItemModifiersByItem(item));
             items.add(item);
         }
+
         return items;
     }
 
@@ -121,6 +122,7 @@ public class ItemDatabase
         while (rs.next())
             modifiers.add(new ItemModifier(rs.getInt(1), rs.getString(2), rs
                     .getInt(3), rs.getInt(4), rs.getInt(5)));
+
         return modifiers;
     }
 
@@ -141,7 +143,8 @@ public class ItemDatabase
                         "INSERT INTO ItemModifiers(sku, modifierId) VALUES (?, ?)");
         for (ItemModifier modifier : item.getModifiers())
         {
-            ps.setInt(item.getSku(), modifier.getModifierId());
+            ps.setInt(1, item.getSku());
+            ps.setInt(2, modifier.getModifierId());
             ps.executeUpdate();
         }
     }
