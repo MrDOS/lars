@@ -174,8 +174,9 @@ public class TransactionPanel extends JPanel implements ActionListener,
         else if (e.getSource().equals(this.delete))
         {
             int rows[] = this.table.getSelectedRows();
-            for (int i = 0; i < rows.length; i++)
-                this.transaction.getTransactionItems().remove(i);
+            for (int i = rows.length - 1; i >= 0; i--)
+                this.transaction.getTransactionItems().remove(rows[i]);
+            this.table.clearSelection();
         }
         else if (e.getSource().equals(this.checkout))
         {
