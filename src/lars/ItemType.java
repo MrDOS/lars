@@ -56,6 +56,24 @@ public class ItemType
         return name;
     }
 
+    @Override
+    public boolean equals(Object other)
+    {
+        if (other instanceof ItemType)
+        {
+            ItemType otherItemType = (ItemType) other;
+            if (otherItemType.purchasePrice == this.purchasePrice
+                    && otherItemType.rentable == this.rentable
+                    && otherItemType.rentalPrice == this.rentalPrice
+                    && otherItemType.rentalDuration == this.rentalDuration
+                    && otherItemType.name.equals(this.name)
+                    && otherItemType.description.equals(this.description))
+                return true;
+        }
+
+        return false;
+    }
+
     public int getTypeId()
     {
         return typeId;
