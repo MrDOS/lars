@@ -92,14 +92,6 @@ public class LoginPanel extends JPanel implements ActionListener, FocusListener
             catch (SQLException ex)
             {
                 this.message.setError("No such account!");
-                try
-                {
-                    Thread.sleep(1000);
-                }
-                catch (InterruptedException ex2)
-                {
-                }
-                KioskFrame.getInstance().showTransaction(null);
             }
         }
         else if (e.getSource().equals(toMenu))

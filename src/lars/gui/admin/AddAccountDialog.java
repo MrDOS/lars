@@ -31,7 +31,7 @@ public class AddAccountDialog extends JDialog implements ActionListener
 {
     private static final long serialVersionUID = 1L;
 
-    private AccountsFrame parent;
+    private AdminInternalFrame parent;
 
     private JTextField nameField;
     private JTextArea addressField;
@@ -40,7 +40,7 @@ public class AddAccountDialog extends JDialog implements ActionListener
     private JButton save;
     private JButton cancel;
 
-    public AddAccountDialog(AccountsFrame parent)
+    public AddAccountDialog(AdminInternalFrame parent)
     {
         super(AdminFrame.getInstance(), "Add Account");
         this.setLocationByPlatform(true);

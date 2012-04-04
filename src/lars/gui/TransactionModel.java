@@ -102,7 +102,10 @@ public class TransactionModel extends AbstractTableModel
     public void setValueAt(Object aValue, int rowIndex, int columnIndex)
     {
         if (columnIndex == RENTED_COLUMN)
-            transaction.getTransactionItems().get(rowIndex)
+        {
+            this.transaction.getTransactionItems().get(rowIndex)
                     .setRented((Boolean) aValue);
+            this.fireTableCellUpdated(rowIndex, PRICE_COLUMN);
+        }
     }
 }

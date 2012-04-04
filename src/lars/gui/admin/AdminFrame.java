@@ -211,10 +211,4 @@ public class AdminFrame extends JFrame implements ActionListener
         else if (e.getSource().equals(menuQuit))
             System.exit(0);
     }
-
-    public AdminInternalFrame getInternal()
-    {
-        AdminInternalFrame f = new AdminInternalFrame("Hello");
-        return f;
-    }
 }

@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -14,6 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 import lars.Account;
@@ -32,7 +36,7 @@ import lars.gui.TransactionModel;
  * @version 2012-04-02
  */
 public class TransactionPanel extends JPanel implements ActionListener,
-        FocusListener
+        FocusListener, TableModelListener
 {
     private static final long serialVersionUID = 1L;
 
@@ -43,13 +47,15 @@ public class TransactionPanel extends JPanel implements ActionListener,
 
     private JTextField skuField;
     private JButton enter;
+    private JTable table;
+    private JLabel subtotal;
+    private JButton delete;
     private JButton checkout;
     private JButton toMenu;
-    private JTable table;
 
     public TransactionPanel(Account account)
     {
-        transaction = new Transaction();
+        this.transaction = new Transaction();
 
         this.account = account;
 
@@ -59,24 +65,25 @@ public class TransactionPanel extends JPanel implements ActionListener,
 
         c.gridx = 0;
         c.gridy = 0;
-        this.add(new JLabel("Welcome back, " + this.account.getName() + "."));
+        this.add(new JLabel("Welcome back, " + this.account.getName() + ".",
+                SwingConstants.CENTER));
 
         c.gridx = 0;
         c.gridy = 1;
         this.add(new JLabel("Enter item ID:"), c);
 
-        skuField = new JTextField(Item.SKU_LENGTH);
+        this.skuField = new JTextField(Item.SKU_LENGTH);
         c.gridx = 0;
         c.gridy = 2;
         this.add(skuField, c);
         skuField.requestFocus();
 
-        enter = new JButton("Enter");
+        this.enter = new JButton("Enter");
         c.gridx = 0;
         c.gridy = 3;
         this.add(enter, c);
 
-        messageLabel = new MessageLabel();
+        this.messageLabel = new MessageLabel();
         c.gridx = 0;
         c.gridy = 4;
         this.add(messageLabel, c);
@@ -87,37 +94,59 @@ public class TransactionPanel extends JPanel implements ActionListener,
         c.gridy = 5;
         this.add(new JScrollPane(table), c);
 
-        checkout = new JButton("Checkout");
+        JPanel subtotalPanel = new JPanel();
+
+        subtotalPanel.add(new JLabel("Subtotal:"), c);
+
+        this.subtotal = new JLabel("$0.00");
+        subtotalPanel.add(subtotal, c);
+
         c.gridx = 0;
         c.gridy = 6;
-        this.add(checkout, c);
+        this.add(subtotalPanel, c);
 
-        toMenu = new JButton("Exit To Main Menu");
+        this.delete = new JButton("Remove selected");
         c.gridx = 0;
         c.gridy = 7;
+        this.add(delete, c);
+
+        this.checkout = new JButton("Checkout");
+        c.gridx = 0;
+        c.gridy = 8;
+        c.ipadx = 20;
+        c.ipady = 10;
+        this.add(checkout, c);
+
+        this.toMenu = new JButton("Return to Main Menu");
+        c.gridx = 0;
+        c.gridy = 9;
+        c.ipadx = 0;
+        c.ipady = 0;
         this.add(toMenu, c);
 
         KioskFrame.getInstance().addFocusListener(this);
 
-        skuField.addActionListener(this);
-        checkout.addActionListener(this);
-        enter.addActionListener(this);
-        toMenu.addActionListener(this);
+        this.skuField.addActionListener(this);
+        this.delete.addActionListener(this);
+        this.checkout.addActionListener(this);
+        this.enter.addActionListener(this);
+        this.toMenu.addActionListener(this);
+        this.table.getModel().addTableModelListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (e.getSource().equals(skuField))
+        if (e.getSource().equals(this.skuField))
         {
-            enter.doClick();
+            this.enter.doClick();
         }
-        else if (e.getSource().equals(enter))
+        else if (e.getSource().equals(this.enter))
         {
             int sku = 0;
             try
             {
-                sku = Integer.valueOf(skuField.getText());
+                sku = Integer.valueOf(this.skuField.getText());
             }
             catch (NumberFormatException ex)
             {
@@ -135,20 +164,26 @@ public class TransactionPanel extends JPanel implements ActionListener,
             {
                 this.messageLabel.setError("No such SKU!");
             }
-
-            table.revalidate();
         }
-        else if (e.getSource().equals(checkout))
+        else if (e.getSource().equals(this.delete))
         {
-            KioskFrame.getInstance().showCheckout(account, transaction);
+            int rows[] = this.table.getSelectedRows();
+            for (int i = 0; i < rows.length; i++)
+                this.transaction.getTransactionItems().remove(i);
         }
-        else if (e.getSource().equals(toMenu))
+        else if (e.getSource().equals(this.checkout))
+        {
+            KioskFrame.getInstance().showCheckout(this.account,
+                    this.transaction);
+        }
+        else if (e.getSource().equals(this.toMenu))
         {
             KioskFrame.getInstance().showMenu();
         }
 
-        skuField.setText("");
-        skuField.requestFocus();
+        this.table.revalidate();
+        this.skuField.setText("");
+        this.skuField.requestFocus();
     }
 
     @Override
@@ -160,5 +195,12 @@ public class TransactionPanel extends JPanel implements ActionListener,
     @Override
     public void focusLost(FocusEvent e)
     {
+    }
+
+    @Override
+    public void tableChanged(TableModelEvent e)
+    {
+        this.subtotal.setText(new DecimalFormat("$#.00")
+                .format(this.transaction.getTotalPrice() / 100));
     }
 }

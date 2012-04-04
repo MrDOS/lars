@@ -33,7 +33,7 @@ public class UpdateItemDialog extends JDialog implements ActionListener
 
     private static final int QUANTITY_LENTH = 2;
 
-    private ItemsFrame parent;
+    private AdminInternalFrame parent;
 
     private Item item;
 
@@ -45,7 +45,7 @@ public class UpdateItemDialog extends JDialog implements ActionListener
     private JButton save;
     private JButton cancel;
 
-    public UpdateItemDialog(ItemsFrame parent, Item item)
+    public UpdateItemDialog(AdminInternalFrame parent, Item item)
     {
         super(AdminFrame.getInstance(), "Add Item");
         this.setLocationByPlatform(true);

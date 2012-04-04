@@ -10,20 +10,20 @@ package lars;
 public class TransactionItem
 {
     private Item item;
-    private boolean isRented = false;
+    private boolean rented = false;
 
-    public TransactionItem(Item item, boolean isRented)
+    public TransactionItem(Item item, boolean rented)
     {
         this.item = item;
         if (this.item.getType().isRentable())
-            this.isRented = isRented;
+            this.rented = rented;
     }
 
     @Override
     public String toString()
     {
         return "TransactionItem[item=" + this.item + ";isRented="
-                + this.isRented + "]";
+                + this.rented + "]";
     }
 
     @Override
@@ -32,7 +32,7 @@ public class TransactionItem
         if (other instanceof TransactionItem)
         {
             TransactionItem otherItem = (TransactionItem) other;
-            if (otherItem.isRented == this.isRented
+            if (otherItem.rented == this.rented
                     && otherItem.item.equals(this.item))
                 return true;
         }
@@ -52,18 +52,18 @@ public class TransactionItem
 
     public boolean isRented()
     {
-        return isRented;
+        return rented;
     }
 
-    public void setRented(boolean isRented)
+    public void setRented(boolean rented)
     {
         if (this.item.getType().isRentable())
-            this.isRented = isRented;
+            this.rented = rented;
     }
 
     public int getPrice()
     {
-        if (this.isRented)
+        if (this.rented)
             return this.item.getRentalPrice();
         else
             return this.item.getPurchasePrice();

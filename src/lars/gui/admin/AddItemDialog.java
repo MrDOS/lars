@@ -33,7 +33,7 @@ public class AddItemDialog extends JDialog implements ActionListener
 
     private static final int QUANTITY_LENTH = 2;
 
-    private ItemsFrame parent;
+    private AdminInternalFrame parent;
 
     private JTextField skuField;
     private JTextField quantityField;
@@ -43,7 +43,7 @@ public class AddItemDialog extends JDialog implements ActionListener
     private JButton save;
     private JButton cancel;
 
-    public AddItemDialog(ItemsFrame parent)
+    public AddItemDialog(AdminInternalFrame parent)
     {
         super(AdminFrame.getInstance(), "Add Item");
         this.setLocationByPlatform(true);

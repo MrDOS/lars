@@ -9,7 +9,8 @@ import java.util.List;
  * receipt printer.
  * 
  * @author Jeremy Wheaton, 100105823
- * @version 2012-04-01
+ * @author Samuel Coleman, 100105709
+ * @version 2012-04-04
  */
 public class Transaction
 {
@@ -20,8 +21,23 @@ public class Transaction
     public Transaction()
     {
         transactionItems = new ArrayList<TransactionItem>();
-        setDate(new Date(System.currentTimeMillis()));
         this.transactionId = 0;
+        this.date = new Date(System.currentTimeMillis());
+    }
+
+    public Transaction(List<TransactionItem> transactionItems,
+            int transactionId, Date date)
+    {
+        this.transactionItems = transactionItems;
+        this.transactionId = transactionId;
+        this.date = date;
+    }
+
+    public Transaction(int transactionId, Date date)
+    {
+        transactionItems = new ArrayList<TransactionItem>();
+        this.transactionId = transactionId;
+        this.date = date;
     }
 
     @Override
@@ -39,16 +55,6 @@ public class Transaction
         }
 
         return rep + "]";
-    }
-
-    public int getTotalPrice()
-    {
-        int totalPrice = 0;
-
-        for (TransactionItem i : transactionItems)
-            totalPrice += i.getPrice();
-
-        return totalPrice;
     }
 
     public void setTransactionId(int transactionId)
@@ -81,8 +87,23 @@ public class Transaction
         transactionItems.remove(item);
     }
 
+    public void setTransactionItems(List<TransactionItem> transactionItems)
+    {
+        this.transactionItems = transactionItems;
+    }
+
     public List<TransactionItem> getTransactionItems()
     {
         return transactionItems;
+    }
+
+    public int getTotalPrice()
+    {
+        int totalPrice = 0;
+
+        for (TransactionItem i : transactionItems)
+            totalPrice += i.getPrice();
+
+        return totalPrice;
     }
 }

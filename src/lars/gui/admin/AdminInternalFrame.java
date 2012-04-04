@@ -4,7 +4,7 @@ import java.awt.Dimension;
 
 import javax.swing.JInternalFrame;
 
-public class AdminInternalFrame extends JInternalFrame
+public abstract class AdminInternalFrame extends JInternalFrame
 {
     private static final long serialVersionUID = 1L;
 
@@ -18,18 +18,5 @@ public class AdminInternalFrame extends JInternalFrame
         this.setSize(SIZE);
     }
 
-    public boolean isOpen()
-    {
-        return this.isVisible();
-    }
-
-    public void close()
-    {
-        this.setVisible(false);
-    }
-    
-    public boolean isInternalFrame()
-    {
-        return true;
-    }
+    public abstract void refresh();
 }

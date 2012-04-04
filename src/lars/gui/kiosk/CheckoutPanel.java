@@ -47,7 +47,7 @@ public class CheckoutPanel extends JPanel implements ActionListener
         c.gridy = 1;
         this.add(confirm, c);
 
-        toMenu = new JButton("Exit To Main Menu");
+        toMenu = new JButton("Return to Main Menu");
         c.gridx = 0;
         c.gridy = 6;
         this.add(toMenu, c);
@@ -61,7 +61,6 @@ public class CheckoutPanel extends JPanel implements ActionListener
     {
         if (e.getSource().equals(confirm))
         {
-            System.out.println("Yippee");
             KioskFrame.getInstance().showMenu();
         }
         else if (e.getSource().equals(toMenu))
