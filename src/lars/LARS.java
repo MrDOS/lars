@@ -32,6 +32,7 @@ public class LARS
         {
             JFrame frame = AdminFrame.getInstance();
             frame.setVisible(true);
+            ((AdminFrame) frame).login();
         }
         else
         {
