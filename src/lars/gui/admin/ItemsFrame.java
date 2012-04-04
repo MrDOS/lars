@@ -69,6 +69,14 @@ public class ItemsFrame extends AdminInternalFrame implements ActionListener
         this.refresh();
 
         this.addItem.addActionListener(this);
+        this.updateItem.addActionListener(this);
+        this.deleteItem.addActionListener(this);
+        this.addItemModifier.addActionListener(this);
+        this.updateItemModifier.addActionListener(this);
+        this.deleteItemModifier.addActionListener(this);
+        this.addItemType.addActionListener(this);
+        this.updateItemType.addActionListener(this);
+        this.deleteItemType.addActionListener(this);
     }
 
     private JPanel getItemsPanel()
@@ -212,11 +220,12 @@ public class ItemsFrame extends AdminInternalFrame implements ActionListener
         {
             JOptionPane.showMessageDialog(null, "Error loading data!",
                     "Item error", JOptionPane.ERROR_MESSAGE);
+            System.err.println(e.getMessage());
         }
 
-        this.itemTable.invalidate();
-        this.itemModifierTable.invalidate();
-        this.itemTypeTable.invalidate();
+        this.itemTable.setModel(new ItemModel(this.items));
+        this.itemModifierTable.setModel(new ItemModifierModel(this.modifiers));
+        this.itemTypeTable.setModel(new ItemTypeModel(this.types));
     }
 
     @Override
@@ -224,13 +233,13 @@ public class ItemsFrame extends AdminInternalFrame implements ActionListener
     {
         if (e.getSource().equals(addItem))
         {
-            new AddItemDialog().setVisible(true);
+            new AddItemDialog(this).setVisible(true);
         }
         else if (e.getSource().equals(updateItem))
         {
             int row = this.itemTable.getSelectedRow();
             if (row >= 0)
-                new UpdateItemDialog(this.items.get(row)).setVisible(true);
+                new UpdateItemDialog(this, this.items.get(row)).setVisible(true);
         }
         else if (e.getSource().equals(deleteItem))
         {

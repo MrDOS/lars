@@ -70,7 +70,7 @@ public class TransactionPanel extends JPanel implements ActionListener,
         c.gridy = 2;
         this.add(messageLabel, c);
 
-        TableModel model = new TransactionModel(transaction);
+        TableModel model = new TransactionModel(this.transaction);
         table = new JTable(model);
         c.gridx = 0;
         c.gridy = 4;
@@ -122,7 +122,9 @@ public class TransactionPanel extends JPanel implements ActionListener,
             catch (SQLException e1)
             {
                 this.messageLabel.setError("No such SKU!");
+                System.err.println(e1.getMessage());
             }
+
             table.revalidate();
         }
         else if (e.getSource().equals(checkout))
@@ -134,6 +136,7 @@ public class TransactionPanel extends JPanel implements ActionListener,
             KioskFrame.getInstance().showMenu();
         }
 
+        skuField.setText("");
         skuField.requestFocus();
     }
 

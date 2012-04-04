@@ -33,21 +33,24 @@ public class UpdateItemDialog extends JDialog implements ActionListener
 
     private static final int QUANTITY_LENTH = 2;
 
-    Item item;
+    private ItemsFrame parent;
 
-    JTextField skuField;
-    JTextField quantityField;
-    JTextArea descriptionField;
-    JComboBox type;
+    private Item item;
 
-    JButton save;
-    JButton cancel;
+    private JTextField skuField;
+    private JTextField quantityField;
+    private JTextArea descriptionField;
+    private JComboBox type;
 
-    public UpdateItemDialog(Item item)
+    private JButton save;
+    private JButton cancel;
+
+    public UpdateItemDialog(ItemsFrame parent, Item item)
     {
         super(AdminFrame.getInstance(), "Add Item");
         this.setLocationByPlatform(true);
 
+        this.parent = parent;
         this.item = item;
 
         this.getContentPane().setLayout(new GridBagLayout());
@@ -88,10 +91,10 @@ public class UpdateItemDialog extends JDialog implements ActionListener
         c.gridy = 3;
         this.add(new JLabel("Type:"), c);
 
-        ItemType types[] = {};
+        Object types[] = {};
         try
         {
-            types = (ItemType[]) ItemDatabase.getItemTypes().toArray();
+            types = ItemDatabase.getItemTypes().toArray();
         }
         catch (SQLException e)
         {
@@ -174,6 +177,7 @@ public class UpdateItemDialog extends JDialog implements ActionListener
                             description, quantity);
                     ItemDatabase.updateItem(this.item);
 
+                    parent.refresh();
                     this.dispose();
                 }
                 catch (SQLException ex)

@@ -31,17 +31,21 @@ public class AddAccountDialog extends JDialog implements ActionListener
 {
     private static final long serialVersionUID = 1L;
 
-    JTextField nameField;
-    JTextArea addressField;
-    JCheckBox manager;
+    private AccountsFrame parent;
 
-    JButton save;
-    JButton cancel;
+    private JTextField nameField;
+    private JTextArea addressField;
+    private JCheckBox manager;
 
-    public AddAccountDialog()
+    private JButton save;
+    private JButton cancel;
+
+    public AddAccountDialog(AccountsFrame parent)
     {
         super(AdminFrame.getInstance(), "Add Account");
         this.setLocationByPlatform(true);
+
+        this.parent = parent;
 
         this.getContentPane().setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -65,11 +69,11 @@ public class AddAccountDialog extends JDialog implements ActionListener
         c.gridx = 1;
         c.gridy = 1;
         this.add(new JScrollPane(addressField), c);
-        
+
         c.gridx = 0;
         c.gridy = 2;
         this.add(new JLabel("Manager:"), c);
-        
+
         manager = new JCheckBox();
         c.gridx = 1;
         c.gridy = 2;
@@ -107,7 +111,7 @@ public class AddAccountDialog extends JDialog implements ActionListener
 
             name = nameField.getText();
             address = addressField.getText();
-                
+
             if (name.equals(""))
             {
                 JOptionPane.showMessageDialog(null, "Invalid name!",
@@ -115,24 +119,26 @@ public class AddAccountDialog extends JDialog implements ActionListener
             }
             else if (address.equals(""))
             {
-                JOptionPane
-                        .showMessageDialog(
-                                null,
-                                "Invalid address! The address may not be blank.",
-                                "Error adding account", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Invalid address! The address may not be blank.",
+                        "Error adding account", JOptionPane.ERROR_MESSAGE);
             }
             else
             {
                 try
                 {
-                    Account account = new Account(0, name, address, manager.isSelected());
+                    Account account = new Account(0, name, address,
+                            manager.isSelected());
                     account = AccountDatabase.insertAccount(account);
+
+                    this.parent.refresh();
                     this.dispose();
                 }
                 catch (SQLException ex)
                 {
-                    JOptionPane.showMessageDialog(null, "Unable to add account!",
-                            "Error adding account", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "Unable to add account!", "Error adding account",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         }

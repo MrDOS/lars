@@ -3,6 +3,8 @@ package lars.db;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import lars.Account;
 
@@ -14,6 +16,23 @@ import lars.Account;
  */
 public class AccountDatabase
 {
+    public static List<Account> getAccounts() throws SQLException
+    {
+        List<Account> accounts = new ArrayList<Account>();
+
+        PreparedStatement ps = ConnectionManager
+                .getConnection()
+                .prepareStatement(
+                        "SELECT accountId, name, address, manager FROM Account");
+
+        ResultSet rs = ps.executeQuery();
+        while (rs.next())
+            accounts.add(new Account(rs.getInt(1), rs.getString(2), rs
+                    .getString(3), rs.getBoolean(4)));
+
+        return accounts;
+    }
+
     public static Account getAccountById(int id) throws SQLException
     {
         PreparedStatement ps = ConnectionManager

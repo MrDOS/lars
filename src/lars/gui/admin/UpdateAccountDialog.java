@@ -30,20 +30,23 @@ public class UpdateAccountDialog extends JDialog implements ActionListener
 {
     private static final long serialVersionUID = 1L;
 
-    Account account;
+    private AccountsFrame parent;
 
-    JTextField nameField;
-    JTextArea addressField;
-    JCheckBox manager;
+    private Account account;
 
-    JButton save;
-    JButton cancel;
+    private JTextField nameField;
+    private JTextArea addressField;
+    private JCheckBox manager;
 
-    public UpdateAccountDialog(Account account)
+    private JButton save;
+    private JButton cancel;
+
+    public UpdateAccountDialog(AccountsFrame parent, Account account)
     {
         super(AdminFrame.getInstance(), "Add Account");
         this.setLocationByPlatform(true);
 
+        this.parent = parent;
         this.account = account;
 
         this.getContentPane().setLayout(new GridBagLayout());
@@ -78,6 +81,8 @@ public class UpdateAccountDialog extends JDialog implements ActionListener
         this.add(new JLabel("Manager:"), c);
 
         manager = new JCheckBox();
+        if (account.isManager())
+            manager.setSelected(true);
         c.gridx = 1;
         c.gridy = 3;
         this.add(manager, c);
@@ -133,6 +138,8 @@ public class UpdateAccountDialog extends JDialog implements ActionListener
                     this.account = new Account(this.account.getAccountId(),
                             name, address, manager.isSelected());
                     AccountDatabase.updateAccount(this.account);
+
+                    this.parent.refresh();
                     this.dispose();
                 }
                 catch (SQLException ex)

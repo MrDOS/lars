@@ -1,5 +1,7 @@
 package lars.gui;
 
+import java.text.DecimalFormat;
+
 import javax.swing.table.AbstractTableModel;
 
 import lars.Transaction;
@@ -36,7 +38,7 @@ public class TransactionModel extends AbstractTableModel
         case RENTED_COLUMN:
             return Boolean.class;
         case PRICE_COLUMN:
-            return Integer.class;
+            return String.class;
         default:
             return null;
         }
@@ -81,7 +83,7 @@ public class TransactionModel extends AbstractTableModel
         case RENTED_COLUMN:
             return transaction.getTransactionItems().get(rowIndex).isRented();
         case PRICE_COLUMN:
-            return transaction.getTransactionItems().get(rowIndex).getPrice();
+            return new DecimalFormat("$#.00").format(transaction.getTransactionItems().get(rowIndex).getPrice() / 100);
         default:
             return null;
         }

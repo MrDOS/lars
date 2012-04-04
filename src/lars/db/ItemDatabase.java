@@ -108,7 +108,7 @@ public class ItemDatabase
         PreparedStatement ps = ConnectionManager
                 .getConnection()
                 .prepareStatement(
-                        "SELECT ItemModifier.modifierId, ItemModifier.name, ItemModifier.purchasePrice, ItemModifier.rentalPrice, ItemModifier.rentalDuration FROM ItemModifiers LEFT JOIN ItemModifier.modifierId = ItemModifiers.modifierId WHERE ItemModifiers.sku = ?");
+                        "SELECT ItemModifier.modifierId, ItemModifier.name, ItemModifier.purchasePrice, ItemModifier.rentalPrice, ItemModifier.rentalDuration FROM ItemModifiers LEFT JOIN ItemModifier ON ItemModifiers.modifierId = ItemModifier.modifierId WHERE ItemModifiers.sku = ?");
         ps.setInt(1, item.getSku());
 
         ResultSet rs = ps.executeQuery();

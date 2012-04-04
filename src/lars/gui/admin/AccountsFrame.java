@@ -16,9 +16,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
 import lars.Account;
-import lars.Item;
 import lars.db.AccountDatabase;
-import lars.db.ItemDatabase;
 import lars.gui.AccountModel;
 
 /**
@@ -43,6 +41,11 @@ public class AccountsFrame extends AdminInternalFrame implements ActionListener
         super("Accounts");
 
         this.add(getAccountsPanel());
+
+        this.refresh();
+
+        addAccount.addActionListener(this);
+        updateAccount.addActionListener(this);
     }
 
     private JPanel getAccountsPanel()
@@ -85,11 +88,9 @@ public class AccountsFrame extends AdminInternalFrame implements ActionListener
         c.gridy = 1;
         panel.add(buttonPanel, c);
 
-        addAccount.addActionListener(this);
-        updateAccount.addActionListener(this);
         return panel;
     }
-    
+
     public void refresh()
     {
         try
@@ -102,7 +103,7 @@ public class AccountsFrame extends AdminInternalFrame implements ActionListener
                     "Account error", JOptionPane.ERROR_MESSAGE);
         }
 
-        this.accountTable.invalidate();
+        this.accountTable.setModel(new AccountModel(this.accounts));
     }
 
     @Override
@@ -110,13 +111,16 @@ public class AccountsFrame extends AdminInternalFrame implements ActionListener
     {
         if (e.getSource().equals(addAccount))
         {
-            new AddAccountDialog().setVisible(true);
+            new AddAccountDialog(this).setVisible(true);
         }
         else if (e.getSource().equals(updateAccount))
         {
             int row = this.accountTable.getSelectedRow();
             if (row >= 0)
-                new UpdateAccountDialog(this.accounts.get(row)).setVisible(true);
+                new UpdateAccountDialog(this, this.accounts.get(row))
+                        .setVisible(true);
         }
+
+        this.refresh();
     }
 }
