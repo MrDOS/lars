@@ -7,16 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lars.Account;
-import lars.Item;
-import lars.ItemModifier;
 import lars.Transaction;
 import lars.TransactionItem;
 
 /**
  * Provide database access to transactions.
  * 
- * @author Jeremy Wheaton
- * @version 2012-04-01
+ * @author Jeremy Wheaton, 100105823
+ * @author Samuel Coleman, 100105709
+ * @version 2012-04-04
  */
 public class TransactionDatabase
 {
@@ -67,22 +66,50 @@ public class TransactionDatabase
     public static Transaction insertTransaction(Transaction transaction)
             throws SQLException
     {
-        // TODO: Stub method.
-        return null;
+        PreparedStatement ps = ConnectionManager.getConnection()
+                .prepareStatement("INSERT INTO Transaction(date) VALUES(?)",
+                        PreparedStatement.RETURN_GENERATED_KEYS);
+        ps.setDate(1, transaction.getDate());
+
+        ps.executeUpdate();
+        ResultSet rs = ps.getGeneratedKeys();
+        if (rs.next())
+        {
+            transaction.setTransactionId(rs.getInt(1));
+            applyTransactionItems(transaction);
+        }
+        else
+            throw new SQLException("Could not insert transaction!");
+
+        return transaction;
     }
 
-    public static Transaction updateTransaction(Transaction transaction)
+    public static void updateTransaction(Transaction transaction)
             throws SQLException
     {
-        // TODO: Stub method.
-        return null;
+        PreparedStatement ps = ConnectionManager
+                .getConnection()
+                .prepareStatement(
+                        "UPDATE Transaction SET date = ? WHERE transactionId = ?");
+        ps.setDate(1, transaction.getDate());
+        ps.setInt(2, transaction.getTransactionId());
+
+        ps.executeUpdate();
+        clearTransactionItems(transaction);
+        applyTransactionItems(transaction);
     }
 
-    public static Transaction deleteTransaction(Transaction transaction)
+    public static void deleteTransaction(Transaction transaction)
             throws SQLException
     {
-        // TODO: Stub method.
-        return null;
+        PreparedStatement ps = ConnectionManager.getConnection()
+                .prepareStatement(
+                        "DELETE FROM Transaction WHERE transactionId = ?");
+        ps.setInt(1, transaction.getTransactionId());
+
+        ps.executeUpdate();
+
+        clearTransactionItems(transaction);
     }
 
     private static List<TransactionItem> getTransactionItemsByTransaction(

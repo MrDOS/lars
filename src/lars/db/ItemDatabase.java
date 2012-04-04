@@ -14,7 +14,7 @@ import lars.ItemType;
  * Provide database access to items.
  * 
  * @author Samuel Coleman, 100105709
- * @version 2012-04-02
+ * @version 2012-04-04
  */
 public class ItemDatabase
 {
@@ -62,8 +62,7 @@ public class ItemDatabase
         PreparedStatement ps = ConnectionManager
                 .getConnection()
                 .prepareStatement(
-                        "INSERT INTO Item(typeId, sku, description, quantity) VALUES(?, ?, ?, ?)",
-                        PreparedStatement.RETURN_GENERATED_KEYS);
+                        "INSERT INTO Item(typeId, sku, description, quantity) VALUES(?, ?, ?, ?)");
         ps.setInt(1, item.getType().getTypeId());
         ps.setInt(2, item.getSku());
         ps.setString(3, item.getDescription());
