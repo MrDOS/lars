@@ -134,6 +134,12 @@ public class TransactionPanel extends JPanel implements ActionListener,
         this.table.getModel().addTableModelListener(this);
     }
 
+    private void updateSubtotal()
+    {
+        this.subtotal.setText(new DecimalFormat("$#.00")
+                .format(this.transaction.getTotalPrice() / 100));
+    }
+
     @Override
     public void actionPerformed(ActionEvent e)
     {
@@ -183,6 +189,7 @@ public class TransactionPanel extends JPanel implements ActionListener,
 
         this.table.revalidate();
         this.skuField.setText("");
+        this.updateSubtotal();
         this.skuField.requestFocus();
     }
 
@@ -200,7 +207,6 @@ public class TransactionPanel extends JPanel implements ActionListener,
     @Override
     public void tableChanged(TableModelEvent e)
     {
-        this.subtotal.setText(new DecimalFormat("$#.00")
-                .format(this.transaction.getTotalPrice() / 100));
+        this.updateSubtotal();
     }
 }
