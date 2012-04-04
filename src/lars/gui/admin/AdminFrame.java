@@ -27,7 +27,7 @@ import lars.LARS;
  * Top-level administative interface.
  * 
  * @author Samuel Coleman, 100105709
- * @version 2012-04-03
+ * @version 2012-04-04
  */
 public class AdminFrame extends JFrame implements ActionListener
 {
@@ -161,6 +161,13 @@ public class AdminFrame extends JFrame implements ActionListener
         this.login();
     }
 
+    private void showInternalFrame(JInternalFrame frame)
+    {
+        frame.setLocation(this.getNewFramePoint());
+        desktop.add(frame);
+        frame.setVisible(true);
+    }
+
     private Point getNewFramePoint()
     {
         if (this.frameInitialLocation[0] <= MAX_FRAME_INITIAL_LOCATION[0]
@@ -187,19 +194,9 @@ public class AdminFrame extends JFrame implements ActionListener
         if (e.getSource().equals(menuLogout) || e.getSource().equals(logout))
             this.logout();
         else if (e.getSource().equals(accounts))
-        {
-            JInternalFrame frame = new AccountsFrame();
-            frame.setLocation(this.getNewFramePoint());
-            desktop.add(frame);
-            frame.setVisible(true);
-        }
+            this.showInternalFrame(new AccountsFrame());
         else if (e.getSource().equals(items))
-        {
-            JInternalFrame frame = new ItemsFrame();
-            frame.setLocation(this.getNewFramePoint());
-            desktop.add(frame);
-            frame.setVisible(true);
-        }
+            this.showInternalFrame(new ItemsFrame());
         else if (e.getSource().equals(menuQuit))
             System.exit(0);
     }

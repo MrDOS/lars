@@ -35,8 +35,6 @@ public class TransactionPanel extends JPanel implements ActionListener,
 {
     private static final long serialVersionUID = 1L;
 
-    private static final int SKU_LENGTH = 8;
-
     private Account account;
     private Transaction transaction;
 
@@ -56,7 +54,7 @@ public class TransactionPanel extends JPanel implements ActionListener,
 
         GridBagConstraints c = new GridBagConstraints();
 
-        skuField = new JTextField(SKU_LENGTH);
+        skuField = new JTextField(Item.SKU_LENGTH);
         c.gridx = 0;
         c.gridy = 0;
         this.add(skuField, c);
@@ -82,7 +80,7 @@ public class TransactionPanel extends JPanel implements ActionListener,
         c.gridx = 0;
         c.gridy = 5;
         this.add(checkout, c);
-        
+
         toMenu = new JButton("Exit To Main Menu");
         c.gridx = 0;
         c.gridy = 6;

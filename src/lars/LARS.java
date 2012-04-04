@@ -27,7 +27,7 @@ public class LARS
         {
             System.err.println("Unable to set native Look-and-Feel.");
         }
-        
+
         if (args.length > 0 && args[0].equals("-admin"))
         {
             JFrame frame = AdminFrame.getInstance();

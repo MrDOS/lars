@@ -18,14 +18,13 @@ import lars.db.AccountDatabase;
 
 /**
  * Modal administative login dialog.
+ * 
  * @author Samuel Coleman, 100105709
  * @version 2012-04-03
  */
 public class LoginDialog extends JDialog implements ActionListener
 {
     private static final long serialVersionUID = 1L;
-
-    private static final int ACCOUNT_LENGTH = 8;
 
     private JTextField accountField;
     private JButton login;
@@ -40,7 +39,7 @@ public class LoginDialog extends JDialog implements ActionListener
 
         this.add(new JLabel("Account ID:"));
 
-        accountField = new JTextField(ACCOUNT_LENGTH);
+        accountField = new JTextField(Account.ACCOUNT_ID_LENGTH);
         this.add(accountField);
 
         login = new JButton("Login");

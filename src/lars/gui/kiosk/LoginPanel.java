@@ -20,13 +20,13 @@ import lars.gui.MessageLabel;
 /**
  * Login GUI panel to log into customer account.
  * 
- * @author Jeremy Wheaton
- * @version April 2, 2012
+ * @author Jeremy Wheaton, 100105823
+ * @version 2012-04-04
  */
 public class LoginPanel extends JPanel implements ActionListener, FocusListener
 {
     private static final long serialVersionUID = 1L;
-    private static final int ACCOUNT_LENGTH = 8;
+
     private JTextField accountField;
     private JButton confirm;
     private JButton toMenu;
@@ -47,7 +47,7 @@ public class LoginPanel extends JPanel implements ActionListener, FocusListener
         c.gridy = 1;
         this.add(message, c);
 
-        accountField = new JTextField(ACCOUNT_LENGTH);
+        accountField = new JTextField(Account.ACCOUNT_ID_LENGTH);
         c.gridx = 0;
         c.gridy = 2;
         this.add(accountField, c);
@@ -57,12 +57,12 @@ public class LoginPanel extends JPanel implements ActionListener, FocusListener
         c.gridx = 0;
         c.gridy = 3;
         this.add(confirm, c);
-        
+
         toMenu = new JButton("Exit To Main Menu");
         c.gridx = 0;
         c.gridy = 4;
         this.add(toMenu, c);
-        
+
         KioskFrame.getInstance().addFocusListener(this);
 
         accountField.addActionListener(this);

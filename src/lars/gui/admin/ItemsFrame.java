@@ -2,6 +2,8 @@ package lars.gui.admin;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -24,7 +26,7 @@ import lars.gui.ItemTypeModel;
  * @author Samuel Coleman, 100105709
  * @version 2012-04-03
  */
-public class ItemsFrame extends AdminInternalFrame
+public class ItemsFrame extends AdminInternalFrame implements ActionListener
 {
     private static final long serialVersionUID = 1L;
 
@@ -52,6 +54,8 @@ public class ItemsFrame extends AdminInternalFrame
         tabs.addTab("Item Types", getItemTypesPanel());
         tabs.addTab("Item Modifiers", getItemModifiersPanel());
         this.add(tabs);
+
+        this.addItem.addActionListener(this);
     }
 
     private JPanel getItemsPanel()
@@ -181,5 +185,12 @@ public class ItemsFrame extends AdminInternalFrame
         panel.add(buttonPanel, c);
 
         return panel;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+        if (e.getSource().equals(addItem))
+            new AddItemDialog().setVisible(true);
     }
 }

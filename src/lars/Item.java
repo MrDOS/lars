@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class Item
 {
+    public static final int SKU_LENGTH = 8;
+
     private List<ItemModifier> modifiers;
     private ItemType type;
     private int sku;

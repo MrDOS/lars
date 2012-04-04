@@ -25,6 +25,7 @@ import lars.gui.TransactionModel;
 public class CheckoutPanel extends JPanel implements ActionListener
 {
     private static final long serialVersionUID = 1L;
+
     private TableModel model;
     private JButton confirm;
     private JButton toMenu;
