@@ -17,4 +17,14 @@ public class AdminInternalFrame extends JInternalFrame
         this.setMinimumSize(SIZE);
         this.setSize(SIZE);
     }
+
+    public boolean isOpen()
+    {
+        return this.isVisible();
+    }
+
+    public void close()
+    {
+        this.setVisible(false);
+    }
 }
