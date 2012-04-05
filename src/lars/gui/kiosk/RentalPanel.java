@@ -40,7 +40,7 @@ public class RentalPanel extends JPanel implements ActionListener,
     private static final long serialVersionUID = 1L;
 
     private Account account;
-    private Rental transaction;
+    private Rental rental;
 
     private JLabel messageLabel;
 
@@ -60,7 +60,7 @@ public class RentalPanel extends JPanel implements ActionListener,
      */
     public RentalPanel(Account account)
     {
-        this.transaction = new Rental();
+        this.rental = new Rental();
 
         this.account = account;
 
@@ -93,7 +93,8 @@ public class RentalPanel extends JPanel implements ActionListener,
         c.gridy = 4;
         this.add(messageLabel, c);
 
-        TableModel model = new RentalItemModel(this.transaction, true);
+        TableModel model = new RentalItemModel(this.rental.getRentalItems(),
+                true);
         table = new JTable(model);
         c.gridx = 0;
         c.gridy = 5;
@@ -142,7 +143,7 @@ public class RentalPanel extends JPanel implements ActionListener,
     private void updateSubtotal()
     {
         this.subtotal.setText(new DecimalFormat("$#0.00")
-                .format((double) this.transaction.getTotalPrice() / 100));
+                .format((double) this.rental.getTotalPrice() / 100));
     }
 
     @Override
@@ -168,7 +169,7 @@ public class RentalPanel extends JPanel implements ActionListener,
             {
                 Item item = ItemDatabase.getItemBySku(sku);
                 RentalItem transItem = new RentalItem(item);
-                transaction.addRentalItem(transItem);
+                rental.addRentalItem(transItem);
                 this.messageLabel.setText("");
             }
             catch (SQLException ex)
@@ -180,13 +181,12 @@ public class RentalPanel extends JPanel implements ActionListener,
         {
             int rows[] = this.table.getSelectedRows();
             for (int i = rows.length - 1; i >= 0; i--)
-                this.transaction.getRentalItems().remove(rows[i]);
+                this.rental.getRentalItems().remove(rows[i]);
             this.table.clearSelection();
         }
         else if (e.getSource().equals(this.checkout))
         {
-            KioskFrame.getInstance().showCheckout(this.account,
-                    this.transaction);
+            KioskFrame.getInstance().showCheckout(this.account, this.rental);
         }
         else if (e.getSource().equals(this.toMenu))
         {

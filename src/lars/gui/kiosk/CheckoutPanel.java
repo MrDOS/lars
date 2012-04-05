@@ -57,7 +57,7 @@ public class CheckoutPanel extends JPanel implements ActionListener
         this.account = account;
 
         GridBagConstraints c = new GridBagConstraints();
-        model = new RentalItemModel(rental);
+        model = new RentalItemModel(this.rental.getRentalItems());
         JTable table = new JTable(model);
         JScrollPane scroll = new JScrollPane(table);
         c.gridx = 0;
@@ -117,20 +117,22 @@ public class CheckoutPanel extends JPanel implements ActionListener
 
     private void updateSubtotal()
     {
-        this.subtotal.setText(new DecimalFormat("$#0.00").format((double) this.rental
-                .getTotalPrice() / 100));
+        this.subtotal.setText(new DecimalFormat("$#0.00")
+                .format((double) this.rental.getTotalPrice() / 100));
     }
 
     private void updateTax()
     {
-        this.tax.setText(new DecimalFormat("$#0.00").format((double) TaxCalculator
-                .getTax(this.rental.getTotalPrice()) / 100));
+        this.tax.setText(new DecimalFormat("$#0.00")
+                .format((double) TaxCalculator.getTax(this.rental
+                        .getTotalPrice()) / 100));
     }
 
     private void updateTotal()
     {
-        this.total.setText(new DecimalFormat("$#0.00").format((double) TaxCalculator
-                .getTotalWithTax(this.rental.getTotalPrice()) / 100));
+        this.total.setText(new DecimalFormat("$#0.00")
+                .format((double) TaxCalculator.getTotalWithTax(this.rental
+                        .getTotalPrice()) / 100));
     }
 
     @Override

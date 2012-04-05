@@ -21,12 +21,12 @@ import lars.gui.AccountModel;
 import lars.gui.RentalItemModel;
 
 /**
- * Interface for accounts management.
+ * Interface for rental management.
  * 
  * @author Jeremy Wheaton, 100105823
  * @version 2012-04-05
  */
-public class ReturnsFrame extends AdminInternalFrame implements ActionListener
+public class RentalsFrame extends AdminInternalFrame implements ActionListener
 {
     private static final long serialVersionUID = 1L;
 
@@ -39,7 +39,7 @@ public class ReturnsFrame extends AdminInternalFrame implements ActionListener
     /**
      * Instantiate the frame.
      */
-    public ReturnsFrame()
+    public RentalsFrame()
     {
         super("Returns");
 

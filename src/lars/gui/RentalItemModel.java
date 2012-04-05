@@ -1,13 +1,14 @@
 package lars.gui;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import lars.Rental;
+import lars.RentalItem;
 
 /**
- * Table model for {@link Rental}s.
+ * Table model for {@link RentalItem}s.
  * 
  * @author Jeremy Wheaton, 100105823
  * @version 2012-04-03
@@ -21,7 +22,7 @@ public class RentalItemModel extends AbstractTableModel
     private static final int RENTED_COLUMN = 1;
     private static final int PRICE_COLUMN = 2;
 
-    private Rental rental;
+    private List<RentalItem> rentalItems;
     private boolean editable;
 
     /**
@@ -32,9 +33,9 @@ public class RentalItemModel extends AbstractTableModel
      * @param editable
      *            whether or not the cells should be editable
      */
-    public RentalItemModel(Rental rental, boolean editable)
+    public RentalItemModel(List<RentalItem> rentalItems, boolean editable)
     {
-        this.rental = rental;
+        this.rentalItems = rentalItems;
         this.editable = editable;
     }
 
@@ -44,9 +45,9 @@ public class RentalItemModel extends AbstractTableModel
      * @param rental
      *            the rental data to model
      */
-    public RentalItemModel(Rental rental)
+    public RentalItemModel(List<RentalItem> rentalItems)
     {
-        this.rental = rental;
+        this.rentalItems = rentalItems;
         this.editable = false;
     }
 
@@ -91,7 +92,7 @@ public class RentalItemModel extends AbstractTableModel
     @Override
     public int getRowCount()
     {
-        return rental.getRentalItems().size();
+        return rentalItems.size();
     }
 
     @Override
@@ -100,13 +101,12 @@ public class RentalItemModel extends AbstractTableModel
         switch (columnIndex)
         {
         case DESCRIPTION_COLUMN:
-            return rental.getRentalItems().get(rowIndex).getItem()
-                    .getDescription();
+            return rentalItems.get(rowIndex).getItem().getDescription();
         case RENTED_COLUMN:
-            return rental.getRentalItems().get(rowIndex).isRented();
+            return rentalItems.get(rowIndex).isRented();
         case PRICE_COLUMN:
-            return new DecimalFormat("$#0.00").format((double) rental
-                    .getRentalItems().get(rowIndex).getPrice() / 100);
+            return new DecimalFormat("$#0.00").format((double) rentalItems.get(
+                    rowIndex).getPrice() / 100);
         default:
             return null;
         }
@@ -116,7 +116,7 @@ public class RentalItemModel extends AbstractTableModel
     public boolean isCellEditable(int rowIndex, int columnIndex)
     {
         if (editable && columnIndex == RENTED_COLUMN
-                && rental.getRentalItems().get(rowIndex).isRentable())
+                && rentalItems.get(rowIndex).isRentable())
             return true;
         return false;
     }
@@ -126,8 +126,7 @@ public class RentalItemModel extends AbstractTableModel
     {
         if (editable && columnIndex == RENTED_COLUMN)
         {
-            this.rental.getRentalItems().get(rowIndex)
-                    .setRented((Boolean) aValue);
+            this.rentalItems.get(rowIndex).setRented((Boolean) aValue);
             this.fireTableCellUpdated(rowIndex, PRICE_COLUMN);
         }
     }
