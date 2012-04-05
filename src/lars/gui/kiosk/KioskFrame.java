@@ -91,4 +91,16 @@ public class KioskFrame extends JFrame
         this.setContentPane(new CheckoutPanel(account, rental));
         this.validate();
     }
+    
+    /**
+     * Show the thankk you message for a rental.
+     * 
+     * @param account
+     *            the account the rental is associated with
+     */
+    public void showThankYou(Account account)
+    {
+        this.setContentPane(new ThankYouPanel(account));
+        this.validate();
+    }
 }

@@ -39,6 +39,7 @@ public class CheckoutPanel extends JPanel implements ActionListener
     private JLabel total;
 
     private Rental rental;
+    private Account account;
 
     /**
      * Instantiate the panel.
@@ -53,6 +54,7 @@ public class CheckoutPanel extends JPanel implements ActionListener
         this.setLayout(new GridBagLayout());
 
         this.rental = rental;
+        this.account = account;
 
         GridBagConstraints c = new GridBagConstraints();
         model = new RentalModel(rental);
@@ -144,7 +146,7 @@ public class CheckoutPanel extends JPanel implements ActionListener
             {
                 e1.printStackTrace();
             }
-            KioskFrame.getInstance().showMenu();
+            KioskFrame.getInstance().showThankYou(this.account);
         }
         else if (e.getSource().equals(toMenu))
         {
