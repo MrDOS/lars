@@ -17,6 +17,10 @@ public class Item
      * The expected maximum length of SKUs; to be used by text fields.
      */
     public static final int SKU_LENGTH = 8;
+    /**
+     * The expected maximum length of quantities; to be used by text fields.
+     */
+    public static final int QUANTITY_LENTH = 2;
 
     private List<ItemModifier> modifiers;
     private ItemType type;
@@ -136,6 +140,17 @@ public class Item
     public void addModifier(ItemModifier modifier)
     {
         this.modifiers.add(modifier);
+    }
+
+    /**
+     * Remove an individual modifier.
+     * 
+     * @param modifier
+     *            a modifier to remove
+     */
+    public void removeModifier(ItemModifier modifier)
+    {
+        this.modifiers.remove(modifier);
     }
 
     /**

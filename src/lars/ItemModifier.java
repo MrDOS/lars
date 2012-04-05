@@ -73,10 +73,7 @@ public class ItemModifier
     @Override
     public String toString()
     {
-        return "ItemModifier[modifierId=" + this.modifierId + ";name="
-                + this.name + ";purchasePrice=" + this.purchasePrice
-                + ";rentalPrice=" + this.rentalPrice + ";rentalDuration="
-                + this.rentalDuration + "]";
+        return this.name;
     }
 
     @Override

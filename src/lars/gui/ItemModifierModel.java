@@ -1,5 +1,6 @@
 package lars.gui;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -33,6 +34,14 @@ public class ItemModifierModel extends AbstractTableModel
     public ItemModifierModel(List<ItemModifier> modifiers)
     {
         this.modifiers = modifiers;
+    }
+
+    /**
+     * Create the model.
+     */
+    public ItemModifierModel()
+    {
+        this.modifiers = new ArrayList<ItemModifier>();
     }
 
     @Override
