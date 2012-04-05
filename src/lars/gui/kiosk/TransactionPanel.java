@@ -22,8 +22,8 @@ import javax.swing.table.TableModel;
 
 import lars.Account;
 import lars.Item;
-import lars.Transaction;
-import lars.TransactionItem;
+import lars.Rental;
+import lars.RentalItem;
 import lars.db.ItemDatabase;
 import lars.gui.MessageLabel;
 import lars.gui.TransactionModel;
@@ -41,7 +41,7 @@ public class TransactionPanel extends JPanel implements ActionListener,
     private static final long serialVersionUID = 1L;
 
     private Account account;
-    private Transaction transaction;
+    private Rental transaction;
 
     private MessageLabel messageLabel;
 
@@ -55,7 +55,7 @@ public class TransactionPanel extends JPanel implements ActionListener,
 
     public TransactionPanel(Account account)
     {
-        this.transaction = new Transaction();
+        this.transaction = new Rental();
 
         this.account = account;
 
@@ -162,8 +162,8 @@ public class TransactionPanel extends JPanel implements ActionListener,
             try
             {
                 Item item = ItemDatabase.getItemBySku(sku);
-                TransactionItem transItem = new TransactionItem(item, false);
-                transaction.addTransactionItem(transItem);
+                RentalItem transItem = new RentalItem(item, false);
+                transaction.addRentalItem(transItem);
                 this.messageLabel.setMessage("");
             }
             catch (SQLException ex)
@@ -175,7 +175,7 @@ public class TransactionPanel extends JPanel implements ActionListener,
         {
             int rows[] = this.table.getSelectedRows();
             for (int i = rows.length - 1; i >= 0; i--)
-                this.transaction.getTransactionItems().remove(rows[i]);
+                this.transaction.getRentalItems().remove(rows[i]);
             this.table.clearSelection();
         }
         else if (e.getSource().equals(this.checkout))

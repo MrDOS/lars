@@ -4,10 +4,10 @@ import java.text.DecimalFormat;
 
 import javax.swing.table.AbstractTableModel;
 
-import lars.Transaction;
+import lars.Rental;
 
 /**
- * Table model for {@link Transaction}s.
+ * Table model for {@link Rental}s.
  * 
  * @author Jeremy Wheaton, 100105823
  * @version 2012-04-03
@@ -21,16 +21,16 @@ public class TransactionModel extends AbstractTableModel
     private static final int RENTED_COLUMN = 1;
     private static final int PRICE_COLUMN = 2;
 
-    private Transaction transaction;
+    private Rental transaction;
     private boolean editable;
 
-    public TransactionModel(Transaction transaction)
+    public TransactionModel(Rental transaction)
     {
         this.transaction = transaction;
         this.editable = false;
     }
 
-    public TransactionModel(Transaction transaction, boolean editable)
+    public TransactionModel(Rental transaction, boolean editable)
     {
         this.transaction = transaction;
         this.editable = editable;
@@ -77,7 +77,7 @@ public class TransactionModel extends AbstractTableModel
     @Override
     public int getRowCount()
     {
-        return transaction.getTransactionItems().size();
+        return transaction.getRentalItems().size();
     }
 
     @Override
@@ -86,13 +86,13 @@ public class TransactionModel extends AbstractTableModel
         switch (columnIndex)
         {
         case DESCRIPTION_COLUMN:
-            return transaction.getTransactionItems().get(rowIndex).getItem()
+            return transaction.getRentalItems().get(rowIndex).getItem()
                     .getDescription();
         case RENTED_COLUMN:
-            return transaction.getTransactionItems().get(rowIndex).isRented();
+            return transaction.getRentalItems().get(rowIndex).isRented();
         case PRICE_COLUMN:
             return new DecimalFormat("$#.00").format(transaction
-                    .getTransactionItems().get(rowIndex).getPrice() / 100);
+                    .getRentalItems().get(rowIndex).getPrice() / 100);
         default:
             return null;
         }
@@ -102,7 +102,7 @@ public class TransactionModel extends AbstractTableModel
     public boolean isCellEditable(int rowIndex, int columnIndex)
     {
         if (editable && columnIndex == RENTED_COLUMN
-                && transaction.getTransactionItems().get(rowIndex).isRentable())
+                && transaction.getRentalItems().get(rowIndex).isRentable())
             return true;
         return false;
     }
@@ -112,7 +112,7 @@ public class TransactionModel extends AbstractTableModel
     {
         if (editable && columnIndex == RENTED_COLUMN)
         {
-            this.transaction.getTransactionItems().get(rowIndex)
+            this.transaction.getRentalItems().get(rowIndex)
                     .setRented((Boolean) aValue);
             this.fireTableCellUpdated(rowIndex, PRICE_COLUMN);
         }

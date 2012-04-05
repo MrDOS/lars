@@ -14,7 +14,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
 import lars.Account;
-import lars.Transaction;
+import lars.Rental;
 import lars.gui.TransactionModel;
 import lars.TaxCalculator;
 
@@ -35,23 +35,23 @@ public class CheckoutPanel extends JPanel implements ActionListener
     private JLabel subtotal;
     private JLabel tax;
     private JLabel total;
-    
-    private Transaction transaction;
 
-    public CheckoutPanel(Account account, Transaction transaction)
+    private Rental rental;
+
+    public CheckoutPanel(Account account, Rental rental)
     {
         this.setLayout(new GridBagLayout());
-        
-        this.transaction = transaction;
+
+        this.rental = rental;
 
         GridBagConstraints c = new GridBagConstraints();
-        model = new TransactionModel(transaction);
+        model = new TransactionModel(rental);
         JTable table = new JTable(model);
         JScrollPane scroll = new JScrollPane(table);
         c.gridx = 0;
         c.gridy = 0;
         this.add(scroll, c);
-        
+
         JPanel subtotalPanel = new JPanel();
 
         subtotalPanel.add(new JLabel("Subtotal:"), c);
@@ -62,7 +62,7 @@ public class CheckoutPanel extends JPanel implements ActionListener
         c.gridx = 0;
         c.gridy = 1;
         this.add(subtotalPanel, c);
-        
+
         JPanel taxPanel = new JPanel();
 
         taxPanel.add(new JLabel("Tax:"), c);
@@ -73,7 +73,7 @@ public class CheckoutPanel extends JPanel implements ActionListener
         c.gridx = 0;
         c.gridy = 2;
         this.add(taxPanel, c);
-        
+
         JPanel totalPanel = new JPanel();
 
         totalPanel.add(new JLabel("Total:"), c);
@@ -94,7 +94,7 @@ public class CheckoutPanel extends JPanel implements ActionListener
         c.gridx = 0;
         c.gridy = 6;
         this.add(toMenu, c);
-        
+
         updateSubtotal();
         updateTax();
         updateTotal();
@@ -102,23 +102,23 @@ public class CheckoutPanel extends JPanel implements ActionListener
         confirm.addActionListener(this);
         toMenu.addActionListener(this);
     }
-    
+
     private void updateSubtotal()
     {
-        this.subtotal.setText(new DecimalFormat("$#0.00")
-                .format(this.transaction.getTotalPrice() / 100));
+        this.subtotal.setText(new DecimalFormat("$#0.00").format(this.rental
+                .getTotalPrice() / 100));
     }
-    
+
     private void updateTax()
     {
-        this.tax.setText(new DecimalFormat("$#0.00")
-                .format(TaxCalculator.getTax(this.transaction.getTotalPrice()) / 100));
+        this.tax.setText(new DecimalFormat("$#0.00").format(TaxCalculator
+                .getTax(this.rental.getTotalPrice()) / 100));
     }
-    
+
     private void updateTotal()
     {
-        this.total.setText(new DecimalFormat("$#0.00")
-                .format(TaxCalculator.getTotalWithTax(this.transaction.getTotalPrice()) / 100));
+        this.total.setText(new DecimalFormat("$#0.00").format(TaxCalculator
+                .getTotalWithTax(this.rental.getTotalPrice()) / 100));
     }
 
     @Override

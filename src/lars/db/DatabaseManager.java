@@ -40,15 +40,15 @@ public class DatabaseManager
                     + e.getMessage());
         }
 
-        System.out.print("Initializing transactions... ");
+        System.out.print("Initializing rentals... ");
         try
         {
-            TransactionDatabase.createTable();
+            RentalDatabase.createTable();
             System.out.println("done.");
         }
         catch (SQLException e)
         {
-            System.err.println("Failed to create transactions table! "
+            System.err.println("Failed to create rentals table! "
                     + e.getMessage());
         }
 

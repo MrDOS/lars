@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 
 import lars.Account;
 import lars.LARS;
-import lars.Transaction;
+import lars.Rental;
 
 /**
  * Main kiosk interface.
@@ -55,7 +55,7 @@ public class KioskFrame extends JFrame
         this.validate();
     }
 
-    public void showCheckout(Account account, Transaction transaction)
+    public void showCheckout(Account account, Rental transaction)
     {
         this.setContentPane(new CheckoutPanel(account, transaction));
         this.validate();
