@@ -20,7 +20,7 @@ import lars.db.AccountDatabase;
 import lars.gui.AccountModel;
 
 /**
- * Frame for account management.
+ * Interface for accounts management.
  * 
  * @author Samuel Coleman, 100105709
  * @version 2012-04-03
@@ -36,6 +36,9 @@ public class AccountsFrame extends AdminInternalFrame implements ActionListener
 
     private List<Account> accounts;
 
+    /**
+     * Instantiate the frame.
+     */
     public AccountsFrame()
     {
         super("Accounts");
@@ -92,6 +95,9 @@ public class AccountsFrame extends AdminInternalFrame implements ActionListener
         return panel;
     }
 
+    /**
+     * Refresh the accounts data table.
+     */
     public void refresh()
     {
         try

@@ -25,17 +25,16 @@ import lars.Item;
 import lars.Rental;
 import lars.RentalItem;
 import lars.db.ItemDatabase;
-import lars.gui.MessageLabel;
-import lars.gui.TransactionModel;
+import lars.gui.RentalModel;
 
 /**
- * Transaction menu presented to a customer upon beginning a transaction.
+ * Rental menu presented to a customer upon beginning a rental.
  * 
  * @author Jeremy Wheaton, 100105823
  * @author Samuel Coleman, 100105709
- * @version 2012-04-02
+ * @version 2012-04-05
  */
-public class TransactionPanel extends JPanel implements ActionListener,
+public class RentalPanel extends JPanel implements ActionListener,
         FocusListener, TableModelListener
 {
     private static final long serialVersionUID = 1L;
@@ -43,7 +42,7 @@ public class TransactionPanel extends JPanel implements ActionListener,
     private Account account;
     private Rental transaction;
 
-    private MessageLabel messageLabel;
+    private JLabel messageLabel;
 
     private JTextField skuField;
     private JButton enter;
@@ -53,7 +52,13 @@ public class TransactionPanel extends JPanel implements ActionListener,
     private JButton checkout;
     private JButton toMenu;
 
-    public TransactionPanel(Account account)
+    /**
+     * Instantiate the panel.
+     * 
+     * @param account
+     *            the account to associate the rental with
+     */
+    public RentalPanel(Account account)
     {
         this.transaction = new Rental();
 
@@ -83,12 +88,12 @@ public class TransactionPanel extends JPanel implements ActionListener,
         c.gridy = 3;
         this.add(enter, c);
 
-        this.messageLabel = new MessageLabel();
+        this.messageLabel = new JLabel();
         c.gridx = 0;
         c.gridy = 4;
         this.add(messageLabel, c);
 
-        TableModel model = new TransactionModel(this.transaction, true);
+        TableModel model = new RentalModel(this.transaction, true);
         table = new JTable(model);
         c.gridx = 0;
         c.gridy = 5;
@@ -156,19 +161,19 @@ public class TransactionPanel extends JPanel implements ActionListener,
             }
             catch (NumberFormatException ex)
             {
-                this.messageLabel.setError("Invalid SKU!");
+                this.messageLabel.setText("Invalid SKU!");
             }
 
             try
             {
                 Item item = ItemDatabase.getItemBySku(sku);
-                RentalItem transItem = new RentalItem(item, false);
+                RentalItem transItem = new RentalItem(item);
                 transaction.addRentalItem(transItem);
-                this.messageLabel.setMessage("");
+                this.messageLabel.setText("");
             }
             catch (SQLException ex)
             {
-                this.messageLabel.setError("No such SKU!");
+                this.messageLabel.setText("No such SKU!");
             }
         }
         else if (e.getSource().equals(this.delete))

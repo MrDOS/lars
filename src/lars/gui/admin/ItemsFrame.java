@@ -25,7 +25,7 @@ import lars.gui.ItemModifierModel;
 import lars.gui.ItemTypeModel;
 
 /**
- * Frame for items and associated data management.
+ * Interface for items and associated data management.
  * 
  * @author Samuel Coleman, 100105709
  * @version 2012-04-04
@@ -52,6 +52,9 @@ public class ItemsFrame extends AdminInternalFrame implements ActionListener
     private JButton updateItemType;
     private JButton deleteItemType;
 
+    /**
+     * Instantiate the frame.
+     */
     public ItemsFrame()
     {
         super("Items");
@@ -208,6 +211,9 @@ public class ItemsFrame extends AdminInternalFrame implements ActionListener
         return panel;
     }
 
+    /**
+     * Refresh the data tables.
+     */
     public void refresh()
     {
         try
@@ -238,7 +244,8 @@ public class ItemsFrame extends AdminInternalFrame implements ActionListener
         {
             int row = this.itemTable.getSelectedRow();
             if (row >= 0)
-                new UpdateItemDialog(this, this.items.get(row)).setVisible(true);
+                new UpdateItemDialog(this, this.items.get(row))
+                        .setVisible(true);
         }
         else if (e.getSource().equals(deleteItem))
         {
@@ -270,7 +277,8 @@ public class ItemsFrame extends AdminInternalFrame implements ActionListener
         {
             int row = this.itemModifierTable.getSelectedRow();
             if (row >= 0)
-                new UpdateItemModifierDialog(this, this.modifiers.get(row)).setVisible(true);
+                new UpdateItemModifierDialog(this, this.modifiers.get(row))
+                        .setVisible(true);
         }
         else if (e.getSource().equals(deleteItemModifier))
         {
@@ -303,7 +311,8 @@ public class ItemsFrame extends AdminInternalFrame implements ActionListener
         {
             int row = this.itemTypeTable.getSelectedRow();
             if (row >= 0)
-                new UpdateItemTypeDialog(this, this.types.get(row)).setVisible(true);
+                new UpdateItemTypeDialog(this, this.types.get(row))
+                        .setVisible(true);
         }
         else if (e.getSource().equals(deleteItemType))
         {

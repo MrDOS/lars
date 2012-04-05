@@ -25,6 +25,9 @@ public class MenuPanel extends JPanel implements ActionListener
 
     private JButton checkoutItems;
 
+    /**
+     * Instantiate the panel.
+     */
     public MenuPanel()
     {
         this.setLayout(new GridBagLayout());

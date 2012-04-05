@@ -10,13 +10,19 @@ import java.util.List;
 import lars.Account;
 
 /**
- * Provide database access to accounts.
+ * Data storage of accounts.
  * 
  * @author Samuel Coleman, 100105709
  * @version 2012-04-04
  */
 public class AccountDatabase
 {
+    /**
+     * Get all accounts.
+     * 
+     * @return all accounts
+     * @throws SQLException
+     */
     public static List<Account> getAccounts() throws SQLException
     {
         List<Account> accounts = new ArrayList<Account>();
@@ -34,6 +40,15 @@ public class AccountDatabase
         return accounts;
     }
 
+    /**
+     * Get an account by its ID.
+     * 
+     * @param id
+     *            the account ID
+     * @return the account associated with the given ID
+     * @throws SQLException
+     *             in the event where no such account exists
+     */
     public static Account getAccountById(int id) throws SQLException
     {
         PreparedStatement ps = ConnectionManager
@@ -58,6 +73,14 @@ public class AccountDatabase
         }
     }
 
+    /**
+     * Insert an account.
+     * 
+     * @param account
+     *            the account
+     * @return the account with its new account ID
+     * @throws SQLException
+     */
     public static Account insertAccount(Account account) throws SQLException
     {
         PreparedStatement ps = ConnectionManager
@@ -86,6 +109,13 @@ public class AccountDatabase
         return account;
     }
 
+    /**
+     * Update an account.
+     * 
+     * @param account
+     *            the account
+     * @throws SQLException
+     */
     public static void updateAccount(Account account) throws SQLException
     {
         PreparedStatement ps = ConnectionManager
@@ -101,6 +131,13 @@ public class AccountDatabase
         ps.close();
     }
 
+    /**
+     * Delete an account.
+     * 
+     * @param account
+     *            the account
+     * @throws SQLException
+     */
     public static void deleteAccount(Account account) throws SQLException
     {
         PreparedStatement ps = ConnectionManager.getConnection()
@@ -111,6 +148,12 @@ public class AccountDatabase
         ps.close();
     }
 
+    /**
+     * Create the database table. <strong>Destructive; call only during initial
+     * system setup.</strong>
+     * 
+     * @throws SQLException
+     */
     public static void createTable() throws SQLException
     {
         Statement statement = ConnectionManager.getConnection()

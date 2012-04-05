@@ -19,7 +19,7 @@ import lars.ItemType;
 import lars.db.ItemDatabase;
 
 /**
- * Item type updating interface.
+ * Item type modification interface.
  * 
  * @author Jeremy Wheaton, 100105823
  * @version 2012-04-04
@@ -40,6 +40,14 @@ public class UpdateItemModifierDialog extends JDialog implements ActionListener
     private JButton save;
     private JButton cancel;
 
+    /**
+     * Instantiate the dialog.
+     * 
+     * @param parent
+     *            the parent frame
+     * @param itemModifier
+     *            the item modifier to be updated
+     */
     public UpdateItemModifierDialog(ItemsFrame parent, ItemModifier itemModifier)
     {
         super(AdminFrame.getInstance(), "Update Item Type");

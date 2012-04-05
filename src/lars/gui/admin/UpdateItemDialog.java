@@ -22,7 +22,7 @@ import lars.ItemType;
 import lars.db.ItemDatabase;
 
 /**
- * Item creation interface.
+ * Item modification interface.
  * 
  * @author Samuel Coleman, 100105709
  * @version 2012-04-04
@@ -45,6 +45,14 @@ public class UpdateItemDialog extends JDialog implements ActionListener
     private JButton save;
     private JButton cancel;
 
+    /**
+     * Instantiate the dialog.
+     * 
+     * @param parent
+     *            the parent frame
+     * @param item
+     *            the account to be updated
+     */
     public UpdateItemDialog(AdminInternalFrame parent, Item item)
     {
         super(AdminFrame.getInstance(), "Add Item");

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class describing Item. Price and RentalDuration of item are calculated based
- * on modifiers that have been added to the Item.
+ * Class describing a physical item, be it for rent or sale. Price and rental
+ * duration of item are calculated based on the item type and applied modifiers.
  * 
  * @author Jeremy Wheaton, 100105823
  * @author Samuel Coleman, 100105709
@@ -13,6 +13,9 @@ import java.util.List;
  */
 public class Item
 {
+    /**
+     * The expected maximum length of SKUs; to be used by text fields.
+     */
     public static final int SKU_LENGTH = 8;
 
     private List<ItemModifier> modifiers;
@@ -21,6 +24,18 @@ public class Item
     private String description;
     private int quantity;
 
+    /**
+     * Instantiate an item.
+     * 
+     * @param type
+     *            the item type
+     * @param sku
+     *            the item SKU
+     * @param description
+     *            the item description
+     * @param quantity
+     *            the total stock count
+     */
     public Item(ItemType type, int sku, String description, int quantity)
     {
         this.modifiers = new ArrayList<ItemModifier>();
@@ -30,6 +45,20 @@ public class Item
         this.quantity = quantity;
     }
 
+    /**
+     * Instantiate an item with modifiers.
+     * 
+     * @param modifiers
+     *            the item modifiers
+     * @param type
+     *            the item type
+     * @param sku
+     *            the item SKU
+     * @param description
+     *            the item description
+     * @param quantity
+     *            the total stock count
+     */
     public Item(List<ItemModifier> modifiers, ItemType type, int sku,
             String description, int quantity)
     {
@@ -77,61 +106,127 @@ public class Item
         return false;
     }
 
+    /**
+     * Get all applied item modifiers.
+     * 
+     * @return all applied item modifiers
+     */
     public List<ItemModifier> getModifiers()
     {
         return modifiers;
     }
 
+    /**
+     * Apply a set of item modifiers.
+     * 
+     * @param modifiers
+     *            a set of item modifiers
+     */
     public void setModifiers(List<ItemModifier> modifiers)
     {
         this.modifiers = modifiers;
     }
 
+    /**
+     * Apply an individual modifier.
+     * 
+     * @param modifier
+     *            a modifier to apply
+     */
     public void addModifier(ItemModifier modifier)
     {
         this.modifiers.add(modifier);
     }
 
+    /**
+     * Get the item type.
+     * 
+     * @return the item type
+     */
     public ItemType getType()
     {
         return type;
     }
 
+    /**
+     * Set the item type.
+     * 
+     * @param type
+     *            the item type
+     */
     public void setType(ItemType type)
     {
         this.type = type;
     }
 
+    /**
+     * Get the item SKU.
+     * 
+     * @return the item SKU
+     */
     public int getSku()
     {
         return sku;
     }
 
+    /**
+     * Set the item SKU.
+     * 
+     * @param sku
+     *            the item SKU
+     */
     public void setSku(int sku)
     {
         this.sku = sku;
     }
 
+    /**
+     * Get the item description.
+     * 
+     * @return the item description
+     */
     public String getDescription()
     {
         return description;
     }
 
+    /**
+     * Set the item description.
+     * 
+     * @param description
+     *            the item description
+     */
     public void setDescription(String description)
     {
         this.description = description;
     }
 
+    /**
+     * Get the total stock count.
+     * 
+     * @return the total stock count
+     */
     public int getQuantity()
     {
         return quantity;
     }
 
+    /**
+     * Set the total stock count.
+     * 
+     * @param quantity
+     *            the total stock count
+     */
     public void setQuantity(int quantity)
     {
         this.quantity = quantity;
     }
 
+    /**
+     * Get the purchase price, based on the item type and applied modifiers.
+     * 
+     * @return the purchase price
+     */
     public int getPurchasePrice()
     {
         int totalPrice = this.type.getPurchasePrice();
@@ -142,6 +237,11 @@ public class Item
         return totalPrice;
     }
 
+    /**
+     * Get the rental price, based on the item type and applied modifiers.
+     * 
+     * @return the rental price
+     */
     public int getRentalPrice()
     {
         int totalPrice = this.type.getRentalPrice();
@@ -152,6 +252,11 @@ public class Item
         return totalPrice;
     }
 
+    /**
+     * Get the rental duration, based on the item type and applied modifiers.
+     * 
+     * @return the rental duration
+     */
     public int getRentalDuration()
     {
         int totalDuration = this.type.getRentalDuration();

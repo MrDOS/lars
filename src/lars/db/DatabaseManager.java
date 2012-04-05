@@ -10,6 +10,10 @@ import java.sql.SQLException;
  */
 public class DatabaseManager
 {
+    /**
+     * Initialize the database tables. <strong>Destructive; call only during
+     * initial system setup.</strong>
+     */
     public static void createDatabase()
     {
         System.out.println("Initializing database.");

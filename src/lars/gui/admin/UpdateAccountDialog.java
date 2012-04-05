@@ -21,7 +21,7 @@ import lars.Account;
 import lars.db.AccountDatabase;
 
 /**
- * Account update interface.
+ * Account modification interface.
  * 
  * @author Jeremy Wheaton, 100105823
  * @version 2012-04-04
@@ -41,6 +41,14 @@ public class UpdateAccountDialog extends JDialog implements ActionListener
     private JButton save;
     private JButton cancel;
 
+    /**
+     * Instantiate the dialog.
+     * 
+     * @param parent
+     *            the parent frame
+     * @param account
+     *            the account to be updated
+     */
     public UpdateAccountDialog(AdminInternalFrame parent, Account account)
     {
         super(AdminFrame.getInstance(), "Add Account");

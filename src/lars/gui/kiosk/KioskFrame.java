@@ -35,6 +35,11 @@ public class KioskFrame extends JFrame
         this.showMenu();
     }
 
+    /**
+     * Get the frame instance.
+     * 
+     * @return the frame instance
+     */
     public static KioskFrame getInstance()
     {
         if (_instance == null)
@@ -43,27 +48,47 @@ public class KioskFrame extends JFrame
         return _instance;
     }
 
+    /**
+     * Show the main menu.
+     */
     public void showMenu()
     {
         this.setContentPane(new MenuPanel());
         this.validate();
     }
 
-    public void showTransaction(Account account)
-    {
-        this.setContentPane(new TransactionPanel(account));
-        this.validate();
-    }
-
-    public void showCheckout(Account account, Rental transaction)
-    {
-        this.setContentPane(new CheckoutPanel(account, transaction));
-        this.validate();
-    }
-    
+    /**
+     * Show the account login screen.
+     */
     public void showLogin()
     {
         this.setContentPane(new LoginPanel());
+        this.validate();
+    }
+
+    /**
+     * Show a new rental to be associated with the given account.
+     * 
+     * @param account
+     *            the account to associate the rental with
+     */
+    public void showRental(Account account)
+    {
+        this.setContentPane(new RentalPanel(account));
+        this.validate();
+    }
+
+    /**
+     * Show the checkout for a rental.
+     * 
+     * @param account
+     *            the account the rental is associated with
+     * @param rental
+     *            the rental to be checked out
+     */
+    public void showCheckout(Account account, Rental rental)
+    {
+        this.setContentPane(new CheckoutPanel(account, rental));
         this.validate();
     }
 }

@@ -40,6 +40,12 @@ public class AddAccountDialog extends JDialog implements ActionListener
     private JButton save;
     private JButton cancel;
 
+    /**
+     * Instantiate the dialog.
+     * 
+     * @param parent
+     *            the frame owning the dialog
+     */
     public AddAccountDialog(AdminInternalFrame parent)
     {
         super(AdminFrame.getInstance(), "Add Account");

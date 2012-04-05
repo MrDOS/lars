@@ -44,6 +44,14 @@ public class UpdateItemTypeDialog extends JDialog implements ActionListener
     private JButton save;
     private JButton cancel;
 
+    /**
+     * Instantiate the dialog.
+     * 
+     * @param parent
+     *            the parent frame
+     * @param itemType
+     *            the item type to be updated
+     */
     public UpdateItemTypeDialog(ItemsFrame parent, ItemType itemType)
     {
         super(AdminFrame.getInstance(), "Update Item Type");

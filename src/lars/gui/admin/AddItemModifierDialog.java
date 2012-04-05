@@ -27,7 +27,7 @@ public class AddItemModifierDialog extends JDialog implements ActionListener
 {
     private static final long serialVersionUID = 1L;
 
-    private ItemsFrame parent;
+    private AdminInternalFrame parent;
 
     private JTextField nameField;
     private JTextField purchasePriceField;
@@ -37,7 +37,13 @@ public class AddItemModifierDialog extends JDialog implements ActionListener
     private JButton save;
     private JButton cancel;
 
-    public AddItemModifierDialog(ItemsFrame parent)
+    /**
+     * Instantiate the dialog.
+     * 
+     * @param parent
+     *            the frame owning the dialog
+     */
+    public AddItemModifierDialog(AdminInternalFrame parent)
     {
         super(AdminFrame.getInstance(), "Add Item Modifier");
         this.setLocationByPlatform(true);

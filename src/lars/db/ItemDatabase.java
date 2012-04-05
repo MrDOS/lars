@@ -12,13 +12,22 @@ import lars.ItemModifier;
 import lars.ItemType;
 
 /**
- * Provide database access to items.
+ * Data storage of items.
  * 
  * @author Samuel Coleman, 100105709
  * @version 2012-04-04
  */
 public class ItemDatabase
 {
+    /**
+     * Get an account by its SKU.
+     * 
+     * @param sku
+     *            the SKU
+     * @return the item associated with the given SKU
+     * @throws SQLException
+     *             in the event where no such item exists
+     */
     public static Item getItemBySku(int sku) throws SQLException
     {
         PreparedStatement ps = ConnectionManager
@@ -47,6 +56,12 @@ public class ItemDatabase
         }
     }
 
+    /**
+     * Get all items.
+     * 
+     * @return all items
+     * @throws SQLException
+     */
     public static List<Item> getItems() throws SQLException
     {
         List<Item> items = new ArrayList<Item>();
@@ -68,6 +83,13 @@ public class ItemDatabase
         return items;
     }
 
+    /**
+     * Insert an item.
+     * 
+     * @param item
+     *            the item
+     * @throws SQLException
+     */
     public static void insertItem(Item item) throws SQLException
     {
         PreparedStatement ps = ConnectionManager
@@ -85,6 +107,15 @@ public class ItemDatabase
         applyItemModifiers(item);
     }
 
+    /**
+     * Update an item. Applicable for when the SKU has changed.
+     * 
+     * @param item
+     *            the item
+     * @param oldSku
+     *            the old SKU of the item
+     * @throws SQLException
+     */
     public static void updateItem(Item item, int oldSku) throws SQLException
     {
         PreparedStatement ps = ConnectionManager
@@ -104,6 +135,13 @@ public class ItemDatabase
         applyItemModifiers(item);
     }
 
+    /**
+     * Update an item.
+     * 
+     * @param item
+     *            the item
+     * @throws SQLException
+     */
     public static void updateItem(Item item) throws SQLException
     {
         updateItem(item, item.getSku());
@@ -121,6 +159,14 @@ public class ItemDatabase
         clearItemModifiers(item);
     }
 
+    /**
+     * Get all modifiers associated with an item.
+     * 
+     * @param item
+     *            the item
+     * @return all modifiers associated with the item
+     * @throws SQLException
+     */
     private static List<ItemModifier> getItemModifiersByItem(Item item)
             throws SQLException
     {
@@ -141,6 +187,13 @@ public class ItemDatabase
         return modifiers;
     }
 
+    /**
+     * Remove all modifiers associated with an item.
+     * 
+     * @param item
+     *            the item
+     * @throws SQLException
+     */
     private static void clearItemModifiers(Item item) throws SQLException
     {
         PreparedStatement ps = ConnectionManager.getConnection()
@@ -151,6 +204,13 @@ public class ItemDatabase
         ps.close();
     }
 
+    /**
+     * Store all modifiers associated with an item.
+     * 
+     * @param item
+     *            the item
+     * @throws SQLException
+     */
     private static void applyItemModifiers(Item item) throws SQLException
     {
         ConnectionManager.getConnection().createStatement()
@@ -170,6 +230,15 @@ public class ItemDatabase
                 .executeUpdate("COMMIT");
     }
 
+    /**
+     * Get an item modifier by its ID.
+     * 
+     * @param modifierId
+     *            the ID
+     * @return the item modifier associated with the given ID
+     * @throws SQLException
+     *             in the event where no such modifier exists
+     */
     public static ItemModifier getItemModifierById(int modifierId)
             throws SQLException
     {
@@ -195,6 +264,12 @@ public class ItemDatabase
         }
     }
 
+    /**
+     * Get all item modifiers.
+     * 
+     * @return all item modifiers
+     * @throws SQLException
+     */
     public static List<ItemModifier> getItemModifiers() throws SQLException
     {
         List<ItemModifier> modifiers = new ArrayList<ItemModifier>();
@@ -213,6 +288,14 @@ public class ItemDatabase
         return modifiers;
     }
 
+    /**
+     * Insert an item modifier.
+     * 
+     * @param modifier
+     *            the modifier
+     * @return the modifier with its new modifier ID
+     * @throws SQLException
+     */
     public static ItemModifier insertItemModifier(ItemModifier modifier)
             throws SQLException
     {
@@ -243,6 +326,13 @@ public class ItemDatabase
         return modifier;
     }
 
+    /**
+     * Update an item modifier.
+     * 
+     * @param modifier
+     *            the item modifier
+     * @throws SQLException
+     */
     public static void updateItemModifier(ItemModifier modifier)
             throws SQLException
     {
@@ -260,6 +350,13 @@ public class ItemDatabase
         ps.close();
     }
 
+    /**
+     * Delete an item modifier.
+     * 
+     * @param modifier
+     *            the item modifier
+     * @throws SQLException
+     */
     public static void deleteItemModifier(ItemModifier modifier)
             throws SQLException
     {
@@ -272,6 +369,15 @@ public class ItemDatabase
         ps.close();
     }
 
+    /**
+     * Get an item type by its ID.
+     * 
+     * @param id
+     *            the ID
+     * @return the item type associated with the given ID
+     * @throws SQLException
+     *             in the event where no such type exists
+     */
     public static ItemType getItemTypeById(int id) throws SQLException
     {
         PreparedStatement ps = ConnectionManager
@@ -297,6 +403,12 @@ public class ItemDatabase
         }
     }
 
+    /**
+     * Get all item types.
+     * 
+     * @return all item types
+     * @throws SQLException
+     */
     public static List<ItemType> getItemTypes() throws SQLException
     {
         List<ItemType> types = new ArrayList<ItemType>();
@@ -316,6 +428,14 @@ public class ItemDatabase
         return types;
     }
 
+    /**
+     * Insert an item type.
+     * 
+     * @param type
+     *            the item type
+     * @return the type with its new type ID
+     * @throws SQLException
+     */
     public static ItemType insertItemType(ItemType type) throws SQLException
     {
         PreparedStatement ps = ConnectionManager
@@ -347,6 +467,13 @@ public class ItemDatabase
         return type;
     }
 
+    /**
+     * Update an item type.
+     * 
+     * @param type
+     *            the item type
+     * @throws SQLException
+     */
     public static void updateItemType(ItemType type) throws SQLException
     {
         PreparedStatement ps = ConnectionManager
@@ -365,6 +492,13 @@ public class ItemDatabase
         ps.close();
     }
 
+    /**
+     * Delete an item type.
+     * 
+     * @param type
+     *            the item type
+     * @throws SQLException
+     */
     public static void deleteItemType(ItemType type) throws SQLException
     {
         PreparedStatement ps = ConnectionManager.getConnection()
@@ -375,6 +509,12 @@ public class ItemDatabase
         ps.close();
     }
 
+    /**
+     * Create the database table. <strong>Destructive; call only during initial
+     * system setup.</strong>
+     * 
+     * @throws SQLException
+     */
     public static void createTable() throws SQLException
     {
         Statement statement = ConnectionManager.getConnection()
@@ -388,8 +528,7 @@ public class ItemDatabase
                 .executeUpdate("CREATE TABLE Item(sku INTEGER PRIMARY KEY, typeId, description, quantity)");
         statement
                 .executeUpdate("CREATE TABLE ItemModifier(modifierId INTEGER PRIMARY KEY AUTOINCREMENT, name, purchasePrice, rentalPrice, rentalDuration)");
-        statement
-                .executeUpdate("CREATE TABLE ItemModifiers(sku, modifierId)");
+        statement.executeUpdate("CREATE TABLE ItemModifiers(sku, modifierId)");
         statement
                 .executeUpdate("CREATE TABLE ItemType(typeId INTEGER PRIMARY KEY AUTOINCREMENT, name, description, purchasePrice, rentable, rentalPrice, rentalDuration)");
         statement.close();

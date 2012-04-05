@@ -7,21 +7,28 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
+import javax.swing.JComponent;
 
 /**
- * Image-displaying JPanel.
+ * An automatically-sizing image display component.
  * 
  * @author Jeremy Wheaton, 100105823
  * @version 2012-04-02
  */
-public class ImagePanel extends JPanel
+public class ImagePanel extends JComponent
 {
     private static final long serialVersionUID = 1L;
 
     private BufferedImage image;
     private Dimension size;
 
+    /**
+     * Instantiate the component.
+     * 
+     * @param file
+     *            the path at which the image is located
+     * @throws IOException
+     */
     public ImagePanel(String file) throws IOException
     {
         image = ImageIO.read(new File(file));

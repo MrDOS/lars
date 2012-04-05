@@ -15,7 +15,6 @@ import javax.swing.JTextField;
 
 import lars.Account;
 import lars.db.AccountDatabase;
-import lars.gui.MessageLabel;
 
 /**
  * Login GUI panel to log into customer account.
@@ -30,7 +29,7 @@ public class LoginPanel extends JPanel implements ActionListener, FocusListener
     private JTextField accountField;
     private JButton confirm;
     private JButton toMenu;
-    private MessageLabel message;
+    private JLabel message;
 
     public LoginPanel()
     {
@@ -42,7 +41,7 @@ public class LoginPanel extends JPanel implements ActionListener, FocusListener
         c.gridy = 0;
         this.add(new JLabel("Please input your account ID"), c);
 
-        message = new MessageLabel();
+        message = new JLabel();
         c.gridx = 0;
         c.gridy = 1;
         this.add(message, c);
@@ -83,15 +82,15 @@ public class LoginPanel extends JPanel implements ActionListener, FocusListener
             {
                 int id = Integer.valueOf(accountField.getText());
                 Account account = AccountDatabase.getAccountById(id);
-                KioskFrame.getInstance().showTransaction(account);
+                KioskFrame.getInstance().showRental(account);
             }
             catch (NumberFormatException ex)
             {
-                this.message.setError("Invalid account ID!");
+                this.message.setText("Invalid account ID!");
             }
             catch (SQLException ex)
             {
-                this.message.setError("No such account!");
+                this.message.setText("No such account!");
             }
         }
         else if (e.getSource().equals(toMenu))

@@ -12,7 +12,7 @@ import lars.Rental;
  * @author Jeremy Wheaton, 100105823
  * @version 2012-04-03
  */
-public class TransactionModel extends AbstractTableModel
+public class RentalModel extends AbstractTableModel
 {
     private static final long serialVersionUID = 1L;
 
@@ -21,19 +21,33 @@ public class TransactionModel extends AbstractTableModel
     private static final int RENTED_COLUMN = 1;
     private static final int PRICE_COLUMN = 2;
 
-    private Rental transaction;
+    private Rental rental;
     private boolean editable;
 
-    public TransactionModel(Rental transaction)
+    /**
+     * Create the model.
+     * 
+     * @param rental
+     *            the rental data to model
+     * @param editable
+     *            whether or not the cells should be editable
+     */
+    public RentalModel(Rental rental, boolean editable)
     {
-        this.transaction = transaction;
-        this.editable = false;
+        this.rental = rental;
+        this.editable = editable;
     }
 
-    public TransactionModel(Rental transaction, boolean editable)
+    /**
+     * Create the model.
+     * 
+     * @param rental
+     *            the rental data to model
+     */
+    public RentalModel(Rental rental)
     {
-        this.transaction = transaction;
-        this.editable = editable;
+        this.rental = rental;
+        this.editable = false;
     }
 
     @Override
@@ -77,7 +91,7 @@ public class TransactionModel extends AbstractTableModel
     @Override
     public int getRowCount()
     {
-        return transaction.getRentalItems().size();
+        return rental.getRentalItems().size();
     }
 
     @Override
@@ -86,12 +100,12 @@ public class TransactionModel extends AbstractTableModel
         switch (columnIndex)
         {
         case DESCRIPTION_COLUMN:
-            return transaction.getRentalItems().get(rowIndex).getItem()
+            return rental.getRentalItems().get(rowIndex).getItem()
                     .getDescription();
         case RENTED_COLUMN:
-            return transaction.getRentalItems().get(rowIndex).isRented();
+            return rental.getRentalItems().get(rowIndex).isRented();
         case PRICE_COLUMN:
-            return new DecimalFormat("$#0.00").format((double) transaction
+            return new DecimalFormat("$#0.00").format((double) rental
                     .getRentalItems().get(rowIndex).getPrice() / 100);
         default:
             return null;
@@ -102,7 +116,7 @@ public class TransactionModel extends AbstractTableModel
     public boolean isCellEditable(int rowIndex, int columnIndex)
     {
         if (editable && columnIndex == RENTED_COLUMN
-                && transaction.getRentalItems().get(rowIndex).isRentable())
+                && rental.getRentalItems().get(rowIndex).isRentable())
             return true;
         return false;
     }
@@ -112,7 +126,7 @@ public class TransactionModel extends AbstractTableModel
     {
         if (editable && columnIndex == RENTED_COLUMN)
         {
-            this.transaction.getRentalItems().get(rowIndex)
+            this.rental.getRentalItems().get(rowIndex)
                     .setRented((Boolean) aValue);
             this.fireTableCellUpdated(rowIndex, PRICE_COLUMN);
         }

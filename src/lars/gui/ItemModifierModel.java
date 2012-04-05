@@ -24,9 +24,15 @@ public class ItemModifierModel extends AbstractTableModel
 
     private List<ItemModifier> modifiers;
 
-    public ItemModifierModel(List<ItemModifier> types)
+    /**
+     * Create the model.
+     * 
+     * @param modifiers
+     *            the item modifier data to model
+     */
+    public ItemModifierModel(List<ItemModifier> modifiers)
     {
-        this.modifiers = types;
+        this.modifiers = modifiers;
     }
 
     @Override

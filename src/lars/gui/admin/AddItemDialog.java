@@ -43,6 +43,12 @@ public class AddItemDialog extends JDialog implements ActionListener
     private JButton save;
     private JButton cancel;
 
+    /**
+     * Instantiate the dialog.
+     * 
+     * @param parent
+     *            the frame owning the dialog
+     */
     public AddItemDialog(AdminInternalFrame parent)
     {
         super(AdminFrame.getInstance(), "Add Item");

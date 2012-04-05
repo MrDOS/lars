@@ -29,6 +29,9 @@ public class LoginDialog extends JDialog implements ActionListener
     private JTextField accountField;
     private JButton login;
 
+    /**
+     * Instantiate the dialog.
+     */
     public LoginDialog()
     {
         super(AdminFrame.getInstance(), "Login", true);

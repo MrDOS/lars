@@ -8,16 +8,29 @@ import lars.gui.admin.AdminFrame;
 import lars.gui.kiosk.KioskFrame;
 
 /**
- * Main entry point.
+ * Welcome to LARS: it's Like a Rental System.
  * 
+ * @author Jeremy Wheaton, 100105823
  * @author Samuel Coleman, 100105709
- * @version 2012-04-03
+ * @version 2012-04-04
  */
 public class LARS
 {
+    /**
+     * The application name.
+     */
     public static final String name = "LARS";
+    /**
+     * The application version.
+     */
     public static final String version = "1.0.0";
 
+    /**
+     * The main entry point.
+     * 
+     * @param args
+     *            command line arguments
+     */
     public static void main(String[] args)
     {
         try

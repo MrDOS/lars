@@ -8,7 +8,7 @@ import lars.Item;
 import lars.ItemType;
 
 /**
- * Table model for @{Item}s.
+ * Table model for {@link Item}s.
  * 
  * @author Samuel Coleman, 100105709
  * @version 2012-04-03
@@ -27,12 +27,26 @@ public class ItemModel extends AbstractTableModel
     private List<Item> items;
     private boolean editable = false;
 
+    /**
+     * Create the model.
+     * 
+     * @param items
+     *            item data to model
+     * @param editable
+     *            whether or not the cells should be editable
+     */
     public ItemModel(List<Item> items, boolean editable)
     {
         this.items = items;
         this.editable = editable;
     }
 
+    /**
+     * Create the model.
+     * 
+     * @param items
+     *            item data to model
+     */
     public ItemModel(List<Item> items)
     {
         this.items = items;

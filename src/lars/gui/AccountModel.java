@@ -24,6 +24,12 @@ public class AccountModel extends AbstractTableModel
 
     private List<Account> accounts;
 
+    /**
+     * Create the model.
+     * 
+     * @param accounts
+     *            account data to model
+     */
     public AccountModel(List<Account> accounts)
     {
         this.accounts = accounts;

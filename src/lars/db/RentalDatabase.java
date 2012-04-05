@@ -12,7 +12,7 @@ import lars.Rental;
 import lars.RentalItem;
 
 /**
- * Provide database access to rentals.
+ * Data storage of rentals.
  * 
  * @author Jeremy Wheaton, 100105823
  * @author Samuel Coleman, 100105709
@@ -20,10 +20,18 @@ import lars.RentalItem;
  */
 public class RentalDatabase
 {
+    /**
+     * Get all rentals associated with an account.
+     * 
+     * @param account
+     *            the account
+     * @return all rentals associated with the account
+     * @throws SQLException
+     */
     public static List<Rental> getRentalsByAccount(Account account)
             throws SQLException
     {
-        List<Rental> transactions = new ArrayList<Rental>();
+        List<Rental> rentals = new ArrayList<Rental>();
         PreparedStatement ps = ConnectionManager
                 .getConnection()
                 .prepareStatement(
@@ -33,16 +41,25 @@ public class RentalDatabase
         ResultSet rs = ps.executeQuery();
         while (rs.next())
         {
-            Rental transaction = new Rental(rs.getInt(1), rs.getDate(2));
-            transaction.setRentalItems(getRentalItemsByRental(transaction));
-            transactions.add(transaction);
+            Rental rental = new Rental(rs.getInt(1), rs.getDate(2));
+            rental.setRentalItems(getRentalItemsByRental(rental));
+            rentals.add(rental);
         }
         rs.close();
         ps.close();
 
-        return transactions;
+        return rentals;
     }
 
+    /**
+     * Get a rental by its ID.
+     * 
+     * @param id
+     *            the ID
+     * @return the rental associated with the given ID
+     * @throws SQLException
+     *             in the event where no such rental exists
+     */
     public static Rental getRentalById(int id) throws SQLException
     {
         PreparedStatement ps = ConnectionManager.getConnection()
@@ -55,9 +72,9 @@ public class RentalDatabase
         {
             if (rs.next())
             {
-                Rental transaction = new Rental(rs.getInt(1), rs.getDate(2));
-                transaction.setRentalItems(getRentalItemsByRental(transaction));
-                return transaction;
+                Rental rental = new Rental(rs.getInt(1), rs.getDate(2));
+                rental.setRentalItems(getRentalItemsByRental(rental));
+                return rental;
             }
             else
                 throw new SQLException("No matching item.");
@@ -69,11 +86,19 @@ public class RentalDatabase
         }
     }
 
-    public static Rental insertRental(Rental transaction) throws SQLException
+    /**
+     * Insert a rental.
+     * 
+     * @param rental
+     *            the rental
+     * @return the rental with its new rental ID
+     * @throws SQLException
+     */
+    public static Rental insertRental(Rental rental) throws SQLException
     {
         PreparedStatement ps = ConnectionManager.getConnection()
                 .prepareStatement("INSERT INTO Rental(date) VALUES(?)");
-        ps.setDate(1, transaction.getDate());
+        ps.setDate(1, rental.getDate());
 
         ps.executeUpdate();
         ResultSet rs = ps.getGeneratedKeys();
@@ -81,8 +106,8 @@ public class RentalDatabase
         {
             if (rs.next())
             {
-                transaction.setRentalId(rs.getInt(1));
-                applyRentalItems(transaction);
+                rental.setRentalId(rs.getInt(1));
+                applyRentalItems(rental);
             }
             else
                 throw new SQLException("Could not insert rental!");
@@ -93,37 +118,60 @@ public class RentalDatabase
             ps.close();
         }
 
-        return transaction;
+        return rental;
     }
 
-    public static void updateRental(Rental transaction) throws SQLException
+    /**
+     * Update a rental.
+     * 
+     * @param rental
+     *            the rental
+     * @throws SQLException
+     */
+    public static void updateRental(Rental rental) throws SQLException
     {
         PreparedStatement ps = ConnectionManager.getConnection()
                 .prepareStatement(
                         "UPDATE Rental SET date = ? WHERE rentalId = ?");
-        ps.setDate(1, transaction.getDate());
-        ps.setInt(2, transaction.getRentalId());
+        ps.setDate(1, rental.getDate());
+        ps.setInt(2, rental.getRentalId());
 
         ps.executeUpdate();
         ps.close();
 
-        clearRentalItems(transaction);
-        applyRentalItems(transaction);
+        clearRentalItems(rental);
+        applyRentalItems(rental);
     }
 
-    public static void deleteRental(Rental transaction) throws SQLException
+    /**
+     * Delete a rental.
+     * 
+     * @param rental
+     *            the rental
+     * @throws SQLException
+     */
+    public static void deleteRental(Rental rental) throws SQLException
     {
         PreparedStatement ps = ConnectionManager.getConnection()
                 .prepareStatement("DELETE FROM Rental WHERE rentalId = ?");
-        ps.setInt(1, transaction.getRentalId());
+        ps.setInt(1, rental.getRentalId());
 
         ps.executeUpdate();
         ps.close();
 
-        clearRentalItems(transaction);
+        clearRentalItems(rental);
     }
 
-    private static List<RentalItem> getRentalItemsByRental(Rental transaction)
+    /**
+     * Get all rental items by their associated rental.
+     * 
+     * @param rental
+     *            the rental
+     * @return all rental items associated with the given rental
+     * @throws SQLException
+     *             in the event where no such rental exists
+     */
+    private static List<RentalItem> getRentalItemsByRental(Rental rental)
             throws SQLException
     {
         List<RentalItem> RentalItems = new ArrayList<RentalItem>();
@@ -131,7 +179,7 @@ public class RentalDatabase
                 .getConnection()
                 .prepareStatement(
                         "SELECT RentalItem.sku, RentalItem.rented, RentalItem.due, RentalItem.returned FROM RentalItem WHERE RentalItem.rentalId = ?");
-        ps.setInt(1, transaction.getRentalId());
+        ps.setInt(1, rental.getRentalId());
 
         ResultSet rs = ps.executeQuery();
         while (rs.next())
@@ -144,19 +192,31 @@ public class RentalDatabase
         return RentalItems;
     }
 
-    private static void clearRentalItems(Rental transaction)
-            throws SQLException
+    /**
+     * Remove all items associated with a rental.
+     * 
+     * @param rental
+     *            the rental
+     * @throws SQLException
+     */
+    private static void clearRentalItems(Rental rental) throws SQLException
     {
         PreparedStatement ps = ConnectionManager.getConnection()
                 .prepareStatement("DELETE FROM RentalItem WHERE rentalId = ?");
-        ps.setInt(1, transaction.getRentalId());
+        ps.setInt(1, rental.getRentalId());
 
         ps.executeUpdate();
         ps.close();
     }
 
-    private static void applyRentalItems(Rental transaction)
-            throws SQLException
+    /**
+     * Store all items associated with a rental.
+     * 
+     * @param rental
+     *            the rental
+     * @throws SQLException
+     */
+    private static void applyRentalItems(Rental rental) throws SQLException
     {
         ConnectionManager.getConnection().createStatement()
                 .executeUpdate("BEGIN");
@@ -164,9 +224,9 @@ public class RentalDatabase
                 .getConnection()
                 .prepareStatement(
                         "INSERT INTO RentalItem(rentalId, sku, rented, due, returned) VALUES (?, ?, ?, ?, ?)");
-        for (RentalItem RentalItem : transaction.getRentalItems())
+        for (RentalItem RentalItem : rental.getRentalItems())
         {
-            ps.setInt(1, transaction.getRentalId());
+            ps.setInt(1, rental.getRentalId());
             ps.setInt(2, RentalItem.getItem().getSku());
             ps.setBoolean(3, RentalItem.isRented());
             ps.setDate(4, RentalItem.getDueDate());
@@ -178,6 +238,12 @@ public class RentalDatabase
                 .executeUpdate("COMMIT");
     }
 
+    /**
+     * Create the database table. <strong>Destructive; call only during initial
+     * system setup.</strong>
+     * 
+     * @throws SQLException
+     */
     public static void createTable() throws SQLException
     {
         Statement statement = ConnectionManager.getConnection()

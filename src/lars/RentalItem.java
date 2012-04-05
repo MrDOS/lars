@@ -3,7 +3,9 @@ package lars;
 import java.sql.Date;
 
 /**
- * Class describing a single transaction item.
+ * An item from a rental, describing its rental state and due date. Due date is
+ * expected to be consistent with that given by the item, but doesn't
+ * necessarily have to be (perhaps due to modification by a manager).
  * 
  * @author Jeremy Wheaton, 100105823
  * @author Samuel Coleman, 100105709
@@ -18,6 +20,18 @@ public class RentalItem
     private Date due = null;
     private boolean returned = false;
 
+    /**
+     * Instantiate a rental item.
+     * 
+     * @param item
+     *            the item
+     * @param rented
+     *            whether or not the item is rented
+     * @param due
+     *            the item due date, if it is rented
+     * @param returned
+     *            whether or not the item has been returned
+     */
     public RentalItem(Item item, boolean rented, Date due, boolean returned)
     {
         this.item = item;
@@ -29,11 +43,15 @@ public class RentalItem
         }
     }
 
-    public RentalItem(Item item, boolean rented)
+    /**
+     * Instantiate a rental item.
+     * 
+     * @param item
+     *            the item
+     */
+    public RentalItem(Item item)
     {
         this.item = item;
-        if (this.item.getType().isRentable())
-            this.rented = rented;
     }
 
     @Override
@@ -59,63 +77,114 @@ public class RentalItem
         return false;
     }
 
+    /**
+     * Get the associated {@link Item}.
+     * 
+     * @return the associated {@link Item}
+     */
     public Item getItem()
     {
         return item;
     }
 
+    /**
+     * Get whether or not the item is rentable.
+     * 
+     * @return whether or not the item is rentable
+     */
     public boolean isRentable()
     {
         return item.getType().isRentable();
     }
 
+    /**
+     * Get whether or not the item is rented.
+     * 
+     * @return whether or not the item is rented
+     */
     public boolean isRented()
     {
         return rented;
     }
 
+    /**
+     * Set whether or not the item is rented.
+     * 
+     * @param rented
+     *            whether or not the item is rented
+     */
     public void setRented(boolean rented)
     {
         if (this.item.getType().isRentable())
             this.rented = rented;
     }
 
+    /**
+     * Reset the due date of the item based on the item type and modifiers and
+     * the current time.
+     */
     public void calculateDueDate()
     {
-        int totalDuration = this.item.getType().getRentalDuration();
-        for (ItemModifier modifier : this.item.getModifiers())
-            totalDuration += modifier.getRentalDuration();
-
         this.due = new Date(((System.currentTimeMillis() + MILLIS_PER_DAY
-                * totalDuration) / MILLIS_PER_DAY)
+                * this.item.getRentalDuration()) / MILLIS_PER_DAY)
                 * MILLIS_PER_DAY);
     }
 
+    /**
+     * Get the item due date. Returns null when the item is not rented.
+     * 
+     * @return the item due date
+     */
     public Date getDueDate()
     {
+        if (!this.rented)
+            return null;
         if (due == null)
             this.calculateDueDate();
 
         return due;
     }
 
+    /**
+     * Manually set the item due date. Has no effect if the item is not rented.
+     * 
+     * @param due
+     *            the item due date
+     */
     public void setDueDate(Date due)
     {
-        if (this.item.getType().isRentable())
+        if (this.rented)
             this.due = due;
     }
 
+    /**
+     * Get whether or not the item has been returned.
+     * 
+     * @return whether or not the item has been returned
+     */
     public boolean isReturned()
     {
         return returned;
     }
 
+    /**
+     * Set whether or not the item has been returned. Has no effect if the item
+     * is not rented.
+     * 
+     * @param returned
+     *            whether or not the item has been returned
+     */
     public void setReturned(boolean returned)
     {
-        if (this.item.getType().isRentable())
+        if (this.rented)
             this.returned = returned;
     }
 
+    /**
+     * Get the price of the item, dependent on whether it's rented or not.
+     * 
+     * @return the price of the item
+     */
     public int getPrice()
     {
         if (this.rented)

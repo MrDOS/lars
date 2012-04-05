@@ -17,6 +17,11 @@ public class ConnectionManager
     private static final String DRIVER = "org.sqlite.JDBC";
     private static final String URL = "jdbc:sqlite:lars.db";
 
+    /**
+     * Get a connection to the database.
+     * 
+     * @return a connection to the database
+     */
     public static Connection getConnection()
     {
         if (connection == null)

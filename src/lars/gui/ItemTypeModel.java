@@ -26,6 +26,12 @@ public class ItemTypeModel extends AbstractTableModel
 
     private List<ItemType> types;
 
+    /**
+     * Create the model.
+     * 
+     * @param types
+     *            the item type data to model
+     */
     public ItemTypeModel(List<ItemType> types)
     {
         this.types = types;

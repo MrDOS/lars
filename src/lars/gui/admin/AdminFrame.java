@@ -79,6 +79,11 @@ public class AdminFrame extends JFrame implements ActionListener
         logout.addActionListener(this);
     }
 
+    /**
+     * Get the frame instance.
+     * 
+     * @return the frame instance
+     */
     public static AdminFrame getInstance()
     {
         if (_instance == null)
@@ -87,11 +92,22 @@ public class AdminFrame extends JFrame implements ActionListener
         return _instance;
     }
 
+    /**
+     * Get the account currently logged into the interface.
+     * 
+     * @return the account currently logged into the interface
+     */
     public Account getAccount()
     {
         return account;
     }
 
+    /**
+     * Set the account currently logged into the interface.
+     * 
+     * @param account
+     *            the account currently logged into the interface
+     */
     public void setAccount(Account account)
     {
         this.account = account;
@@ -149,6 +165,9 @@ public class AdminFrame extends JFrame implements ActionListener
         return desktop;
     }
 
+    /**
+     * Show the login dialog.
+     */
     public void login()
     {
         JDialog login = new LoginDialog();
@@ -160,6 +179,9 @@ public class AdminFrame extends JFrame implements ActionListener
         }
     }
 
+    /**
+     * Log the current user out.
+     */
     private void logout()
     {
         this.account = null;
