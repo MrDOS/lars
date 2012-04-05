@@ -22,10 +22,18 @@ public class TransactionModel extends AbstractTableModel
     private static final int PRICE_COLUMN = 2;
 
     private Transaction transaction;
+    private boolean editable;
 
     public TransactionModel(Transaction transaction)
     {
         this.transaction = transaction;
+        this.editable = false;
+    }
+
+    public TransactionModel(Transaction transaction, boolean editable)
+    {
+        this.transaction = transaction;
+        this.editable = editable;
     }
 
     @Override
@@ -83,7 +91,8 @@ public class TransactionModel extends AbstractTableModel
         case RENTED_COLUMN:
             return transaction.getTransactionItems().get(rowIndex).isRented();
         case PRICE_COLUMN:
-            return new DecimalFormat("$#.00").format(transaction.getTransactionItems().get(rowIndex).getPrice() / 100);
+            return new DecimalFormat("$#.00").format(transaction
+                    .getTransactionItems().get(rowIndex).getPrice() / 100);
         default:
             return null;
         }
@@ -92,7 +101,7 @@ public class TransactionModel extends AbstractTableModel
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex)
     {
-        if (columnIndex == RENTED_COLUMN
+        if (editable && columnIndex == RENTED_COLUMN
                 && transaction.getTransactionItems().get(rowIndex).isRentable())
             return true;
         return false;
@@ -101,7 +110,7 @@ public class TransactionModel extends AbstractTableModel
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex)
     {
-        if (columnIndex == RENTED_COLUMN)
+        if (editable && columnIndex == RENTED_COLUMN)
         {
             this.transaction.getTransactionItems().get(rowIndex)
                     .setRented((Boolean) aValue);

@@ -3,6 +3,7 @@ package lars;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
+import lars.db.DatabaseManager;
 import lars.gui.admin.AdminFrame;
 import lars.gui.kiosk.KioskFrame;
 
@@ -33,6 +34,10 @@ public class LARS
             JFrame frame = AdminFrame.getInstance();
             frame.setVisible(true);
             ((AdminFrame) frame).login();
+        }
+        else if (args.length > 0 && args[0].equals("-setup"))
+        {
+            DatabaseManager.createDatabase();
         }
         else
         {

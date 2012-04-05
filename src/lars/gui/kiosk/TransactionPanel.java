@@ -88,7 +88,7 @@ public class TransactionPanel extends JPanel implements ActionListener,
         c.gridy = 4;
         this.add(messageLabel, c);
 
-        TableModel model = new TransactionModel(this.transaction);
+        TableModel model = new TransactionModel(this.transaction, true);
         table = new JTable(model);
         c.gridx = 0;
         c.gridy = 5;

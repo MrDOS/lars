@@ -3,6 +3,7 @@ package lars.db;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,15 +28,23 @@ public class ItemDatabase
         ps.setInt(1, sku);
 
         ResultSet rs = ps.executeQuery();
-        if (rs.next())
+        try
         {
-            Item item = new Item(getItemTypeById(rs.getInt(1)), rs.getInt(2),
-                    rs.getString(3), rs.getInt(4));
-            item.setModifiers(getItemModifiersByItem(item));
-            return item;
+            if (rs.next())
+            {
+                Item item = new Item(getItemTypeById(rs.getInt(1)),
+                        rs.getInt(2), rs.getString(3), rs.getInt(4));
+                item.setModifiers(getItemModifiersByItem(item));
+                return item;
+            }
+            else
+                throw new SQLException("No matching item.");
         }
-        else
-            throw new SQLException("No matching item.");
+        finally
+        {
+            rs.close();
+            ps.close();
+        }
     }
 
     public static List<Item> getItems() throws SQLException
@@ -53,6 +62,8 @@ public class ItemDatabase
             item.setModifiers(getItemModifiersByItem(item));
             items.add(item);
         }
+        rs.close();
+        ps.close();
 
         return items;
     }
@@ -69,6 +80,7 @@ public class ItemDatabase
         ps.setInt(4, item.getQuantity());
 
         ps.executeUpdate();
+        ps.close();
 
         applyItemModifiers(item);
     }
@@ -86,6 +98,7 @@ public class ItemDatabase
         ps.setInt(5, oldSku);
 
         ps.executeUpdate();
+        ps.close();
 
         clearItemModifiers(item);
         applyItemModifiers(item);
@@ -103,6 +116,7 @@ public class ItemDatabase
         ps.setInt(1, item.getSku());
 
         ps.executeUpdate();
+        ps.close();
 
         clearItemModifiers(item);
     }
@@ -121,6 +135,8 @@ public class ItemDatabase
         while (rs.next())
             modifiers.add(new ItemModifier(rs.getInt(1), rs.getString(2), rs
                     .getInt(3), rs.getInt(4), rs.getInt(5)));
+        rs.close();
+        ps.close();
 
         return modifiers;
     }
@@ -132,10 +148,13 @@ public class ItemDatabase
         ps.setInt(1, item.getSku());
 
         ps.executeUpdate();
+        ps.close();
     }
 
     private static void applyItemModifiers(Item item) throws SQLException
     {
+        ConnectionManager.getConnection().createStatement()
+                .executeUpdate("BEGIN");
         PreparedStatement ps = ConnectionManager
                 .getConnection()
                 .prepareStatement(
@@ -146,6 +165,9 @@ public class ItemDatabase
             ps.setInt(2, modifier.getModifierId());
             ps.executeUpdate();
         }
+        ps.close();
+        ConnectionManager.getConnection().createStatement()
+                .executeUpdate("COMMIT");
     }
 
     public static ItemModifier getItemModifierById(int modifierId)
@@ -158,11 +180,19 @@ public class ItemDatabase
         ps.setInt(1, modifierId);
 
         ResultSet rs = ps.executeQuery();
-        if (rs.next())
-            return new ItemModifier(rs.getInt(1), rs.getString(2),
-                    rs.getInt(3), rs.getInt(4), rs.getInt(5));
-        else
-            throw new SQLException("No matching item modifier.");
+        try
+        {
+            if (rs.next())
+                return new ItemModifier(rs.getInt(1), rs.getString(2),
+                        rs.getInt(3), rs.getInt(4), rs.getInt(5));
+            else
+                throw new SQLException("No matching item modifier.");
+        }
+        finally
+        {
+            rs.close();
+            ps.close();
+        }
     }
 
     public static List<ItemModifier> getItemModifiers() throws SQLException
@@ -177,6 +207,9 @@ public class ItemDatabase
         while (rs.next())
             modifiers.add(new ItemModifier(rs.getInt(1), rs.getString(1), rs
                     .getInt(3), rs.getInt(4), rs.getInt(5)));
+        rs.close();
+        ps.close();
+
         return modifiers;
     }
 
@@ -195,10 +228,18 @@ public class ItemDatabase
 
         ps.executeUpdate();
         ResultSet rs = ps.getGeneratedKeys();
-        if (rs.next())
-            modifier.setModifierId(rs.getInt(1));
-        else
-            throw new SQLException("Could not insert modifier!");
+        try
+        {
+            if (rs.next())
+                modifier.setModifierId(rs.getInt(1));
+            else
+                throw new SQLException("Could not insert modifier!");
+        }
+        finally
+        {
+            rs.close();
+            ps.close();
+        }
 
         return modifier;
     }
@@ -217,6 +258,7 @@ public class ItemDatabase
         ps.setInt(5, modifier.getModifierId());
 
         ps.executeUpdate();
+        ps.close();
     }
 
     public static void deleteItemModifier(ItemModifier modifier)
@@ -228,6 +270,7 @@ public class ItemDatabase
         ps.setInt(1, modifier.getModifierId());
 
         ps.executeUpdate();
+        ps.close();
     }
 
     public static ItemType getItemTypeById(int id) throws SQLException
@@ -239,11 +282,20 @@ public class ItemDatabase
         ps.setInt(1, id);
 
         ResultSet rs = ps.executeQuery();
-        if (rs.next())
-            return new ItemType(rs.getInt(1), rs.getString(2), rs.getString(3),
-                    rs.getInt(4), rs.getBoolean(5), rs.getInt(6), rs.getInt(7));
-        else
-            throw new SQLException("No matching item type!");
+        try
+        {
+            if (rs.next())
+                return new ItemType(rs.getInt(1), rs.getString(2),
+                        rs.getString(3), rs.getInt(4), rs.getBoolean(5),
+                        rs.getInt(6), rs.getInt(7));
+            else
+                throw new SQLException("No matching item type!");
+        }
+        finally
+        {
+            rs.close();
+            ps.close();
+        }
     }
 
     public static List<ItemType> getItemTypes() throws SQLException
@@ -259,6 +311,9 @@ public class ItemDatabase
             types.add(new ItemType(rs.getInt(1), rs.getString(2), rs
                     .getString(3), rs.getInt(4), rs.getBoolean(5),
                     rs.getInt(6), rs.getInt(7)));
+        rs.close();
+        ps.close();
+
         return types;
     }
 
@@ -278,10 +333,18 @@ public class ItemDatabase
 
         ps.executeUpdate();
         ResultSet rs = ps.getGeneratedKeys();
-        if (rs.next())
-            type.setTypeId(rs.getInt(1));
-        else
-            throw new SQLException("Could not insert type!");
+        try
+        {
+            if (rs.next())
+                type.setTypeId(rs.getInt(1));
+            else
+                throw new SQLException("Could not insert type!");
+        }
+        finally
+        {
+            rs.close();
+            ps.close();
+        }
 
         return type;
     }
@@ -301,6 +364,7 @@ public class ItemDatabase
         ps.setInt(7, type.getTypeId());
 
         ps.executeUpdate();
+        ps.close();
     }
 
     public static void deleteItemType(ItemType type) throws SQLException
@@ -310,5 +374,26 @@ public class ItemDatabase
         ps.setInt(1, type.getTypeId());
 
         ps.executeUpdate();
+        ps.close();
+    }
+
+    public static void createTable() throws SQLException
+    {
+        Statement statement = ConnectionManager.getConnection()
+                .createStatement();
+
+        statement.executeUpdate("DROP TABLE IF EXISTS Item");
+        statement.executeUpdate("DROP TABLE IF EXISTS ItemModifier");
+        statement.executeUpdate("DROP TABLE IF EXISTS ItemModifiers");
+        statement.executeUpdate("DROP TABLE IF EXISTS ItemType");
+        statement
+                .executeUpdate("CREATE TABLE Item(sku INTEGER PRIMARY KEY, typeId, description, quantity)");
+        statement
+                .executeUpdate("CREATE TABLE ItemModifier(modifierId INTEGER PRIMARY KEY AUTOINCREMENT, name, purchasePrice, rentalPrice, rentalDuration)");
+        statement
+                .executeUpdate("CREATE TABLE ItemModifiers(sku INTEGER PRIMARY KEY, modifierId)");
+        statement
+                .executeUpdate("CREATE TABLE ItemType(typeId INTEGER PRIMARY KEY AUTOINCREMENT, name, description, purchasePrice, rentable, rentalPrice, rentalDuration)");
+        statement.close();
     }
 }

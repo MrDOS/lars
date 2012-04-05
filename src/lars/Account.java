@@ -9,6 +9,7 @@ package lars;
  */
 public class Account
 {
+    public static final int LOW_ACCOUNT_ID = 1001;
     public static final int ACCOUNT_ID_LENGTH = 8;
 
     private int accountId;

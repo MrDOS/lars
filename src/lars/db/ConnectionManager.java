@@ -14,11 +14,8 @@ public class ConnectionManager
 {
     private static Connection connection = null;
 
-    private static final String DRIVER = "com.mysql.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3306/";
-    private static final String DB_NAME = "lars";
-    private static final String DB_USER = "lars";
-    private static final String DB_PASS = "lars";
+    private static final String DRIVER = "org.sqlite.JDBC";
+    private static final String URL = "jdbc:sqlite:lars.db";
 
     public static Connection getConnection()
     {
@@ -27,8 +24,7 @@ public class ConnectionManager
             try
             {
                 Class.forName(DRIVER);
-                connection = DriverManager.getConnection(URL + DB_NAME,
-                        DB_USER, DB_PASS);
+                connection = DriverManager.getConnection(URL);
             }
             catch (ClassNotFoundException e)
             {

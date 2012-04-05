@@ -38,6 +38,8 @@ public class TransactionDatabase
                     .setTransactionItems(getTransactionItemsByTransaction(transaction));
             transactions.add(transaction);
         }
+        rs.close();
+        ps.close();
 
         return transactions;
     }
@@ -51,16 +53,24 @@ public class TransactionDatabase
         ps.setInt(1, id);
 
         ResultSet rs = ps.executeQuery();
-        if (rs.next())
+        try
         {
-            Transaction transaction = new Transaction(rs.getInt(1),
-                    rs.getDate(2));
-            transaction
-                    .setTransactionItems(getTransactionItemsByTransaction(transaction));
-            return transaction;
+            if (rs.next())
+            {
+                Transaction transaction = new Transaction(rs.getInt(1),
+                        rs.getDate(2));
+                transaction
+                        .setTransactionItems(getTransactionItemsByTransaction(transaction));
+                return transaction;
+            }
+            else
+                throw new SQLException("No matching item.");
         }
-        else
-            throw new SQLException("No matching item.");
+        finally
+        {
+            rs.close();
+            ps.close();
+        }
     }
 
     public static Transaction insertTransaction(Transaction transaction)
@@ -73,13 +83,21 @@ public class TransactionDatabase
 
         ps.executeUpdate();
         ResultSet rs = ps.getGeneratedKeys();
-        if (rs.next())
+        try
         {
-            transaction.setTransactionId(rs.getInt(1));
-            applyTransactionItems(transaction);
+            if (rs.next())
+            {
+                transaction.setTransactionId(rs.getInt(1));
+                applyTransactionItems(transaction);
+            }
+            else
+                throw new SQLException("Could not insert transaction!");
         }
-        else
-            throw new SQLException("Could not insert transaction!");
+        finally
+        {
+            rs.close();
+            ps.close();
+        }
 
         return transaction;
     }
@@ -95,6 +113,8 @@ public class TransactionDatabase
         ps.setInt(2, transaction.getTransactionId());
 
         ps.executeUpdate();
+        ps.close();
+
         clearTransactionItems(transaction);
         applyTransactionItems(transaction);
     }
@@ -108,6 +128,7 @@ public class TransactionDatabase
         ps.setInt(1, transaction.getTransactionId());
 
         ps.executeUpdate();
+        ps.close();
 
         clearTransactionItems(transaction);
     }
@@ -126,6 +147,8 @@ public class TransactionDatabase
         while (rs.next())
             transactionItems.add(new TransactionItem(ItemDatabase
                     .getItemBySku(rs.getInt(1)), rs.getBoolean(2)));
+        rs.close();
+        ps.close();
 
         return transactionItems;
     }
@@ -139,11 +162,14 @@ public class TransactionDatabase
         ps.setInt(1, transaction.getTransactionId());
 
         ps.executeUpdate();
+        ps.close();
     }
 
     private static void applyTransactionItems(Transaction transaction)
             throws SQLException
     {
+        ConnectionManager.getConnection().createStatement()
+                .executeUpdate("BEGIN");
         PreparedStatement ps = ConnectionManager
                 .getConnection()
                 .prepareStatement(
@@ -156,5 +182,12 @@ public class TransactionDatabase
             ps.setBoolean(3, transactionItem.isRented());
             ps.executeUpdate();
         }
+        ps.close();
+        ConnectionManager.getConnection().createStatement()
+                .executeUpdate("COMMIT");
+    }
+
+    public static void createTable() throws SQLException
+    {
     }
 }
