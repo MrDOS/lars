@@ -67,7 +67,7 @@ public class CheckoutPanel extends JPanel implements ActionListener
 
         taxPanel.add(new JLabel("Tax:"), c);
 
-        this.tax = new JLabel("15.00%");
+        this.tax = new JLabel("$0.00");
         taxPanel.add(tax, c);
 
         c.gridx = 0;
@@ -126,6 +126,7 @@ public class CheckoutPanel extends JPanel implements ActionListener
     {
         if (e.getSource().equals(confirm))
         {
+            
             KioskFrame.getInstance().showMenu();
         }
         else if (e.getSource().equals(toMenu))
