@@ -40,7 +40,7 @@ public class MenuPanel extends JPanel implements ActionListener
         try
         {
             c.gridy = 0;
-            this.add(new ImagePanel("res/SwayingPalms.png"), c);
+            this.add(new ImagePanel("res/logo.png"), c);
         }
         catch (IOException e)
         {
@@ -55,7 +55,7 @@ public class MenuPanel extends JPanel implements ActionListener
         {
             c.gridy = 2;
             c.insets = new Insets(50, 0, 0, 0);
-            this.add(new ImagePanel("res/Scorcher.jpg"), c);
+            this.add(new ImagePanel("res/ad.jpg"), c);
         }
         catch (IOException e)
         {
