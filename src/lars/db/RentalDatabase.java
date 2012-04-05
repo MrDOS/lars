@@ -186,9 +186,9 @@ public class RentalDatabase
         statement.executeUpdate("DROP TABLE IF EXISTS Rental");
         statement.executeUpdate("DROP TABLE IF EXISTS RentalItem");
         statement
-                .executeUpdate("CREATE TABLE Rental(rentalId INTEGER PRIMARY KEY, accountId, date)");
+                .executeUpdate("CREATE TABLE Rental(rentalId INTEGER PRIMARY KEY AUTOINCREMENT, accountId, date)");
         statement
-                .executeUpdate("CREATE TABLE RentalItem(rentalId INTEGER PRIMARY KEY, sku, rented, due, returned)");
+                .executeUpdate("CREATE TABLE RentalItem(rentalId INTEGER PRIMARY KEY AUTOINCREMENT, sku, rented, due, returned)");
         statement.close();
     }
 }
