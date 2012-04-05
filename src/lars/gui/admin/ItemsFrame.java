@@ -221,16 +221,17 @@ public class ItemsFrame extends AdminInternalFrame implements ActionListener
             this.items = ItemDatabase.getItems();
             this.modifiers = ItemDatabase.getItemModifiers();
             this.types = ItemDatabase.getItemTypes();
+
+            this.itemTable.setModel(new ItemModel(this.items));
+            this.itemModifierTable.setModel(new ItemModifierModel(
+                    this.modifiers));
+            this.itemTypeTable.setModel(new ItemTypeModel(this.types));
         }
         catch (SQLException e)
         {
             JOptionPane.showMessageDialog(null, "Error loading data!",
                     "Item error", JOptionPane.ERROR_MESSAGE);
         }
-
-        this.itemTable.setModel(new ItemModel(this.items));
-        this.itemModifierTable.setModel(new ItemModifierModel(this.modifiers));
-        this.itemTypeTable.setModel(new ItemTypeModel(this.types));
     }
 
     @Override

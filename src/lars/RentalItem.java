@@ -15,10 +15,38 @@ public class RentalItem
 {
     private static final int MILLIS_PER_DAY = 1000 * 60 * 60 * 24;
 
+    private int rentalItemId = 0;
     private Item item;
     private boolean rented = false;
     private Date due = null;
     private boolean returned = false;
+
+    /**
+     * Instantiate a rental item.
+     * 
+     * @param rentalItemId
+     *            the database ID of the rental item
+     * @param item
+     *            the item
+     * @param rented
+     *            whether or not the item is rented
+     * @param due
+     *            the item due date, if it is rented
+     * @param returned
+     *            whether or not the item has been returned
+     */
+    public RentalItem(int rentalItemId, Item item, boolean rented, Date due,
+            boolean returned)
+    {
+        this.rentalItemId = rentalItemId;
+        this.item = item;
+        if (this.item.getType().isRentable())
+        {
+            this.rented = rented;
+            this.due = due;
+            this.returned = returned;
+        }
+    }
 
     /**
      * Instantiate a rental item.
@@ -75,6 +103,27 @@ public class RentalItem
         }
 
         return false;
+    }
+
+    /**
+     * Get the database ID of the rental item.
+     * 
+     * @return the database ID of the rental item
+     */
+    public int getRentalItemId()
+    {
+        return rentalItemId;
+    }
+
+    /**
+     * Set the database ID of the rental item.
+     * 
+     * @param rentalItemId
+     *            the database ID of the rental item
+     */
+    public void setRentalItemId(int rentalItemId)
+    {
+        this.rentalItemId = rentalItemId;
     }
 
     /**

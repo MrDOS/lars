@@ -103,14 +103,14 @@ public class AccountsFrame extends AdminInternalFrame implements ActionListener
         try
         {
             this.accounts = AccountDatabase.getAccounts();
+
+            this.accountTable.setModel(new AccountModel(this.accounts));
         }
         catch (SQLException e)
         {
             JOptionPane.showMessageDialog(null, "Error loading data!",
                     "Account error", JOptionPane.ERROR_MESSAGE);
         }
-
-        this.accountTable.setModel(new AccountModel(this.accounts));
     }
 
     @Override

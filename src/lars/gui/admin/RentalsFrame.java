@@ -96,19 +96,36 @@ public class RentalsFrame extends AdminInternalFrame implements ActionListener
         try
         {
             this.rentalItems = RentalDatabase.getUnreturnedRentalItems();
+
+            this.rentalItemsTable.setModel(new RentalItemModel(this.rentalItems));
         }
         catch (SQLException e)
         {
             JOptionPane.showMessageDialog(null, "Error loading data!",
                     "Rental error", JOptionPane.ERROR_MESSAGE);
+            System.err.println(e.getMessage());
         }
-
-        this.rentalItemsTable.setModel(new RentalItemModel(this.rentalItems));
     }
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        if (e.getSource().equals(this.processReturn))
+        {
+            try
+            {
+                RentalItem rentalItem = this.rentalItems
+                        .get(this.rentalItemsTable.getSelectedRow());
+                rentalItem.setReturned(true);
+                RentalDatabase.updateRentalItem(rentalItem);
+            }
+            catch (SQLException ex)
+            {
+                JOptionPane.showMessageDialog(null, "Error updating rental!",
+                        "Rental error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
         this.refresh();
     }
 }

@@ -176,13 +176,13 @@ public class RentalDatabase
         PreparedStatement ps = ConnectionManager
                 .getConnection()
                 .prepareStatement(
-                        "SELECT sku, rented, due, returned FROM RentalItem WHERE rented = 1 AND returned = 0");
+                        "SELECT rentalItemId, sku, rented, due, returned FROM RentalItem WHERE rented = 1 AND returned = 0");
 
         ResultSet rs = ps.executeQuery();
         while (rs.next())
-            RentalItems.add(new RentalItem(ItemDatabase.getItemBySku(rs
-                    .getInt(1)), rs.getBoolean(2), rs.getDate(3), rs
-                    .getBoolean(4)));
+            RentalItems.add(new RentalItem(rs.getInt(1), ItemDatabase
+                    .getItemBySku(rs.getInt(2)), rs.getBoolean(3), rs
+                    .getDate(4), rs.getBoolean(5)));
         rs.close();
         ps.close();
 
@@ -205,14 +205,14 @@ public class RentalDatabase
         PreparedStatement ps = ConnectionManager
                 .getConnection()
                 .prepareStatement(
-                        "SELECT RentalItem.sku, RentalItem.rented, RentalItem.due, RentalItem.returned FROM RentalItem WHERE RentalItem.rentalId = ?");
+                        "SELECT RentalItem.rentalItemId, RentalItem.sku, RentalItem.rented, RentalItem.due, RentalItem.returned FROM RentalItem WHERE RentalItem.rentalId = ?");
         ps.setInt(1, rental.getRentalId());
 
         ResultSet rs = ps.executeQuery();
         while (rs.next())
-            RentalItems.add(new RentalItem(ItemDatabase.getItemBySku(rs
-                    .getInt(1)), rs.getBoolean(2), rs.getDate(3), rs
-                    .getBoolean(4)));
+            RentalItems.add(new RentalItem(rs.getInt(1), ItemDatabase
+                    .getItemBySku(rs.getInt(2)), rs.getBoolean(3), rs
+                    .getDate(4), rs.getBoolean(5)));
         rs.close();
         ps.close();
 
@@ -265,6 +265,34 @@ public class RentalDatabase
                 .executeUpdate("COMMIT");
     }
 
+    public static void updateRentalItem(RentalItem rentalItem)
+            throws SQLException
+    {
+        PreparedStatement ps = ConnectionManager
+                .getConnection()
+                .prepareStatement(
+                        "UPDATE RentalItem SET rented = ?, due = ?, returned = ? WHERE rentalItemId = ?");
+        ps.setBoolean(1, rentalItem.isRented());
+        ps.setDate(2, rentalItem.getDueDate());
+        ps.setBoolean(3, rentalItem.isReturned());
+        ps.setInt(4, rentalItem.getRentalItemId());
+
+        ps.executeUpdate();
+        ps.close();
+    }
+
+    public static void deleteRentalItem(RentalItem rentalItem)
+            throws SQLException
+    {
+        PreparedStatement ps = ConnectionManager.getConnection()
+                .prepareStatement(
+                        "DELETE FROM RentalItem WHERE rentalItemId = ?");
+        ps.setInt(1, rentalItem.getRentalItemId());
+
+        ps.executeUpdate();
+        ps.close();
+    }
+
     /**
      * Create the database table. <strong>Destructive; call only during initial
      * system setup.</strong>
@@ -281,7 +309,7 @@ public class RentalDatabase
         statement
                 .executeUpdate("CREATE TABLE Rental(rentalId INTEGER PRIMARY KEY AUTOINCREMENT, accountId, date)");
         statement
-                .executeUpdate("CREATE TABLE RentalItem(rentalId, sku, rented, due, returned)");
+                .executeUpdate("CREATE TABLE RentalItem(rentalItemId INTEGER PRIMARY KEY AUTOINCREMENT, rentalId, sku, rented, due, returned)");
         statement.close();
     }
 }
