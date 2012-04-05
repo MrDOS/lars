@@ -4,8 +4,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -14,6 +16,7 @@ import javax.swing.table.TableModel;
 import lars.Account;
 import lars.Transaction;
 import lars.gui.TransactionModel;
+import lars.TaxCalculator;
 
 /**
  * Item checkout interface.
@@ -29,10 +32,17 @@ public class CheckoutPanel extends JPanel implements ActionListener
     private TableModel model;
     private JButton confirm;
     private JButton toMenu;
+    private JLabel subtotal;
+    private JLabel tax;
+    private JLabel total;
+    
+    private Transaction transaction;
 
     public CheckoutPanel(Account account, Transaction transaction)
     {
         this.setLayout(new GridBagLayout());
+        
+        this.transaction = transaction;
 
         GridBagConstraints c = new GridBagConstraints();
         model = new TransactionModel(transaction);
@@ -41,19 +51,74 @@ public class CheckoutPanel extends JPanel implements ActionListener
         c.gridx = 0;
         c.gridy = 0;
         this.add(scroll, c);
+        
+        JPanel subtotalPanel = new JPanel();
+
+        subtotalPanel.add(new JLabel("Subtotal:"), c);
+
+        this.subtotal = new JLabel("$0.00");
+        subtotalPanel.add(subtotal, c);
+
+        c.gridx = 0;
+        c.gridy = 1;
+        this.add(subtotalPanel, c);
+        
+        JPanel taxPanel = new JPanel();
+
+        taxPanel.add(new JLabel("Tax:"), c);
+
+        this.tax = new JLabel("15.00%");
+        taxPanel.add(tax, c);
+
+        c.gridx = 0;
+        c.gridy = 2;
+        this.add(taxPanel, c);
+        
+        JPanel totalPanel = new JPanel();
+
+        totalPanel.add(new JLabel("Total:"), c);
+
+        this.total = new JLabel("$0.00");
+        totalPanel.add(total, c);
+
+        c.gridx = 0;
+        c.gridy = 3;
+        this.add(totalPanel, c);
 
         confirm = new JButton("Confirm");
         c.gridx = 0;
-        c.gridy = 1;
+        c.gridy = 4;
         this.add(confirm, c);
 
         toMenu = new JButton("Return to Main Menu");
         c.gridx = 0;
         c.gridy = 6;
         this.add(toMenu, c);
+        
+        updateSubtotal();
+        updateTax();
+        updateTotal();
 
         confirm.addActionListener(this);
         toMenu.addActionListener(this);
+    }
+    
+    private void updateSubtotal()
+    {
+        this.subtotal.setText(new DecimalFormat("$#0.00")
+                .format(this.transaction.getTotalPrice() / 100));
+    }
+    
+    private void updateTax()
+    {
+        this.tax.setText(new DecimalFormat("$#0.00")
+                .format(TaxCalculator.getTax(this.transaction.getTotalPrice()) / 100));
+    }
+    
+    private void updateTotal()
+    {
+        this.total.setText(new DecimalFormat("$#0.00")
+                .format(TaxCalculator.getTotalWithTax(this.transaction.getTotalPrice()) / 100));
     }
 
     @Override
