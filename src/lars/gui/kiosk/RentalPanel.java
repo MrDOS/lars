@@ -25,7 +25,7 @@ import lars.Item;
 import lars.Rental;
 import lars.RentalItem;
 import lars.db.ItemDatabase;
-import lars.gui.RentalModel;
+import lars.gui.RentalItemModel;
 
 /**
  * Rental menu presented to a customer upon beginning a rental.
@@ -93,7 +93,7 @@ public class RentalPanel extends JPanel implements ActionListener,
         c.gridy = 4;
         this.add(messageLabel, c);
 
-        TableModel model = new RentalModel(this.transaction, true);
+        TableModel model = new RentalItemModel(this.transaction, true);
         table = new JTable(model);
         c.gridx = 0;
         c.gridy = 5;

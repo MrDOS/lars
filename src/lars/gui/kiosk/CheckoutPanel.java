@@ -16,9 +16,9 @@ import javax.swing.table.TableModel;
 
 import lars.Account;
 import lars.Rental;
-import lars.db.RentalDatabase;
-import lars.gui.RentalModel;
 import lars.TaxCalculator;
+import lars.db.RentalDatabase;
+import lars.gui.RentalItemModel;
 
 /**
  * Item checkout interface.
@@ -57,7 +57,7 @@ public class CheckoutPanel extends JPanel implements ActionListener
         this.account = account;
 
         GridBagConstraints c = new GridBagConstraints();
-        model = new RentalModel(rental);
+        model = new RentalItemModel(rental);
         JTable table = new JTable(model);
         JScrollPane scroll = new JScrollPane(table);
         c.gridx = 0;

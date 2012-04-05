@@ -15,9 +15,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
-import lars.Account;
+import lars.Rental;
 import lars.db.AccountDatabase;
 import lars.gui.AccountModel;
+import lars.gui.RentalItemModel;
 
 /**
  * Interface for accounts management.
@@ -29,12 +30,11 @@ public class ReturnsFrame extends AdminInternalFrame implements ActionListener
 {
     private static final long serialVersionUID = 1L;
 
-    private JTable accountTable;
-    private JButton addAccount;
-    private JButton updateAccount;
-    private JButton deleteAccount;
+    private JTable rentalTable;
+    private JButton updateReturn;
+    private JButton processReturn;
 
-    private List<Account> accounts;
+    private List<Rental> rentals;
 
     /**
      * Instantiate the frame.
@@ -47,9 +47,8 @@ public class ReturnsFrame extends AdminInternalFrame implements ActionListener
 
         this.refresh();
 
-        addAccount.addActionListener(this);
-        updateAccount.addActionListener(this);
-        deleteAccount.addActionListener(this);
+        updateReturn.addActionListener(this);
+        processReturn.addActionListener(this);
     }
 
     private JPanel getReturnsPanel()
@@ -58,14 +57,14 @@ public class ReturnsFrame extends AdminInternalFrame implements ActionListener
 
         GridBagConstraints c = new GridBagConstraints();
 
-        TableModel model = new AccountModel(new ArrayList<Account>());
-        accountTable = new JTable(model);
+        //TableModel model = new RentalModel(new ArrayList<Rental>());
+        //rentalTable = new JTable(model);
         c.gridx = 0;
         c.gridy = 0;
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1;
         c.weighty = 1;
-        panel.add(new JScrollPane(accountTable), c);
+        panel.add(new JScrollPane(rentalTable), c);
 
         JPanel buttonPanel = new JPanel(new GridBagLayout());
 

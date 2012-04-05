@@ -12,7 +12,7 @@ import lars.Rental;
  * @author Jeremy Wheaton, 100105823
  * @version 2012-04-03
  */
-public class RentalModel extends AbstractTableModel
+public class RentalItemModel extends AbstractTableModel
 {
     private static final long serialVersionUID = 1L;
 
@@ -32,7 +32,7 @@ public class RentalModel extends AbstractTableModel
      * @param editable
      *            whether or not the cells should be editable
      */
-    public RentalModel(Rental rental, boolean editable)
+    public RentalItemModel(Rental rental, boolean editable)
     {
         this.rental = rental;
         this.editable = editable;
@@ -44,7 +44,7 @@ public class RentalModel extends AbstractTableModel
      * @param rental
      *            the rental data to model
      */
-    public RentalModel(Rental rental)
+    public RentalItemModel(Rental rental)
     {
         this.rental = rental;
         this.editable = false;
