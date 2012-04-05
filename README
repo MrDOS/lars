@@ -1,0 +1,25 @@
+COMP 2663 Assignment 5/Term Project
+Jeremy Wheaton, 100105823
+Samuel Coleman, 100105709
+Work Balance: 50/50
+
+INTRODUCTION
+------------
+Welcome to LARS: it's Like a Rental System.
+
+This project demonstrates an implementation of design work produced throughout
+the rest of the semester, including data definitions, class layout, and GRASP
+concepts.
+
+RUNNING
+-------
+The main method can be found in lars.LARS. Based on command line arguments, it
+can start one of three modes: 
+- No argument will launch kiosk mode: the main, fullscreen interface intended
+  for use by customers.
+- "-admin" will launch administrative mode: the data viewing and modification
+  interface intended for use by staff.
+- "-setup" will initialize the database. This must be run before the system can
+  be used.
+  - "-demo" used in conjunction with "-setup" will initialize the database with
+    some sample data for demonstration purposes.   
