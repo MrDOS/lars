@@ -119,16 +119,27 @@ public class UpdateItemModifierDialog extends JDialog implements ActionListener
             this.dispose();
         else if (e.getSource().equals(save))
         {
-            String name = "";
+            String name = nameField.getText();
             int purchasePrice = 0;
             int rentalPrice = 0;
             int rentalDuration = 0;
 
             try
             {
-                name = nameField.getText();
                 purchasePrice = Integer.valueOf(purchasePriceField.getText());
+            }
+            catch (NumberFormatException ex)
+            {
+            }
+            try
+            {
                 rentalPrice = Integer.valueOf(rentalPriceField.getText());
+            }
+            catch (NumberFormatException ex)
+            {
+            }
+            try
+            {
                 rentalDuration = Integer.valueOf(rentalDurationField.getText());
             }
             catch (NumberFormatException ex)

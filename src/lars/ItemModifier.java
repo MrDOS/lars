@@ -24,8 +24,6 @@ public class ItemModifier
         this.purchasePrice = purchasePrice;
         this.rentalPrice = rentalPrice;
         this.rentalDuration = rentalDuration;
-
-        System.out.println(this);
     }
 
     public ItemModifier(String name, int purchasePrice, int rentalPrice,

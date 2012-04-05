@@ -205,7 +205,7 @@ public class ItemDatabase
 
         ResultSet rs = ps.executeQuery();
         while (rs.next())
-            modifiers.add(new ItemModifier(rs.getInt(1), rs.getString(1), rs
+            modifiers.add(new ItemModifier(rs.getInt(1), rs.getString(2), rs
                     .getInt(3), rs.getInt(4), rs.getInt(5)));
         rs.close();
         ps.close();

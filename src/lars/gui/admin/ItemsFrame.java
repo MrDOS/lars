@@ -220,7 +220,6 @@ public class ItemsFrame extends AdminInternalFrame implements ActionListener
         {
             JOptionPane.showMessageDialog(null, "Error loading data!",
                     "Item error", JOptionPane.ERROR_MESSAGE);
-            System.err.println(e.getMessage());
         }
 
         this.itemTable.setModel(new ItemModel(this.items));

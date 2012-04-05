@@ -76,7 +76,6 @@ public class LoginDialog extends JDialog implements ActionListener
                 }
                 else
                 {
-                    this.accountField.setText("");
                     JOptionPane.showMessageDialog(null, "Non-privileged ID!",
                             "Login Failure", JOptionPane.ERROR_MESSAGE);
                 }
@@ -92,5 +91,7 @@ public class LoginDialog extends JDialog implements ActionListener
                         "Login Failure", JOptionPane.ERROR_MESSAGE);
             }
         }
+
+        this.accountField.setText("");
     }
 }

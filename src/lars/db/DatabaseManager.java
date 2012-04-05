@@ -2,8 +2,6 @@ package lars.db;
 
 import java.sql.SQLException;
 
-import lars.Account;
-
 /**
  * Database manager creates and updates database schemas.
  * 

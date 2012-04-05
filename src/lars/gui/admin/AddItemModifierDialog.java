@@ -33,7 +33,7 @@ public class AddItemModifierDialog extends JDialog implements ActionListener
     private JTextField purchasePriceField;
     private JTextField rentalPriceField;
     private JTextField rentalDurationField;
-    
+
     private JButton save;
     private JButton cancel;
 
@@ -57,7 +57,7 @@ public class AddItemModifierDialog extends JDialog implements ActionListener
         c.gridx = 1;
         c.gridy = 0;
         this.add(nameField, c);
-        
+
         c.gridx = 0;
         c.gridy = 1;
         this.add(new JLabel("Purchase price:"), c);
@@ -66,7 +66,7 @@ public class AddItemModifierDialog extends JDialog implements ActionListener
         c.gridx = 1;
         c.gridy = 1;
         this.add(purchasePriceField, c);
-        
+
         c.gridx = 0;
         c.gridy = 2;
         this.add(new JLabel("Rental price:"), c);
@@ -112,16 +112,27 @@ public class AddItemModifierDialog extends JDialog implements ActionListener
             this.dispose();
         else if (e.getSource().equals(save))
         {
-            String name = "";
+            String name = nameField.getText();
             int purchasePrice = 0;
             int rentalPrice = 0;
             int rentalDuration = 0;
 
             try
             {
-                name = nameField.getText();
                 purchasePrice = Integer.valueOf(purchasePriceField.getText());
+            }
+            catch (NumberFormatException ex)
+            {
+            }
+            try
+            {
                 rentalPrice = Integer.valueOf(rentalPriceField.getText());
+            }
+            catch (NumberFormatException ex)
+            {
+            }
+            try
+            {
                 rentalDuration = Integer.valueOf(rentalDurationField.getText());
             }
             catch (NumberFormatException ex)
@@ -130,21 +141,26 @@ public class AddItemModifierDialog extends JDialog implements ActionListener
 
             if (name.equals(""))
             {
-                JOptionPane.showMessageDialog(null, "Invalid name!",
-                        "Error adding item modifier", JOptionPane.ERROR_MESSAGE);
+                JOptionPane
+                        .showMessageDialog(null, "Invalid name!",
+                                "Error adding item modifier",
+                                JOptionPane.ERROR_MESSAGE);
             }
             else
             {
                 try
                 {
-                    ItemDatabase.insertItemModifier(new ItemModifier(name, purchasePrice, rentalPrice, rentalDuration));
+                    ItemDatabase.insertItemModifier(new ItemModifier(name,
+                            purchasePrice, rentalPrice, rentalDuration));
                     parent.refresh();
                     this.dispose();
                 }
                 catch (SQLException ex)
                 {
-                    JOptionPane.showMessageDialog(null, "Unable to add item modifier!",
-                            "Error adding item modifier", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "Unable to add item modifier!",
+                            "Error adding item modifier",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         }

@@ -187,17 +187,19 @@ public class AddItemTypeDialog extends JDialog implements ActionListener
             {
                 try
                 {
-                    
-                    ItemDatabase.insertItemType(new ItemType(0, name, description,
-                            purchasePrice, isRentable, rentalPrice, rentalDuration));
+                    ItemDatabase.insertItemType(new ItemType(0, name,
+                            description, purchasePrice, isRentable,
+                            rentalPrice, rentalDuration));
                     parent.refresh();
                     this.dispose();
                 }
                 catch (SQLException ex)
                 {
-                    JOptionPane.showMessageDialog(null, "Unable to add item type!",
-                            "Error adding item type", JOptionPane.ERROR_MESSAGE);
-                    System.err.println(ex.getMessage());
+                    JOptionPane
+                            .showMessageDialog(null,
+                                    "Unable to add item type!",
+                                    "Error adding item type",
+                                    JOptionPane.ERROR_MESSAGE);
                 }
             }
         }

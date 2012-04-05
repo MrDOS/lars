@@ -195,10 +195,9 @@ public class UpdateItemTypeDialog extends JDialog implements ActionListener
             {
                 try
                 {
-                    ItemType newType = new ItemType(itemType.getTypeId(), name,
-                            description, purchasePrice, isRentable,
-                            rentalPrice, rentalDuration);
-                    ItemDatabase.updateItemType(newType);
+                    ItemDatabase.updateItemType(new ItemType(itemType
+                            .getTypeId(), name, description, purchasePrice,
+                            isRentable, rentalPrice, rentalDuration));
                     parent.refresh();
                     this.dispose();
                 }
