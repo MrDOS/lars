@@ -175,4 +175,15 @@ public class AccountDatabase
         ps.executeUpdate();
         ps.close();
     }
+
+    /**
+     * Insert some demo accounts.
+     * 
+     * @throws SQLException
+     */
+    public static void insertDemoData() throws SQLException
+    {
+        insertAccount(new Account(0, "John Doe", "Marvin Gardens", false));
+        insertAccount(new Account(0, "Robert Roe", "Louisiana Avenue", false));
+    }
 }

@@ -51,6 +51,9 @@ public class LARS
         else if (args.length > 0 && args[0].equals("-setup"))
         {
             DatabaseManager.createDatabase();
+
+            if (args.length >= 2 && args[1].equals("-demo"))
+                DatabaseManager.insertDemoData();
         }
         else
         {

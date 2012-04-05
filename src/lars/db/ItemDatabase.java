@@ -88,6 +88,7 @@ public class ItemDatabase
      * 
      * @param item
      *            the item
+     * @return
      * @throws SQLException
      */
     public static void insertItem(Item item) throws SQLException
@@ -532,5 +533,36 @@ public class ItemDatabase
         statement
                 .executeUpdate("CREATE TABLE ItemType(typeId INTEGER PRIMARY KEY AUTOINCREMENT, name, description, purchasePrice, rentable, rentalPrice, rentalDuration)");
         statement.close();
+    }
+
+    /**
+     * Insert some demo items.
+     * 
+     * @throws SQLException
+     */
+    public static void insertDemoData() throws SQLException
+    {
+        ItemType dvd = insertItemType(new ItemType(0, "DVD", "A rental DVD.",
+                1500, true, 300, 5));
+        ItemType game = insertItemType(new ItemType(0, "Game",
+                "A rental video game.", 3500, true, 800, 14));
+
+        ItemModifier sale = insertItemModifier(new ItemModifier(
+                "1-Day Rental Extension", 0, 50, 1));
+        ItemModifier newGame = insertItemModifier(new ItemModifier("New Game",
+                2500, 500, 1));
+
+        Item shrek = new Item(dvd, 9001, "Pulp Fiction", 7);
+        shrek.addModifier(sale);
+        insertItem(shrek);
+
+        insertItem(new Item(dvd, 9002, "Leathal Weapon", 6));
+        insertItem(new Item(dvd, 9003, "Deep Impact", 8));
+
+        insertItem(new Item(game, 8001, "Mass Effect", 5));
+
+        Item assassinsCreed = new Item(game, 8002, "Assassin's Creed III", 4);
+        assassinsCreed.addModifier(newGame);
+        insertItem(assassinsCreed);
     }
 }

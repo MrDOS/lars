@@ -57,4 +57,37 @@ public class DatabaseManager
         System.out
                 .println("Finished database setup. An initial user with ID 1 has been created.");
     }
+
+    /**
+     * Insert some demo data.
+     */
+    public static void insertDemoData()
+    {
+        System.out.println("Inserting demo data.");
+
+        System.out.print("Inserting accounts... ");
+        try
+        {
+            AccountDatabase.insertDemoData();
+            System.out.println("done.");
+        }
+        catch (SQLException e)
+        {
+            System.err
+                    .println("Failed insert demo accounts! " + e.getMessage());
+        }
+
+        System.out.print("Inserting items... ");
+        try
+        {
+            ItemDatabase.insertDemoData();
+            System.out.println("done.");
+        }
+        catch (SQLException e)
+        {
+            System.err.println("Failed insert demo data! " + e.getMessage());
+        }
+
+        System.out.println("Finished inserting demo data.");
+    }
 }
