@@ -8,16 +8,13 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import lars.ItemType;
+import lars.ItemModifier;
 import lars.db.ItemDatabase;
 
 /**
@@ -26,7 +23,7 @@ import lars.db.ItemDatabase;
  * @author Jeremy Wheaton, 100105823
  * @version 2012-04-04
  */
-public class AddItemTypeDialog extends JDialog implements ActionListener
+public class AddItemModifierDialog extends JDialog implements ActionListener
 {
     private static final long serialVersionUID = 1L;
 
@@ -36,15 +33,13 @@ public class AddItemTypeDialog extends JDialog implements ActionListener
     private JTextField purchasePriceField;
     private JTextField rentalPriceField;
     private JTextField rentalDurationField;
-    private JTextArea descriptionField;
-    private JCheckBox rentable;
-
+    
     private JButton save;
     private JButton cancel;
 
-    public AddItemTypeDialog(ItemsFrame parent)
+    public AddItemModifierDialog(ItemsFrame parent)
     {
-        super(AdminFrame.getInstance(), "Add Item Type");
+        super(AdminFrame.getInstance(), "Add Item Modifier");
         this.setLocationByPlatform(true);
 
         this.parent = parent;
@@ -58,54 +53,36 @@ public class AddItemTypeDialog extends JDialog implements ActionListener
         c.gridy = 0;
         this.add(new JLabel("Name:"), c);
 
-        nameField = new JTextField(ItemType.NAME_SIZE);
+        nameField = new JTextField(ItemModifier.NAME_SIZE);
         c.gridx = 1;
         c.gridy = 0;
         this.add(nameField, c);
-
+        
         c.gridx = 0;
         c.gridy = 1;
-        this.add(new JLabel("Description:"), c);
-
-        descriptionField = new JTextArea(null, 3, 20);
-        c.gridx = 1;
-        c.gridy = 1;
-        this.add(new JScrollPane(descriptionField), c);
-
-        c.gridx = 0;
-        c.gridy = 2;
         this.add(new JLabel("Purchase price:"), c);
 
-        purchasePriceField = new JTextField(ItemType.NAME_SIZE);
+        purchasePriceField = new JTextField(ItemModifier.NAME_SIZE);
         c.gridx = 1;
-        c.gridy = 2;
+        c.gridy = 1;
         this.add(purchasePriceField, c);
-
+        
         c.gridx = 0;
-        c.gridy = 3;
-        this.add(new JLabel("Is rentable:"), c);
-
-        rentable = new JCheckBox();
-        c.gridx = 1;
-        c.gridy = 3;
-        this.add(rentable, c);
-
-        c.gridx = 0;
-        c.gridy = 4;
+        c.gridy = 2;
         this.add(new JLabel("Rental price:"), c);
 
-        rentalPriceField = new JTextField(ItemType.NAME_SIZE);
+        rentalPriceField = new JTextField(ItemModifier.NAME_SIZE);
         c.gridx = 1;
-        c.gridy = 4;
+        c.gridy = 2;
         this.add(rentalPriceField, c);
 
         c.gridx = 0;
-        c.gridy = 5;
+        c.gridy = 3;
         this.add(new JLabel("Rental duration:"), c);
 
-        rentalDurationField = new JTextField(ItemType.NAME_SIZE);
+        rentalDurationField = new JTextField(ItemModifier.NAME_SIZE);
         c.gridx = 1;
-        c.gridy = 5;
+        c.gridy = 3;
         this.add(rentalDurationField, c);
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -136,16 +113,13 @@ public class AddItemTypeDialog extends JDialog implements ActionListener
         else if (e.getSource().equals(save))
         {
             String name = "";
-            String description = "";
             int purchasePrice = 0;
             int rentalPrice = 0;
             int rentalDuration = 0;
-            boolean isRentable = rentable.isSelected();
 
             try
             {
                 name = nameField.getText();
-                description = descriptionField.getText();
                 purchasePrice = Integer.valueOf(purchasePriceField.getText());
                 rentalPrice = Integer.valueOf(rentalPriceField.getText());
                 rentalDuration = Integer.valueOf(rentalDurationField.getText());
@@ -157,46 +131,20 @@ public class AddItemTypeDialog extends JDialog implements ActionListener
             if (name.equals(""))
             {
                 JOptionPane.showMessageDialog(null, "Invalid name!",
-                        "Error adding item type", JOptionPane.ERROR_MESSAGE);
-            }
-            else if (description.equals(""))
-            {
-                JOptionPane
-                        .showMessageDialog(
-                                null,
-                                "Invalid description! The description may not be blank.",
-                                "Error adding item type",
-                                JOptionPane.ERROR_MESSAGE);
-            }
-            else if (purchasePrice < 0)
-            {
-                JOptionPane.showMessageDialog(null, "Invalid purchase price!",
-                        "Error adding item type", JOptionPane.ERROR_MESSAGE);
-            }
-            else if (isRentable && rentalPrice <= 0)
-            {
-                JOptionPane.showMessageDialog(null, "Invalid rental price!",
-                        "Error adding item type", JOptionPane.ERROR_MESSAGE);
-            }
-            else if (isRentable && rentalDuration <= 0)
-            {
-                JOptionPane.showMessageDialog(null, "Invalid rental duration!",
-                        "Error adding item type", JOptionPane.ERROR_MESSAGE);
+                        "Error adding item modifier", JOptionPane.ERROR_MESSAGE);
             }
             else
             {
                 try
                 {
-                    
-                    ItemDatabase.insertItemType(new ItemType(0, name, description,
-                            purchasePrice, isRentable, rentalPrice, rentalDuration));
+                    ItemDatabase.insertItemModifier(new ItemModifier(name, purchasePrice, rentalPrice, rentalDuration));
                     parent.refresh();
                     this.dispose();
                 }
                 catch (SQLException ex)
                 {
-                    JOptionPane.showMessageDialog(null, "Unable to add item type!",
-                            "Error adding item type", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Unable to add item modifier!",
+                            "Error adding item modifier", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }

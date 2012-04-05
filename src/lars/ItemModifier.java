@@ -9,6 +9,7 @@ package lars;
  */
 public class ItemModifier
 {
+    public static final int NAME_SIZE = 8;
     private int modifierId = 0;
     private String name;
     private int purchasePrice;

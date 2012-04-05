@@ -8,15 +8,13 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import lars.ItemModifier;
 import lars.ItemType;
 import lars.db.ItemDatabase;
 
@@ -26,31 +24,29 @@ import lars.db.ItemDatabase;
  * @author Jeremy Wheaton, 100105823
  * @version 2012-04-04
  */
-public class UpdateItemTypeDialog extends JDialog implements ActionListener
+public class UpdateItemModifierDialog extends JDialog implements ActionListener
 {
     private static final long serialVersionUID = 1L;
 
     private ItemsFrame parent;
 
-    private ItemType itemType;
+    private ItemModifier itemModifier;
 
     private JTextField nameField;
     private JTextField purchasePriceField;
     private JTextField rentalPriceField;
     private JTextField rentalDurationField;
-    private JTextArea descriptionField;
-    private JCheckBox rentable;
 
     private JButton save;
     private JButton cancel;
 
-    public UpdateItemTypeDialog(ItemsFrame parent, ItemType itemType)
+    public UpdateItemModifierDialog(ItemsFrame parent, ItemModifier itemModifier)
     {
         super(AdminFrame.getInstance(), "Update Item Type");
         this.setLocationByPlatform(true);
 
         this.parent = parent;
-        this.itemType = itemType;
+        this.itemModifier = itemModifier;
 
         this.getContentPane().setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -61,59 +57,39 @@ public class UpdateItemTypeDialog extends JDialog implements ActionListener
         c.gridy = 0;
         this.add(new JLabel("Name:"), c);
 
-        nameField = new JTextField(itemType.getName(), ItemType.NAME_SIZE);
+        nameField = new JTextField(itemModifier.getName(), ItemType.NAME_SIZE);
         c.gridx = 1;
         c.gridy = 0;
         this.add(nameField, c);
 
         c.gridx = 0;
         c.gridy = 1;
-        this.add(new JLabel("Description:"), c);
-
-        descriptionField = new JTextArea(itemType.getDescription(), 3, 20);
-        c.gridx = 1;
-        c.gridy = 1;
-        this.add(new JScrollPane(descriptionField), c);
-
-        c.gridx = 0;
-        c.gridy = 2;
         this.add(new JLabel("Purchase price:"), c);
 
-        purchasePriceField = new JTextField(String.valueOf(itemType
+        purchasePriceField = new JTextField(String.valueOf(itemModifier
                 .getPurchasePrice()), ItemType.NAME_SIZE);
         c.gridx = 1;
-        c.gridy = 2;
+        c.gridy = 1;
         this.add(purchasePriceField, c);
 
         c.gridx = 0;
-        c.gridy = 3;
-        this.add(new JLabel("Is rentable:"), c);
-
-        rentable = new JCheckBox();
-        if (itemType.isRentable())
-            rentable.setSelected(true);
-        c.gridx = 1;
-        c.gridy = 3;
-        this.add(rentable, c);
-
-        c.gridx = 0;
-        c.gridy = 4;
+        c.gridy = 2;
         this.add(new JLabel("Rental price:"), c);
 
-        rentalPriceField = new JTextField(String.valueOf(itemType
+        rentalPriceField = new JTextField(String.valueOf(itemModifier
                 .getRentalPrice()), ItemType.NAME_SIZE);
         c.gridx = 1;
-        c.gridy = 4;
+        c.gridy = 2;
         this.add(rentalPriceField, c);
 
         c.gridx = 0;
-        c.gridy = 5;
+        c.gridy = 3;
         this.add(new JLabel("Rental duration:"), c);
 
-        rentalDurationField = new JTextField(String.valueOf(itemType
+        rentalDurationField = new JTextField(String.valueOf(itemModifier
                 .getRentalDuration()), ItemType.NAME_SIZE);
         c.gridx = 1;
-        c.gridy = 5;
+        c.gridy = 3;
         this.add(rentalDurationField, c);
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -144,16 +120,13 @@ public class UpdateItemTypeDialog extends JDialog implements ActionListener
         else if (e.getSource().equals(save))
         {
             String name = "";
-            String description = "";
             int purchasePrice = 0;
             int rentalPrice = 0;
             int rentalDuration = 0;
-            boolean isRentable = rentable.isSelected();
 
             try
             {
                 name = nameField.getText();
-                description = descriptionField.getText();
                 purchasePrice = Integer.valueOf(purchasePriceField.getText());
                 rentalPrice = Integer.valueOf(rentalPriceField.getText());
                 rentalDuration = Integer.valueOf(rentalDurationField.getText());
@@ -165,48 +138,26 @@ public class UpdateItemTypeDialog extends JDialog implements ActionListener
             if (name.equals(""))
             {
                 JOptionPane.showMessageDialog(null, "Invalid name!",
-                        "Error updating item type", JOptionPane.ERROR_MESSAGE);
-            }
-            else if (description.equals(""))
-            {
-                JOptionPane
-                        .showMessageDialog(
-                                null,
-                                "Invalid description! The description may not be blank.",
-                                "Error updating item type",
-                                JOptionPane.ERROR_MESSAGE);
-            }
-            else if (purchasePrice < 0)
-            {
-                JOptionPane.showMessageDialog(null, "Invalid purchase price!",
-                        "Error updating item type", JOptionPane.ERROR_MESSAGE);
-            }
-            else if (isRentable && rentalPrice <= 0)
-            {
-                JOptionPane.showMessageDialog(null, "Invalid rental price!",
-                        "Error updating item type", JOptionPane.ERROR_MESSAGE);
-            }
-            else if (isRentable && rentalDuration <= 0)
-            {
-                JOptionPane.showMessageDialog(null, "Invalid rental duration!",
-                        "Error updating item type", JOptionPane.ERROR_MESSAGE);
+                        "Error updating item modifier",
+                        JOptionPane.ERROR_MESSAGE);
             }
             else
             {
                 try
                 {
-                    ItemType newType = new ItemType(itemType.getTypeId(), name,
-                            description, purchasePrice, isRentable,
+                    ItemModifier newMod = new ItemModifier(
+                            itemModifier.getModifierId(), name, purchasePrice,
                             rentalPrice, rentalDuration);
-                    ItemDatabase.updateItemType(newType);
+                    ItemDatabase.updateItemModifier(newMod);
+
                     parent.refresh();
                     this.dispose();
                 }
                 catch (SQLException ex)
                 {
                     JOptionPane.showMessageDialog(null,
-                            "Unable to update item type!",
-                            "Error updating item type",
+                            "Unable to update item modifier!",
+                            "Error updating item modifier",
                             JOptionPane.ERROR_MESSAGE);
                 }
             }

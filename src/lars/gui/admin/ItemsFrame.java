@@ -263,11 +263,15 @@ public class ItemsFrame extends AdminInternalFrame implements ActionListener
                 }
             }
         }
+        else if (e.getSource().equals(addItemModifier))
+        {
+            new AddItemModifierDialog(this).setVisible(true);
+        }
         else if (e.getSource().equals(updateItemModifier))
         {
             int row = this.itemModifierTable.getSelectedRow();
             if (row >= 0)
-                this.modifiers.get(row);
+                new UpdateItemModifierDialog(this, this.modifiers.get(row)).setVisible(true);
         }
         else if (e.getSource().equals(deleteItemModifier))
         {
