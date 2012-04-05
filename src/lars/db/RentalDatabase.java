@@ -188,7 +188,7 @@ public class RentalDatabase
         statement
                 .executeUpdate("CREATE TABLE Rental(rentalId INTEGER PRIMARY KEY AUTOINCREMENT, accountId, date)");
         statement
-                .executeUpdate("CREATE TABLE RentalItem(rentalId INTEGER PRIMARY KEY AUTOINCREMENT, sku, rented, due, returned)");
+                .executeUpdate("CREATE TABLE RentalItem(rentalId, sku, rented, due, returned)");
         statement.close();
     }
 }

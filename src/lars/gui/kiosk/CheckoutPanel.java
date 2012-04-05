@@ -4,6 +4,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 
 import javax.swing.JButton;
@@ -15,6 +16,7 @@ import javax.swing.table.TableModel;
 
 import lars.Account;
 import lars.Rental;
+import lars.db.RentalDatabase;
 import lars.gui.TransactionModel;
 import lars.TaxCalculator;
 
@@ -126,7 +128,14 @@ public class CheckoutPanel extends JPanel implements ActionListener
     {
         if (e.getSource().equals(confirm))
         {
-            
+            try
+            {
+                RentalDatabase.insertRental(this.rental);
+            }
+            catch (SQLException e1)
+            {
+                e1.printStackTrace();
+            }
             KioskFrame.getInstance().showMenu();
         }
         else if (e.getSource().equals(toMenu))

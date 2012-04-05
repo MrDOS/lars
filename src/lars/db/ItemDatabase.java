@@ -389,7 +389,7 @@ public class ItemDatabase
         statement
                 .executeUpdate("CREATE TABLE ItemModifier(modifierId INTEGER PRIMARY KEY AUTOINCREMENT, name, purchasePrice, rentalPrice, rentalDuration)");
         statement
-                .executeUpdate("CREATE TABLE ItemModifiers(sku INTEGER PRIMARY KEY, modifierId)");
+                .executeUpdate("CREATE TABLE ItemModifiers(sku, modifierId)");
         statement
                 .executeUpdate("CREATE TABLE ItemType(typeId INTEGER PRIMARY KEY AUTOINCREMENT, name, description, purchasePrice, rentable, rentalPrice, rentalDuration)");
         statement.close();
