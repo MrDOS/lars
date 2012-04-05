@@ -107,6 +107,7 @@ public class RentalDatabase
             if (rs.next())
             {
                 rental.setRentalId(rs.getInt(1));
+                rs.close();
                 applyRentalItems(rental);
             }
             else
