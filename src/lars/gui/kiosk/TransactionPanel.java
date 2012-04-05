@@ -136,8 +136,8 @@ public class TransactionPanel extends JPanel implements ActionListener,
 
     private void updateSubtotal()
     {
-        this.subtotal.setText(new DecimalFormat("$#.00")
-                .format(this.transaction.getTotalPrice() / 100));
+        this.subtotal.setText(new DecimalFormat("$#0.00")
+                .format((double) this.transaction.getTotalPrice() / 100));
     }
 
     @Override

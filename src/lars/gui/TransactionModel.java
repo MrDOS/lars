@@ -91,7 +91,7 @@ public class TransactionModel extends AbstractTableModel
         case RENTED_COLUMN:
             return transaction.getRentalItems().get(rowIndex).isRented();
         case PRICE_COLUMN:
-            return new DecimalFormat("$#.00").format(transaction
+            return new DecimalFormat("$#0.00").format((double) transaction
                     .getRentalItems().get(rowIndex).getPrice() / 100);
         default:
             return null;

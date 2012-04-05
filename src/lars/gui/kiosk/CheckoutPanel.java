@@ -107,19 +107,19 @@ public class CheckoutPanel extends JPanel implements ActionListener
 
     private void updateSubtotal()
     {
-        this.subtotal.setText(new DecimalFormat("$#0.00").format(this.rental
+        this.subtotal.setText(new DecimalFormat("$#0.00").format((double) this.rental
                 .getTotalPrice() / 100));
     }
 
     private void updateTax()
     {
-        this.tax.setText(new DecimalFormat("$#0.00").format(TaxCalculator
+        this.tax.setText(new DecimalFormat("$#0.00").format((double) TaxCalculator
                 .getTax(this.rental.getTotalPrice()) / 100));
     }
 
     private void updateTotal()
     {
-        this.total.setText(new DecimalFormat("$#0.00").format(TaxCalculator
+        this.total.setText(new DecimalFormat("$#0.00").format((double) TaxCalculator
                 .getTotalWithTax(this.rental.getTotalPrice()) / 100));
     }
 
