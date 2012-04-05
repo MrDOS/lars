@@ -168,7 +168,7 @@ public class ItemDatabase
      * @return all modifiers associated with the item
      * @throws SQLException
      */
-    public static List<ItemModifier> getItemModifiersByItem(Item item)
+    private static List<ItemModifier> getItemModifiersByItem(Item item)
             throws SQLException
     {
         List<ItemModifier> modifiers = new ArrayList<ItemModifier>();

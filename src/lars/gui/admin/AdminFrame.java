@@ -38,10 +38,10 @@ public class AdminFrame extends JFrame implements ActionListener
 
     private static final Dimension SIZE = new Dimension(600, 400);
 
-    private static final int MAX_FRAME_INITIAL_LOCATION[] = {200, 200};
-    private static final int FRAME_LOCATION_INCREMENT[] = {20, 20};
-    private int frameInitialLocation[] = {MAX_FRAME_INITIAL_LOCATION[0] + 1,
-            MAX_FRAME_INITIAL_LOCATION[1] + 1};
+    private static final int MAX_FRAME_INITIAL_LOCATION[] = { 200, 200 };
+    private static final int FRAME_LOCATION_INCREMENT[] = { 20, 20 };
+    private int frameInitialLocation[] = { MAX_FRAME_INITIAL_LOCATION[0] + 1,
+            MAX_FRAME_INITIAL_LOCATION[1] + 1 };
 
     private Account account = null;
 
@@ -226,10 +226,12 @@ public class AdminFrame extends JFrame implements ActionListener
     {
         if (e.getSource().equals(menuLogout) || e.getSource().equals(logout))
             this.logout();
-        else if (e.getSource().equals(accounts))
+        else if (e.getSource().equals(this.accounts))
             this.showInternalFrame(new AccountsFrame());
-        else if (e.getSource().equals(items))
+        else if (e.getSource().equals(this.items))
             this.showInternalFrame(new ItemsFrame());
+        else if (e.getSource().equals(this.rentals))
+            this.showInternalFrame(new RentalsFrame());
         else if (e.getSource().equals(menuQuit))
             System.exit(0);
     }

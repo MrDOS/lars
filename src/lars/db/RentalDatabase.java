@@ -164,6 +164,32 @@ public class RentalDatabase
     }
 
     /**
+     * Get all unreturned rental items.
+     * 
+     * @return all unreturned rental items
+     * @throws SQLException
+     */
+    public static List<RentalItem> getUnreturnedRentalItems()
+            throws SQLException
+    {
+        List<RentalItem> RentalItems = new ArrayList<RentalItem>();
+        PreparedStatement ps = ConnectionManager
+                .getConnection()
+                .prepareStatement(
+                        "SELECT sku, rented, due, returned FROM RentalItem WHERE rented = 1 AND returned = 0");
+
+        ResultSet rs = ps.executeQuery();
+        while (rs.next())
+            RentalItems.add(new RentalItem(ItemDatabase.getItemBySku(rs
+                    .getInt(1)), rs.getBoolean(2), rs.getDate(3), rs
+                    .getBoolean(4)));
+        rs.close();
+        ps.close();
+
+        return RentalItems;
+    }
+
+    /**
      * Get all rental items by their associated rental.
      * 
      * @param rental

@@ -15,9 +15,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
-import lars.Rental;
-import lars.db.AccountDatabase;
-import lars.gui.AccountModel;
+import lars.RentalItem;
+import lars.db.RentalDatabase;
 import lars.gui.RentalItemModel;
 
 /**
@@ -30,41 +29,41 @@ public class RentalsFrame extends AdminInternalFrame implements ActionListener
 {
     private static final long serialVersionUID = 1L;
 
-    private JTable rentalTable;
-    private JButton updateReturn;
+    private JTable rentalItemsTable;
+    private JButton updateDue;
     private JButton processReturn;
 
-    private List<Rental> rentals;
+    private List<RentalItem> rentalItems;
 
     /**
      * Instantiate the frame.
      */
     public RentalsFrame()
     {
-        super("Returns");
+        super("Rentals");
 
-        this.add(getReturnsPanel());
+        this.add(getRentalsPanel());
 
         this.refresh();
 
-        updateReturn.addActionListener(this);
+        updateDue.addActionListener(this);
         processReturn.addActionListener(this);
     }
 
-    private JPanel getReturnsPanel()
+    private JPanel getRentalsPanel()
     {
         JPanel panel = new JPanel(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
 
-        //TableModel model = new RentalModel(new ArrayList<Rental>());
-        //rentalTable = new JTable(model);
+        TableModel model = new RentalItemModel(new ArrayList<RentalItem>());
+        rentalItemsTable = new JTable(model);
         c.gridx = 0;
         c.gridy = 0;
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1;
         c.weighty = 1;
-        panel.add(new JScrollPane(rentalTable), c);
+        panel.add(new JScrollPane(rentalItemsTable), c);
 
         JPanel buttonPanel = new JPanel(new GridBagLayout());
 
@@ -72,20 +71,15 @@ public class RentalsFrame extends AdminInternalFrame implements ActionListener
         c.weightx = 0;
         c.weighty = 0;
 
-        addAccount = new JButton("Add Account");
+        updateDue = new JButton("Update Due Date");
         c.gridx = 0;
         c.gridy = 0;
-        buttonPanel.add(addAccount, c);
+        buttonPanel.add(updateDue, c);
 
-        updateAccount = new JButton("Update Account");
+        processReturn = new JButton("Mark as Returned");
         c.gridx = 1;
         c.gridy = 0;
-        buttonPanel.add(updateAccount, c);
-
-        deleteAccount = new JButton("Delete Account");
-        c.gridx = 2;
-        c.gridy = 0;
-        buttonPanel.add(deleteAccount, c);
+        buttonPanel.add(processReturn, c);
 
         c.gridx = 0;
         c.gridy = 1;
@@ -101,54 +95,20 @@ public class RentalsFrame extends AdminInternalFrame implements ActionListener
     {
         try
         {
-            this.accounts = AccountDatabase.getAccounts();
+            this.rentalItems = RentalDatabase.getUnreturnedRentalItems();
         }
         catch (SQLException e)
         {
             JOptionPane.showMessageDialog(null, "Error loading data!",
-                    "Account error", JOptionPane.ERROR_MESSAGE);
+                    "Rental error", JOptionPane.ERROR_MESSAGE);
         }
 
-        this.accountTable.setModel(new AccountModel(this.accounts));
+        this.rentalItemsTable.setModel(new RentalItemModel(this.rentalItems));
     }
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (e.getSource().equals(addAccount))
-        {
-            new AddAccountDialog(this).setVisible(true);
-        }
-        else if (e.getSource().equals(updateAccount))
-        {
-            int row = this.accountTable.getSelectedRow();
-            if (row >= 0)
-                new UpdateAccountDialog(this, this.accounts.get(row))
-                        .setVisible(true);
-        }
-        else if (e.getSource().equals(deleteAccount))
-        {
-            int row = this.accountTable.getSelectedRow();
-            if (row >= 0)
-            {
-                if (JOptionPane.showConfirmDialog(null,
-                        "Are you sure you want to delete this account?",
-                        "Account", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
-                {
-                    try
-                    {
-                        AccountDatabase.deleteAccount(this.accounts.get(row));
-                    }
-                    catch (SQLException ex)
-                    {
-                        JOptionPane.showMessageDialog(null,
-                                "Error deleting account!", "Account error",
-                                JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            }
-        }
-
         this.refresh();
     }
 }
