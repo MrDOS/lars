@@ -13,7 +13,7 @@ import lars.Account;
  * Provide database access to accounts.
  * 
  * @author Samuel Coleman, 100105709
- * @version 2012-04-01
+ * @version 2012-04-04
  */
 public class AccountDatabase
 {

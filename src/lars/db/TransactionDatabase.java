@@ -77,8 +77,7 @@ public class TransactionDatabase
             throws SQLException
     {
         PreparedStatement ps = ConnectionManager.getConnection()
-                .prepareStatement("INSERT INTO Transaction(date) VALUES(?)",
-                        PreparedStatement.RETURN_GENERATED_KEYS);
+                .prepareStatement("INSERT INTO Transaction(date) VALUES(?)");
         ps.setDate(1, transaction.getDate());
 
         ps.executeUpdate();

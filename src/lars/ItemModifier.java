@@ -5,7 +5,7 @@ package lars;
  * 
  * @author Jeremy Wheaton, 100105823
  * @author Samuel Coleman, 100105709
- * @version 2012-04-03
+ * @version 2012-04-04
  */
 public class ItemModifier
 {
@@ -24,6 +24,8 @@ public class ItemModifier
         this.purchasePrice = purchasePrice;
         this.rentalPrice = rentalPrice;
         this.rentalDuration = rentalDuration;
+
+        System.out.println(this);
     }
 
     public ItemModifier(String name, int purchasePrice, int rentalPrice,

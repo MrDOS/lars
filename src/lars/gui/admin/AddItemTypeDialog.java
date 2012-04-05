@@ -197,6 +197,7 @@ public class AddItemTypeDialog extends JDialog implements ActionListener
                 {
                     JOptionPane.showMessageDialog(null, "Unable to add item type!",
                             "Error adding item type", JOptionPane.ERROR_MESSAGE);
+                    System.err.println(ex.getMessage());
                 }
             }
         }

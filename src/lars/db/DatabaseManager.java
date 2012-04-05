@@ -4,6 +4,12 @@ import java.sql.SQLException;
 
 import lars.Account;
 
+/**
+ * Database manager creates and updates database schemas.
+ * 
+ * @author Samuel Coleman, 100105709
+ * @version 2012-04-04
+ */
 public class DatabaseManager
 {
     public static void createDatabase()

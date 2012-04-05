@@ -219,8 +219,7 @@ public class ItemDatabase
         PreparedStatement ps = ConnectionManager
                 .getConnection()
                 .prepareStatement(
-                        "INSERT INTO ItemModifier(name, purchasePrice, rentalPrice, rentalDuration) VALUES(?, ?, ?, ?)",
-                        PreparedStatement.RETURN_GENERATED_KEYS);
+                        "INSERT INTO ItemModifier(name, purchasePrice, rentalPrice, rentalDuration) VALUES(?, ?, ?, ?)");
         ps.setString(1, modifier.getName());
         ps.setInt(2, modifier.getPurchasePrice());
         ps.setInt(3, modifier.getRentalPrice());
@@ -322,8 +321,7 @@ public class ItemDatabase
         PreparedStatement ps = ConnectionManager
                 .getConnection()
                 .prepareStatement(
-                        "INSERT INTO ItemType(name, description, purchasePrice, rentable, rentalPrice, rentalDuration) VALUES(?, ?, ?, ?, ?, ?)",
-                        PreparedStatement.RETURN_GENERATED_KEYS);
+                        "INSERT INTO ItemType(name, description, purchasePrice, rentable, rentalPrice, rentalDuration) VALUES(?, ?, ?, ?, ?, ?)");
         ps.setString(1, type.getName());
         ps.setString(2, type.getDescription());
         ps.setInt(3, type.getPurchasePrice());
