@@ -19,13 +19,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.table.TableModel;
 
 import lars.Item;
 import lars.ItemModifier;
 import lars.ItemType;
 import lars.db.ItemDatabase;
-import lars.gui.AccountModel;
 import lars.gui.ItemModifierModel;
 
 /**
