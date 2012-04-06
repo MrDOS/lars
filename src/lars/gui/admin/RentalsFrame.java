@@ -125,6 +125,13 @@ public class RentalsFrame extends AdminInternalFrame implements ActionListener
                         "Rental error", JOptionPane.ERROR_MESSAGE);
             }
         }
+        else if (e.getSource().equals(updateDue))
+        {
+            int row = this.rentalItemsTable.getSelectedRow();
+            if (row >= 0)
+                new UpdateRentalDialog(this, this.rentalItems.get(row))
+                        .setVisible(true);
+        }
 
         this.refresh();
     }
