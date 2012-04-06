@@ -60,9 +60,9 @@ public class KioskFrame extends JFrame
     /**
      * Show the account login screen.
      */
-    public void showLogin()
+    public void showLogin(int destination)
     {
-        this.setContentPane(new LoginPanel());
+        this.setContentPane(new LoginPanel(destination));
         this.validate();
     }
 
@@ -70,11 +70,23 @@ public class KioskFrame extends JFrame
      * Show a new rental to be associated with the given account.
      * 
      * @param account
-     *            the account to associate the rental with
+     *            the account
      */
     public void showRental(Account account)
     {
         this.setContentPane(new RentalPanel(account));
+        this.validate();
+    }
+
+    /**
+     * Show the rental history associated with the given account.
+     * 
+     * @param account
+     *            the account
+     */
+    public void showHistory(Account account)
+    {
+        this.setContentPane(new HistoryPanel(account));
         this.validate();
     }
 
@@ -91,7 +103,7 @@ public class KioskFrame extends JFrame
         this.setContentPane(new CheckoutPanel(account, rental));
         this.validate();
     }
-    
+
     /**
      * Show the thankk you message for a rental.
      * 

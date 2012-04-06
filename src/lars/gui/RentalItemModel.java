@@ -12,7 +12,8 @@ import lars.RentalItem;
  * Table model for {@link RentalItem}s.
  * 
  * @author Jeremy Wheaton, 100105823
- * @version 2012-04-03
+ * @author Samuel Coleman, 100105823
+ * @version 2012-04-05
  */
 public class RentalItemModel extends AbstractTableModel
 {
@@ -25,12 +26,12 @@ public class RentalItemModel extends AbstractTableModel
     private static final int PRICE_COLUMN = 3;
 
     private List<RentalItem> rentalItems;
-    private boolean editable;
+    private boolean editable = false;
 
     /**
      * Create the model.
      * 
-     * @param rental
+     * @param rentalItems
      *            the rental data to model
      * @param editable
      *            whether or not the cells should be editable
@@ -50,7 +51,6 @@ public class RentalItemModel extends AbstractTableModel
     public RentalItemModel(List<RentalItem> rentalItems)
     {
         this.rentalItems = rentalItems;
-        this.editable = false;
     }
 
     @Override

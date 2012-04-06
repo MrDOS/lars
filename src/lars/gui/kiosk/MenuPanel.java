@@ -1,5 +1,6 @@
 package lars.gui.kiosk;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -24,6 +25,7 @@ public class MenuPanel extends JPanel implements ActionListener
     private static final long serialVersionUID = 1L;
 
     private JButton checkoutItems;
+    private JButton history;
 
     /**
      * Instantiate the panel.
@@ -34,8 +36,6 @@ public class MenuPanel extends JPanel implements ActionListener
 
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;
-        c.ipadx = 40;
-        c.ipady = 40;
 
         try
         {
@@ -48,12 +48,24 @@ public class MenuPanel extends JPanel implements ActionListener
         }
 
         checkoutItems = new JButton("Begin Checkout");
+        checkoutItems.setPreferredSize(new Dimension(128, (int) checkoutItems
+                .getPreferredSize().getHeight()));
         c.gridy = 1;
+        c.ipadx = 40;
+        c.ipady = 30;
         this.add(checkoutItems, c);
+
+        history = new JButton("Account History");
+        history.setPreferredSize(new Dimension(128, (int) history
+                .getPreferredSize().getHeight()));
+        c.gridy = 2;
+        c.ipadx = 40;
+        c.ipady = 15;
+        this.add(history, c);
 
         try
         {
-            c.gridy = 2;
+            c.gridy = 3;
             c.insets = new Insets(50, 0, 0, 0);
             this.add(new ImagePanel("res/ad.jpg"), c);
         }
@@ -63,12 +75,15 @@ public class MenuPanel extends JPanel implements ActionListener
         }
 
         checkoutItems.addActionListener(this);
+        history.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
         if (e.getSource().equals(checkoutItems))
-            KioskFrame.getInstance().showLogin();
+            KioskFrame.getInstance().showLogin(LoginPanel.DESTINATION_RENTAL);
+        else if (e.getSource().equals(history))
+            KioskFrame.getInstance().showLogin(LoginPanel.DESTINATION_HISTORY);
     }
 }

@@ -18,10 +18,10 @@ public class Account
      */
     public static final int ACCOUNT_ID_LENGTH = 8;
 
-    private int accountId;
-    private String name;
-    private String address;
-    private boolean manager;
+    private int accountId = 0;
+    private String name = "";
+    private String address = "";
+    private boolean manager = false;
 
     /**
      * Instantiate an account.
@@ -41,6 +41,13 @@ public class Account
         this.name = name;
         this.address = address;
         this.manager = manager;
+    }
+
+    /**
+     * Default constructor.
+     */
+    public Account()
+    {
     }
 
     /**

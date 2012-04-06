@@ -142,6 +142,7 @@ public class CheckoutPanel extends JPanel implements ActionListener
         {
             try
             {
+                this.rental.setAccount(this.account);
                 RentalDatabase.insertRental(this.rental);
             }
             catch (SQLException e1)

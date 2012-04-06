@@ -35,13 +35,14 @@ public class RentalDatabase
         PreparedStatement ps = ConnectionManager
                 .getConnection()
                 .prepareStatement(
-                        "SELECT rentalId, date FROM Rental WHERE accountId = ?");
+                        "SELECT rentalId, accountId, date FROM Rental WHERE accountId = ?");
         ps.setInt(1, account.getAccountId());
 
         ResultSet rs = ps.executeQuery();
         while (rs.next())
         {
-            Rental rental = new Rental(rs.getInt(1), rs.getDate(2));
+            Rental rental = new Rental(rs.getInt(1),
+                    AccountDatabase.getAccountById(rs.getInt(2)), rs.getDate(3));
             rental.setRentalItems(getRentalItemsByRental(rental));
             rentals.add(rental);
         }
@@ -62,9 +63,10 @@ public class RentalDatabase
      */
     public static Rental getRentalById(int id) throws SQLException
     {
-        PreparedStatement ps = ConnectionManager.getConnection()
+        PreparedStatement ps = ConnectionManager
+                .getConnection()
                 .prepareStatement(
-                        "SELECT rentalId, date FROM Rental WHERE rentalId = ?");
+                        "SELECT rentalId, accountId, date FROM Rental WHERE rentalId = ?");
         ps.setInt(1, id);
 
         ResultSet rs = ps.executeQuery();
@@ -72,7 +74,9 @@ public class RentalDatabase
         {
             if (rs.next())
             {
-                Rental rental = new Rental(rs.getInt(1), rs.getDate(2));
+                Rental rental = new Rental(rs.getInt(1),
+                        AccountDatabase.getAccountById(rs.getInt(2)),
+                        rs.getDate(3));
                 rental.setRentalItems(getRentalItemsByRental(rental));
                 return rental;
             }
@@ -96,9 +100,12 @@ public class RentalDatabase
      */
     public static Rental insertRental(Rental rental) throws SQLException
     {
+        System.out.println(rental.getAccount().getAccountId());
         PreparedStatement ps = ConnectionManager.getConnection()
-                .prepareStatement("INSERT INTO Rental(date) VALUES(?)");
-        ps.setDate(1, rental.getDate());
+                .prepareStatement(
+                        "INSERT INTO Rental(accountId, date) VALUES(?, ?)");
+        ps.setInt(1, rental.getAccount().getAccountId());
+        ps.setDate(2, rental.getDate());
 
         ps.executeUpdate();
         ResultSet rs = ps.getGeneratedKeys();

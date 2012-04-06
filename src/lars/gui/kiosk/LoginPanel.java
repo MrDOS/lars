@@ -26,13 +26,20 @@ public class LoginPanel extends JPanel implements ActionListener, FocusListener
 {
     private static final long serialVersionUID = 1L;
 
+    public static final int DESTINATION_RENTAL = 0;
+    public static final int DESTINATION_HISTORY = 1;
+
+    private int destination = 0;
+
     private JTextField accountField;
     private JButton confirm;
     private JButton toMenu;
     private JLabel message;
 
-    public LoginPanel()
+    public LoginPanel(int destination)
     {
+        this.destination = destination;
+
         this.setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
@@ -82,7 +89,15 @@ public class LoginPanel extends JPanel implements ActionListener, FocusListener
             {
                 int id = Integer.valueOf(accountField.getText());
                 Account account = AccountDatabase.getAccountById(id);
-                KioskFrame.getInstance().showRental(account);
+                switch (this.destination)
+                {
+                case DESTINATION_RENTAL:
+                    KioskFrame.getInstance().showRental(account);
+                    break;
+                case DESTINATION_HISTORY:
+                    KioskFrame.getInstance().showHistory(account);
+                    break;
+                }
             }
             catch (NumberFormatException ex)
             {

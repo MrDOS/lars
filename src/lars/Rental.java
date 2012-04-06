@@ -14,6 +14,7 @@ import java.util.List;
 public class Rental
 {
     private int rentalId = 0;
+    private Account account;
     private Date date;
     private List<RentalItem> rentalItems;
 
@@ -23,6 +24,7 @@ public class Rental
     public Rental()
     {
         rentalItems = new ArrayList<RentalItem>();
+        this.account = new Account();
         this.date = new Date(System.currentTimeMillis());
     }
 
@@ -36,10 +38,12 @@ public class Rental
      * @param date
      *            the date of the rental
      */
-    public Rental(int rentalId, List<RentalItem> rentalItems, Date date)
+    public Rental(int rentalId, List<RentalItem> rentalItems, Account account,
+            Date date)
     {
-        this.rentalItems = rentalItems;
         this.rentalId = rentalId;
+        this.rentalItems = rentalItems;
+        this.account = account;
         this.date = date;
     }
 
@@ -51,10 +55,11 @@ public class Rental
      * @param date
      *            the date of the rental
      */
-    public Rental(int rentalId, Date date)
+    public Rental(int rentalId, Account account, Date date)
     {
         rentalItems = new ArrayList<RentalItem>();
         this.rentalId = rentalId;
+        this.account = account;
         this.date = date;
     }
 
@@ -94,6 +99,27 @@ public class Rental
     public int getRentalId()
     {
         return rentalId;
+    }
+
+    /**
+     * Get the account the rental is associated with.
+     * 
+     * @return the account the rental is associated with
+     */
+    public Account getAccount()
+    {
+        return account;
+    }
+
+    /**
+     * Set the account the rental is associated with.
+     * 
+     * @param account
+     *            the account the rental is associated with
+     */
+    public void setAccount(Account account)
+    {
+        this.account = account;
     }
 
     /**
